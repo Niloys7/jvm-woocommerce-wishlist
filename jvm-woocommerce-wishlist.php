@@ -251,6 +251,7 @@ if ( ! class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 			 * Functions used in frontend and admin
 			 */
 			include_once( 'inc/www-core-functions.php' );
+			include_once 'inc/frontend/www-functions.php';
 
 			if ( $this->is_request( 'admin' ) ) {
 				include_once( 'inc/admin/class-www-admin.php' );
@@ -261,7 +262,7 @@ if ( ! class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 			}
 
 			if ( $this->is_request( 'frontend' ) ) {
-				include_once( 'inc/frontend/www-functions.php' );
+				
 				include_once( 'inc/frontend/class-www-shortcodes.php' );
 			}
 		}
