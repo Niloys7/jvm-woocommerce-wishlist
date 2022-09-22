@@ -1,0 +1,17 @@
+{
+    "name": "codeixer/jvm-woocommerce-wishlist",
+    "description": "A Simple and Lightweight Wishlist for WooCommerce",
+    "type": "woocommerce-plugin",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Codeixer",
+            "email": "codeixer@gmail.com"
+        }
+    ],
+    "require": {
+        "appsero/client": "^1.2",
+        "collizo4sky/persist-admin-notices-dismissal": "^1.4"
+    },
+    "minimum-stability": "dev"
+}

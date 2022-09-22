@@ -3,13 +3,13 @@
  * JVM Woocommerce Wishlist Options.
  *
  * @class JVM_WW_Options
- 
+ *
  * @category Admin
- * @package JVMWooCommerceWishlist/Admin
  * @version 1.0.8
+ * @package JVMWooCommerceWishlist/Admin
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
@@ -54,16 +54,16 @@ class JVM_WW_Options {
 	 */
 	public function register_settings() {
 		register_setting( 'jvm-woocommerce-wishlist-settings', 'jvm_woocommerce_wishlist_settings', array( $this, 'settings_validate' ) );
-		add_settings_section( 'jvm-woocommerce-wishlist-settings', '', function(){}, 'jvm-woocommerce-wishlist-settings' );
+		add_settings_section( 'jvm-woocommerce-wishlist-settings', '', function () {}, 'jvm-woocommerce-wishlist-settings' );
 		add_settings_field( 'page_id', esc_html__( 'Wishlist Page', 'jvm-woocommerce-wishlist' ), array( $this, 'setting_page_id' ), 'jvm-woocommerce-wishlist-settings', 'jvm-woocommerce-wishlist-settings' );
 		add_settings_field( 'instructions', esc_html__( 'Instructions', 'jvm-woocommerce-wishlist' ), array( $this, 'setting_instructions' ), 'jvm-woocommerce-wishlist-settings', 'jvm-woocommerce-wishlist-settings' );
-		add_settings_field( 'donate', esc_html__( 'Donate', 'jvm-woocommerce-wishlist' ), array( $this, 'donate_instructions' ), 'jvm-woocommerce-wishlist-settings', 'jvm-woocommerce-wishlist-settings' );
+
 	}
 
 	/**
 	 * Validate options
 	 *
-	 * @param array $input
+	 * @param  array $input
 	 * @return array $input
 	 */
 	public function settings_validate( $input ) {
@@ -85,36 +85,27 @@ class JVM_WW_Options {
 		$pages = get_pages();
 		?>
 		<select name="jvm_woocommerce_wishlist_settings[page_id]">
-			<option value="-1"><?php esc_html_e( 'Select a page...', 'jvm-woocommerce-wishlist' ); ?></option>
-			<?php foreach ( $pages as $page ) : ?>
-				<option <?php selected( absint( $page->ID ), get_option( 'jvm_woocommerce_wishlist_page_id' ) ); ?> value="<?php echo intval( $page->ID ); ?>"><?php echo sanitize_text_field( $page->post_title ); ?></option>
-			<?php endforeach; ?>
+			<option value="-1"><?php esc_html_e( 'Select a page...', 'jvm-woocommerce-wishlist' );?></option>
+			<?php foreach ( $pages as $page ): ?>
+				<option <?php selected( absint( $page->ID ), get_option( 'jvm_woocommerce_wishlist_page_id' ) );?> value="<?php echo intval( $page->ID ); ?>"><?php echo sanitize_text_field( $page->post_title ); ?></option>
+			<?php endforeach;?>
 		</select>
 		<p>
 			<label for="jvm_woocommerce_wishlist_settings[page_id]">
-				<?php printf( esc_html__( 'It is recommended to set your wishlist page here, so themes and plugins can access its URL with the %s function.', 'jvm-woocommerce-wishlist' ), 'jvm_get_wishlist_url()' ); ?>
+				<?php printf( esc_html__( 'It is recommended to set your wishlist page here, so themes and plugins can access its URL with the %s function.', 'jvm-woocommerce-wishlist' ), 'jvm_get_wishlist_url()' );?>
 			</label>
 		</p>
 		<?php
-	}
+}
 
 	/**
 	 * Display additional instructions
 	 */
 	public function setting_instructions() {
 		?>
-		<p><?php printf( esc_html__( 'You can use the %s shortcode to display your wishlist in your page.', 'jvm-woocommerce-wishlist' ), '[jvm_woocommerce_wishlist]' ) ?></p>
+		<p><?php printf( esc_html__( 'You can use the %s shortcode to display your wishlist in your page.', 'jvm-woocommerce-wishlist' ), '[jvm_woocommerce_wishlist]' )?></p>
 		<?php
-	}
-
-	/**
-	 * Display donation instructions
-	 */
-	public function donate_instructions() {
-		?>
-		<p><?php _e( 'Like this plugin? Please consider a donation.', 'jvm-woocommerce-wishlist' ) ?> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VXZJG9GC34JJU" target="_blank"><img src="<?php echo  JVM_WW_IMAGES;?>/paypal.gif" style="vertical-align: middle;" /></a></p>
-		<?php
-	}
+}
 
 	/**
 	 * Options form
@@ -122,15 +113,15 @@ class JVM_WW_Options {
 	public function options_form() {
 		?>
 		<div class="wrap">
-			<h2><?php esc_html_e( 'Wishlist Options', 'jvm-woocommerce-wishlist' ); ?></h2>
+			<h2><?php esc_html_e( 'Wishlist Options', 'jvm-woocommerce-wishlist' );?></h2>
 			<form action="options.php" method="post">
-				<?php settings_fields( 'jvm-woocommerce-wishlist-settings' ); ?>
-				<?php do_settings_sections( 'jvm-woocommerce-wishlist-settings' ); ?>
-				<p class="submit"><input name="save" type="submit" class="button-primary" value="<?php esc_html_e( 'Save Changes', 'jvm-woocommerce-wishlist' ); ?>" /></p>
+				<?php settings_fields( 'jvm-woocommerce-wishlist-settings' );?>
+				<?php do_settings_sections( 'jvm-woocommerce-wishlist-settings' );?>
+				<p class="submit"><input name="save" type="submit" class="button-primary" value="<?php esc_html_e( 'Save Changes', 'jvm-woocommerce-wishlist' );?>" /></p>
 			</form>
 		</div>
 		<?php
-	}
+}
 
 	/**
 	 * Set default options
@@ -139,7 +130,7 @@ class JVM_WW_Options {
 
 		// delete_option( 'jvm_woocommerce_wishlist_settings' );
 
-		if ( false === get_option( 'jvm_woocommerce_wishlist_settings' )  ) {
+		if ( false === get_option( 'jvm_woocommerce_wishlist_settings' ) ) {
 
 			$default = array(
 

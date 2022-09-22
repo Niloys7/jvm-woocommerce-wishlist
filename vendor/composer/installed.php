@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'codeixer/jvm-woocommerce-wishlist',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '37c05f0e313ee4efd76f6ba3e03706b8783bea69',
+        'type' => 'woocommerce-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'appsero/client' => array(
+            'pretty_version' => 'v1.2.1',
+            'version' => '1.2.1.0',
+            'reference' => 'd110c537f4ca92ac7f3398eee67cc6bdf506a4fb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../appsero/client',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'codeixer/jvm-woocommerce-wishlist' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '37c05f0e313ee4efd76f6ba3e03706b8783bea69',
+            'type' => 'woocommerce-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'collizo4sky/persist-admin-notices-dismissal' => array(
+            'pretty_version' => '1.4.4',
+            'version' => '1.4.4.0',
+            'reference' => '900739eb6b0ec0210465f5983a6d4e0e420289e4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../collizo4sky/persist-admin-notices-dismissal',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

@@ -1,20 +1,19 @@
-=== JVM WooCommerce Wishlist ===
-Contributors: jorisvanmontfort
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VXZJG9GC34JJU
-Tags: woocommerce, wishlist, e-commerce, shop, products, theme
+=== Wishlist for WooCommerce  ===
+Contributors: codeixer,wpinteractive,im_niloy,jorisvanmontfort
+Tags: woocommerce wishlist, wishlist, woocommerce, cart
 Requires at least: 4.4.1
-Tested up to: 5.4.1
-Stable tag: 1.0.0
+Tested up to: 6.0.2
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A simple and lightweight wishlist for WooCommerce, with plenty of hooks for customization to fit your WooCommerce theme.
 
 == Description ==
-A simple and lightweight wishlist for WooCommerce, with plenty of hooks for customization to fit your WooCommerce theme. Tested on WooCommerce 3.x but should work on any WooCommerce 4.x installation.
+A simple and lightweight wishlist for WooCommerce, with plenty of hooks for customization to fit your WooCommerce theme.
 
-By default the plugin adds a wishlist icon to the WooCommerce archive pages and the WooCommerce single product page. Instead of an icon you can also switch to a text based link to or add remove wishlist items.
-The wishlist can be added to a page using the `[jvm_woocommerce_add_to_wishlist]` shortcode. For more advanced customisation see the hooks, javascript API and templates sections below.
+By default, the plugin adds a wishlist icon to the WooCommerce archive pages and the WooCommerce single product page. Instead of an icon you can also switch to a text-based link to or add/remove wishlist items.
+The wishlist can be added to a page using the `[jvm_woocommerce_add_to_wishlist]` shortcode. For more advanced customization see the hooks, javascript API and templates sections below.
 
 == Installation ==
 
@@ -26,9 +25,9 @@ The plugin assumes you're already using WooCommerce. Without WooCommerce this pl
 
 == Hooks ==
 
-For advanced users and developers a few WordPress actions and filters are supplied to modify the behaviour of the wishlist. 
+For advanced users and developers, a few WordPress actions and filters are supplied to modify the behavior of the wishlist. 
 
-Example usage removing the button from the achive page:
+Example usage removing the button from the archive page:
 `
 remove_action( 'woocommerce_after_shop_loop_item', 'jvm_woocommerce_add_to_wishlist', 15 );
 `
