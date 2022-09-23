@@ -3,13 +3,13 @@
  * JVM Woocommerce Wishlist Admin.
  *
  * @class JVM_WW_Admin
- 
+
  * @category Admin
  * @package JVMWooCommerceWishlist/Admin
  * @version 1.0.8
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
@@ -23,7 +23,7 @@ class JVM_WW_Admin {
 	public function __construct() {
 
 		// Includes files
-		include_once( 'class-www-options.php' );
+		include_once 'class-www-options.php';
 
 		// Admin init hooks
 		$this->admin_init_hooks();
@@ -34,11 +34,13 @@ class JVM_WW_Admin {
 	 */
 	public function update() {
 
-		if ( ! defined( 'IFRAME_REQUEST' ) && ! defined( 'DOING_AJAX' ) && ( get_option( 'jvm_woocommerce_wishlist_version' ) != JVM_WW_VERSION ) ) {
-			include_once( 'update.php' );
+		if ( !defined( 'IFRAME_REQUEST' ) && !defined( 'DOING_AJAX' ) && ( get_option( 'jvm_woocommerce_wishlist_version' ) != JVM_WW_VERSION ) ) {
+			include_once 'update.php';
 
 			// Update hook
-			do_action( 'jvm_woocommerce_wishlist_do_update' );
+			do_action( 'wpi_woocommerce_wishlist_do_update' );
+			do_action_deprecated( 'jvm_woocommerce_wishlist_do_update', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_do_update' );
+			
 
 			// Update version
 			delete_option( 'jvm_woocommerce_wishlist_version' );
@@ -80,13 +82,11 @@ class JVM_WW_Admin {
 			return;
 		}
 
-
-		if ( ! get_option( 'jvm_woocommerce_wishlist_needs_page' ) ) {
+		if ( !get_option( 'jvm_woocommerce_wishlist_needs_page' ) ) {
 			return;
 		}
 
-
-		if ( -1 == jvm_woocommerce_wishlist_get_page_id() && ! isset( $_GET['jvm_woocommerce_wishlist_create_page'] ) ) {
+		if ( -1 == jvm_woocommerce_wishlist_get_page_id() && !isset( $_GET['jvm_woocommerce_wishlist_create_page'] ) ) {
 
 			if ( isset( $_GET['skipjvm_woocommerce_wishlist_setup'] ) ) {
 				delete_option( 'jvm_woocommerce_wishlist_needs_page' );
@@ -96,21 +96,21 @@ class JVM_WW_Admin {
 			update_option( 'jvm_woocommerce_wishlist_needs_page', true );
 
 			$message = '<strong>JVM Woocommerce Wishlist</strong> ' . sprintf(
-					wp_kses(
-						__( 'says : <em>Almost done! you need to <a href="%1$s">create a page</a> for your wishlist or <a href="%2$s">select an existing page</a> in the plugin settings</em>.', 'jvm-woocommerce-wishlist' ),
-						array(
-							'a' => array(
-								'href' => array(),
-								'class' => array(),
-								'title' => array(),
-							),
-							'br' => array(),
-							'em' => array(),
-							'strong' => array(),
-						)
-					),
-					esc_url( admin_url( '?jvm_woocommerce_wishlist_create_page=true' ) ),
-					esc_url( admin_url( 'options-general.php?page=jvm-woocommerce-wishlist-settings' ) )
+				wp_kses(
+					__( 'says : <em>Almost done! you need to <a href="%1$s">create a page</a> for your wishlist or <a href="%2$s">select an existing page</a> in the plugin settings</em>.', 'jvm-woocommerce-wishlist' ),
+					array(
+						'a'      => array(
+							'href'  => array(),
+							'class' => array(),
+							'title' => array(),
+						),
+						'br'     => array(),
+						'em'     => array(),
+						'strong' => array(),
+					)
+				),
+				esc_url( admin_url( '?jvm_woocommerce_wishlist_create_page=true' ) ),
+				esc_url( admin_url( 'options-general.php?page=jvm-woocommerce-wishlist-settings' ) )
 			);
 
 			$message .= sprintf(
@@ -123,24 +123,24 @@ class JVM_WW_Admin {
 					<a href="%3$s" class="button">Skip setup</a>', 'jvm-woocommerce-wishlist' ),
 
 					array(
-							'a' => array(
-								'href' => array(),
-								'class' => array(),
-								'title' => array(),
-							),
-							'br' => array(),
-							'em' => array(),
-							'strong' => array(),
-						)
+						'a'      => array(
+							'href'  => array(),
+							'class' => array(),
+							'title' => array(),
+						),
+						'br'     => array(),
+						'em'     => array(),
+						'strong' => array(),
+					)
 				),
-					esc_url( admin_url( '?jvm_woocommerce_wishlist_create_page=true' ) ),
-					esc_url( admin_url( 'options-general.php?page=jvm-woocommerce-wishlist-settings' ) ),
-					esc_url( admin_url( '?skipjvm_woocommerce_wishlist_setup=true' ) )
+				esc_url( admin_url( '?jvm_woocommerce_wishlist_create_page=true' ) ),
+				esc_url( admin_url( 'options-general.php?page=jvm-woocommerce-wishlist-settings' ) ),
+				esc_url( admin_url( '?skipjvm_woocommerce_wishlist_setup=true' ) )
 			);
 
 			$output = '<div class="updated jvm-woocommerce-wishlist-admin-notice jvm-woocommerce-wishlist-plugin-admin-notice"><p>';
 
-				$output .= $message;
+			$output .= $message;
 
 			$output .= '</p></div>';
 
@@ -164,10 +164,10 @@ class JVM_WW_Admin {
 
 			// Create post object
 			$post = array(
-				'post_title'  => esc_html__( 'Wishlist', 'jvm-woocommerce-wishlist' ),
+				'post_title'   => esc_html__( 'Wishlist', 'jvm-woocommerce-wishlist' ),
 				'post_content' => '[jvm_woocommerce_wishlist]',
-				'post_type'   => 'page',
-				'post_status' => 'publish',
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
 			);
 
 			// Insert the post into the database

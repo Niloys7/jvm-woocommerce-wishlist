@@ -30,11 +30,13 @@ function jvm_woocommerce_wishlist_locate_template( $path, $params = null ) {
  */
 function jvm_woocommerce_wishlist() {
 
-	do_action( 'jvm_woocommerce_wishlist_before_wishlist' );
+	do_action( 'wpi_woocommerce_wishlist_before_wishlist' );
+	do_action_deprecated( 'jvm_woocommerce_wishlist_before_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_before_wishlist' );
 
 	jvm_woocommerce_wishlist_locate_template( 'wishlist.php' );
 
-	do_action( 'jvm_woocommerce_wishlist_after_wishlist' );
+	do_action( 'wpi_woocommerce_wishlist_after_wishlist' );
+	do_action_deprecated( 'jvm_woocommerce_wishlist_after_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_after_wishlist' );
 }
 
 /**
@@ -55,7 +57,8 @@ function jvm_woocommerce_add_to_wishlist( $product_id = null ) {
 	// Hook for icon HTML
 	$icon_html = apply_filters( 'jvm_add_to_wishlist_icon_html', '<span class="jvm_add_to_wishlist_heart"></span>' );
 
-	do_action( 'jvm_woocommerce_wishlist_before_add_to_wishlist', $product_id );
+	do_action( 'wpi_woocommerce_wishlist_before_add_to_wishlist', $product_id );
+	do_action_deprecated( 'jvm_woocommerce_wishlist_before_add_to_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_before_add_to_wishlist' );
 
 	$class .= apply_filters( 'jvm_add_to_wishlist_class', ' jvm_add_to_wishlist button' );
 	?><a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>">
@@ -63,7 +66,9 @@ function jvm_woocommerce_add_to_wishlist( $product_id = null ) {
 	<span class="jvm_add_to_wishlist_text_add"><?php _e( 'Add to wishlist', 'jvm-woocommerce-wishlist' );?></span>
 	<span class="jvm_add_to_wishlist_text_remove"><?php _e( 'Remove from wishlist', 'jvm-woocommerce-wishlist' );?></span>
 </a><?php
-do_action( 'jvm_woocommerce_wishlist_after_add_to_wishlist', $product_id );
+do_action( 'wpi_woocommerce_wishlist_after_add_to_wishlist', $product_id );
+do_action_deprecated( 'jvm_woocommerce_wishlist_after_add_to_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_after_add_to_wishlist' );
+
 }
 
 /**

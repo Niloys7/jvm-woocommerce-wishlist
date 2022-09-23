@@ -14,4 +14,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( '_jvm_woocommerce_wishlist_page_id' );
+delete_option( 'jvm_woocommerce_wishlist_page_id' );

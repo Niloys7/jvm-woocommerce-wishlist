@@ -17,7 +17,7 @@
 if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-require_once __DIR__  . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 	/**
@@ -100,12 +100,12 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 			$this->includes();
 			$this->init_hooks();
 
-			do_action( 'jvm_woocommerce_wishlist_loaded' );
+			do_action( 'wpi_woocommerce_wishlist_loaded' );
+			do_action_deprecated( 'jvm_woocommerce_wishlist_loaded', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_loaded' );
 		}
 
 		/**
 		 * Check if WooCommerce is active
-		 *
 		 *
 		 * @see https://docs.woocommerce.com/document/create-a-plugin/
 		 *
@@ -196,12 +196,13 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 		private function define_constants() {
 
 			$constants = array(
-				'JVM_WW_CSS'     => $this->plugin_url() . '/assets/css',
-				'JVM_WW_DIR'     => $this->plugin_path(),
-				'JVM_WW_JS'      => $this->plugin_url() . '/assets/js',
-				'JVM_WW_IMAGES'  => $this->plugin_url() . '/assets/images',
-				'JVM_WW_PATH'    => plugin_basename( __FILE__ ),
-				'JVM_WW_VERSION' => $this->version,
+				'JVM_WW_CSS'              => $this->plugin_url() . '/assets/css',
+				'JVM_WW_DIR'              => $this->plugin_path(),
+				'JVM_WW_JS'               => $this->plugin_url() . '/assets/js',
+				'JVM_WW_IMAGES'           => $this->plugin_url() . '/assets/images',
+				'JVM_WW_PATH'             => plugin_basename( __FILE__ ),
+				'JVM_WW_VERSION'          => $this->version,
+				'WPI_WW_HANDOVER_VERSION' => '1.3.5',
 			);
 
 			foreach ( $constants as $name => $value ) {

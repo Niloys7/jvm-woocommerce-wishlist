@@ -31,7 +31,10 @@ if ( !empty($product_ids)) { ?>
 			</tr>
 		</thead>
 		<tbody>
-			<?php do_action( 'jvm_woocommerce_wishlist_before_wishlist_contents' ); ?>
+			<?php 
+			do_action( 'wpi_woocommerce_wishlist_before_wishlist_contents' ); 
+			do_action_deprecated( 'jvm_woocommerce_wishlist_before_wishlist_contents', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_before_wishlist_contents' );
+			?>
 
 			<?php
 
@@ -94,7 +97,9 @@ if ( !empty($product_ids)) { ?>
 				}
 			}
 
-			do_action( 'jvm_woocommerce_wishlist_after_wishlist_contents' ); ?>
+			do_action( 'wpi_woocommerce_wishlist_after_wishlist_contents' ); 
+			do_action_deprecated( 'jvm_woocommerce_wishlist_after_wishlist_contents', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_after_wishlist_contents' );
+			?>
 		</tbody>
 	</table>
 <?php 
