@@ -1,6 +1,6 @@
 === Wishlist for WooCommerce  ===
 Contributors: codeixer,wpinteractive,im_niloy,jorisvanmontfort
-Tags: woocommerce wishlist, wishlist, woocommerce, cart
+Tags: woocommerce wishlist, wishlist, woocommerce
 Requires at least: 5.0
 Tested up to: 6.0.2
 Stable tag: 1.3.5
@@ -90,6 +90,12 @@ $(document).on("beforeupdate.JVMWooCommerceWishlist", function(e) {
 `
 
 == Changelog ==
+
+= 1.3.5 - 23 Sep 22 =
+
+Bug fix
+Added: appsero insights
+Compatibility with WooCommerce 6.9.3
 
 = 1.3.4 =
 Added a new filter for modifying the icon HTML: jvm_add_to_wishlist_icon_html
