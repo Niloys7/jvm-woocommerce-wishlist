@@ -104,6 +104,7 @@ class JVM_WW_Options {
 	public function setting_instructions() {
 		?>
 		<p><?php printf( esc_html__( 'You can use the %s shortcode to display your wishlist in your page.', 'jvm-woocommerce-wishlist' ), '[jvm_woocommerce_wishlist]' )?></p>
+		<p>Anything you are missing in this plugin? Submit your idea <a target="_blank" href="https://app.loopedin.io/wishlist-for-woocommerce#/ideas">here</a></p>
 		<?php
 }
 

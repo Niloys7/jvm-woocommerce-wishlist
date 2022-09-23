@@ -1,7 +1,7 @@
 === Wishlist for WooCommerce  ===
 Contributors: codeixer,wpinteractive,im_niloy,jorisvanmontfort
 Tags: woocommerce wishlist, wishlist, woocommerce, cart
-Requires at least: 4.4.1
+Requires at least: 5.0
 Tested up to: 6.0.2
 Stable tag: 1.3.5
 License: GPLv2 or later
@@ -16,8 +16,6 @@ By default, the plugin adds a wishlist icon to the WooCommerce archive pages and
 The wishlist can be added to a page using the `[jvm_woocommerce_add_to_wishlist]` shortcode. For more advanced customization see the hooks, javascript API and templates sections below.
 
 == Installation ==
-
-The plugin assumes you're already using WooCommerce. Without WooCommerce this plugin won't do much. 
 
 1. Install the plugin from the Plugins or upload the plugin folder to the `/wp-content/plugins/` directory menu and then activate it.
 2. Go to the plugin setting screen to define a wishlist page.

@@ -40,7 +40,6 @@ class JVM_WW_Admin {
 			// Update hook
 			do_action( 'wpi_woocommerce_wishlist_do_update' );
 			do_action_deprecated( 'jvm_woocommerce_wishlist_do_update', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_do_update' );
-			
 
 			// Update version
 			delete_option( 'jvm_woocommerce_wishlist_version' );
@@ -68,36 +67,33 @@ class JVM_WW_Admin {
 	}
 
 	/**
-	 * Check albums page
+	 * Check whistlist page
 	 *
-	 * Display a notification if we can't get the albums page id
+	 * Display a notification if we can't get the whistlist page id
 	 *
 	 */
 	public function check_page() {
 
-		$output    = '';
-		$theme_dir = get_template_directory();
+		$output = '';
 
 		if ( get_option( 'jvm_woocommerce_wishlist_no_needs_page' ) ) {
 			return;
-		}
+		} // user skip setup
 
-		if ( !get_option( 'jvm_woocommerce_wishlist_needs_page' ) ) {
+		if ( get_option( 'jvm_woocommerce_wishlist_page_id' ) != -1 ) {
 			return;
-		}
+		} // Existing page seleted
 
 		if ( -1 == jvm_woocommerce_wishlist_get_page_id() && !isset( $_GET['jvm_woocommerce_wishlist_create_page'] ) ) {
 
 			if ( isset( $_GET['skipjvm_woocommerce_wishlist_setup'] ) ) {
-				delete_option( 'jvm_woocommerce_wishlist_needs_page' );
+				add_option( 'jvm_woocommerce_wishlist_no_needs_page', true );
 				return;
 			}
 
-			update_option( 'jvm_woocommerce_wishlist_needs_page', true );
-
-			$message = '<strong>JVM Woocommerce Wishlist</strong> ' . sprintf(
+			$message = '<strong>Wishlist for WooCommerce </strong> ' . sprintf(
 				wp_kses(
-					__( 'says : <em>Almost done! you need to <a href="%1$s">create a page</a> for your wishlist or <a href="%2$s">select an existing page</a> in the plugin settings</em>.', 'jvm-woocommerce-wishlist' ),
+					__( ': <em>Almost done! You need to <a href="%1$s">create a page</a> for your wishlist or <a href="%2$s">select an existing page</a> in the plugin settings</em>.', 'jvm-woocommerce-wishlist' ),
 					array(
 						'a'      => array(
 							'href'  => array(),
@@ -145,9 +141,6 @@ class JVM_WW_Admin {
 			$output .= '</p></div>';
 
 			echo $output;
-		} else {
-
-			delete_option( 'jvm_woocommerce_wishlist_need_page' );
 		}
 
 		return false;

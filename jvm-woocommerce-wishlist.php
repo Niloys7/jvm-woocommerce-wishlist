@@ -5,7 +5,7 @@
  * Version: 1.3.5
  * Author: WPInteractive
  * Author URI: http://wpinteractive.com
- * Tested up to: 6.0.1
+ * Tested up to: 6.0.2
  * WC requires at least: 4.0
  * WC tested up to: 6.9.3
  * Requires PHP: 7.2
@@ -18,6 +18,26 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 require_once __DIR__ . '/vendor/autoload.php';
+
+/**
+ * Initialize the plugin tracker
+ *
+ * @return void
+ */
+function appsero_init_tracker_jvm_woocommerce_wishlist() {
+
+	if ( !class_exists( 'Appsero\Client' ) ) {
+		require_once __DIR__ . '/appsero/src/Client.php';
+	}
+
+	$client = new Appsero\Client( '29ff6213-2aed-47b6-9bc2-f1ac982963e7', 'Wishlist for WooCommerce', __FILE__ );
+
+	// Active insights
+	$client->insights()->init();
+
+}
+
+appsero_init_tracker_jvm_woocommerce_wishlist();
 
 if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 	/**
@@ -32,12 +52,12 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 		/**
 		 * @var string
 		 */
-		private $required_php_version = '5.4.0';
+		private $required_php_version = '7.2';
 
 		/**
 		 * @var string
 		 */
-		public $version = '1.3.4';
+		public $version = '1.3.5';
 
 		/**
 		 * @var JVM Woocommerce Wishlist The single instance of the class
@@ -99,11 +119,32 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 			$this->define_constants();
 			$this->includes();
 			$this->init_hooks();
+			add_filter( 'plugin_row_meta', [$this, 'plugin_meta_links'], 10, 2 );
 
 			do_action( 'wpi_woocommerce_wishlist_loaded' );
 			do_action_deprecated( 'jvm_woocommerce_wishlist_loaded', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_loaded' );
 		}
+		
+		/**
+		 * Add links to plugin's description in plugins table
+		 *
+		 * @param array  $links Initial list of links.
+		 * @param string $file  Basename of current plugin.
+		 */
+		function plugin_meta_links( $links, string $file ) {
+			if ( $file !== plugin_basename( __FILE__ ) ) {
+				return $links;
+			}
+			
+			$support_link = '<a target="_blank" href="https://www.codeixer.com/contact-us/" title="' . __( 'Get help', 'wpgs-td' ) . '">' . __( 'Support', 'jvm-woocommerce-wishlist' ) . '</a>';
+			$rate_twist   = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5"> Rate this plugin » </a>';
 
+			
+			$links[] = $support_link;
+			$links[] = $rate_twist;
+
+			return $links;
+		} // plugin_meta_links
 		/**
 		 * Check if WooCommerce is active
 		 *
@@ -132,7 +173,7 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 			?></p>
 			</div>
 			<?php
-}
+		}
 
 		/**
 		 * Hook into actions and filters
@@ -180,14 +221,6 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 			} else {
 				setcookie( $cookie_name, jvm_woocommerce_wishlist_array_to_list( $updated_user_meta ), strtotime( "+7 day", time() ), '/' );
 			}
-		}
-
-		/**
-		 * Activation function
-		 */
-		public function activate() {
-
-			add_option( 'jvm_woocommerce_wishlist_needs_page', true );
 		}
 
 		/**
