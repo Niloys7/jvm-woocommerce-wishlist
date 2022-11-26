@@ -29,7 +29,6 @@ function jvm_woocommerce_wishlist_locate_template( $path, $params = null ) {
  * Output wishlist table
  */
 function jvm_woocommerce_wishlist() {
-
 	do_action( 'wpi_woocommerce_wishlist_before_wishlist' );
 	do_action_deprecated( 'jvm_woocommerce_wishlist_before_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_before_wishlist' );
 
@@ -67,7 +66,7 @@ function jvm_woocommerce_add_to_wishlist( $product_id = null ) {
 	<span class="jvm_add_to_wishlist_text_remove"><?php _e( 'Remove from wishlist', 'jvm-woocommerce-wishlist' );?></span>
 </a><?php
 do_action( 'wpi_woocommerce_wishlist_after_add_to_wishlist', $product_id );
-do_action_deprecated( 'jvm_woocommerce_wishlist_after_add_to_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_after_add_to_wishlist' );
+	do_action_deprecated( 'jvm_woocommerce_wishlist_after_add_to_wishlist', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_after_add_to_wishlist' );
 
 }
 
@@ -244,3 +243,17 @@ function jvm_woocommerce_wishlist_enqueue_scripts() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'jvm_woocommerce_wishlist_enqueue_scripts', 20 );
+
+add_filter( 'body_class', 'wpi_whistlist_page_class' );
+/**
+ * @param $classes
+ * @return mixed
+ */
+function wpi_whistlist_page_class( $classes ) {
+	global $post;
+	
+	if ( $post && has_shortcode( $post->post_content, 'jvm_woocommerce_wishlist') ) {
+		$classes[] = 'woocommerce-page woocommerce woocommerce-cart';
+	}
+	return $classes;
+}

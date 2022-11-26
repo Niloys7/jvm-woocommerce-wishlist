@@ -17,10 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_ids = jvm_woocommerce_wishlist_get_wishlist_product_ids();
 
 ?>
-<div class="jvm-woocommerce-wishlist-container">
+<div class="jvm-woocommerce-wishlist-container woocommerce-cart-form">
 <?php
 if ( !empty($product_ids)) { ?>
-	<table class="jvm-woocommerce-wishlist-table shop_table cart">
+	<table class="jvm-woocommerce-wishlist-table shop_table shop_table_responsive cart woocommerce-cart-form__contents">
 		<thead>
 			<tr>
 				<th class="product-remove">&nbsp;</th>

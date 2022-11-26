@@ -2,12 +2,12 @@
 /**
  * Plugin Name: Wishlist for WooCommerce
  * Description: A Simple and Lightweight Wishlist for WooCommerce
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: WPInteractive
- * Author URI: http://wpinteractive.com
- * Tested up to: 6.0.2
+ * Author URI: https://wpinteractive.com
+ * Tested up to: 6.1
  * WC requires at least: 4.0
- * WC tested up to: 6.9.3
+ * WC tested up to: 7.1
  * Requires PHP: 7.2
  *
  * Text Domain: jvm-woocommerce-wishlist
@@ -57,7 +57,7 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 		/**
 		 * @var string
 		 */
-		public $version = '1.3.5';
+		public $version = '1.3.6';
 
 		/**
 		 * @var JVM Woocommerce Wishlist The single instance of the class
@@ -136,7 +136,7 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 				return $links;
 			}
 			
-			$support_link = '<a target="_blank" href="https://www.codeixer.com/contact-us/" title="' . __( 'Get help', 'wpgs-td' ) . '">' . __( 'Support', 'jvm-woocommerce-wishlist' ) . '</a>';
+			$support_link = '<a target="_blank" href="https://wpinteractive.com/contact-us/" title="' . __( 'Get help', 'wpgs-td' ) . '">' . __( 'Support', 'jvm-woocommerce-wishlist' ) . '</a>';
 			$rate_twist   = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5"> Rate this plugin » </a>';
 
 			
@@ -235,7 +235,7 @@ if ( !class_exists( 'JVM_WooCommerce_Wishlist' ) ) {
 				'JVM_WW_IMAGES'           => $this->plugin_url() . '/assets/images',
 				'JVM_WW_PATH'             => plugin_basename( __FILE__ ),
 				'JVM_WW_VERSION'          => $this->version,
-				'WPI_WW_HANDOVER_VERSION' => '1.3.5',
+				'WPI_WW_HANDOVER_VERSION' => '1.3.6',
 			);
 
 			foreach ( $constants as $name => $value ) {
