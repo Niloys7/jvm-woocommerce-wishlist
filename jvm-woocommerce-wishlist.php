@@ -9,6 +9,7 @@
  * WC requires at least: 4.0
  * WC tested up to: 7.1
  * Requires PHP: 7.2
+ * Stable Tag: 1.3.6
  *
  * Text Domain: jvm-woocommerce-wishlist
  * Domain Path: /languages/
