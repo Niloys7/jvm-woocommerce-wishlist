@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CIXW_WISHLIST\\' => array($baseDir . '/v2'),
     'Appsero\\' => array($vendorDir . '/appsero/client/src'),
 );

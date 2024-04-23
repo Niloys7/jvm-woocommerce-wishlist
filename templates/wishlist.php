@@ -1,6 +1,7 @@
 <?php
 /**
  * Template to render the wishlit table.
+ * DO NOT USE THIS TEMPLATE IF YOU ARE USING THE PLUGIN VERSION 2.0 OR ABOVE.
  *
  
  * @category Core

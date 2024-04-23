@@ -6,7 +6,16 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitbee06180dfee1e9fc609c0ebe8c58354
 {
+    public static $files = array (
+        '411365114bfd84c3e5d2e5a0b22c4c38' => __DIR__ . '/../..' . '/inc/codestar-framework/codestar-framework.php',
+        'a4023d9468bba4a3353a245ddd05e517' => __DIR__ . '/../..' . '/inc/core.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'C' => 
+        array (
+            'CIXW_WISHLIST\\' => 14,
+        ),
         'A' => 
         array (
             'Appsero\\' => 8,
@@ -14,6 +23,10 @@ class ComposerStaticInitbee06180dfee1e9fc609c0ebe8c58354
     );
 
     public static $prefixDirsPsr4 = array (
+        'CIXW_WISHLIST\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/v2',
+        ),
         'Appsero\\' => 
         array (
             0 => __DIR__ . '/..' . '/appsero/client/src',

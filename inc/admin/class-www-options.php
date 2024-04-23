@@ -57,6 +57,7 @@ class JVM_WW_Options {
 		add_settings_section( 'jvm-woocommerce-wishlist-settings', '', function () {}, 'jvm-woocommerce-wishlist-settings' );
 		add_settings_field( 'page_id', esc_html__( 'Wishlist Page', 'jvm-woocommerce-wishlist' ), array( $this, 'setting_page_id' ), 'jvm-woocommerce-wishlist-settings', 'jvm-woocommerce-wishlist-settings' );
 		add_settings_field( 'instructions', esc_html__( 'Instructions', 'jvm-woocommerce-wishlist' ), array( $this, 'setting_instructions' ), 'jvm-woocommerce-wishlist-settings', 'jvm-woocommerce-wishlist-settings' );
+		add_settings_field( 'upgrade', esc_html__( 'Switch to Version 2.0', 'jvm-woocommerce-wishlist' ), array( $this, 'upgrade_instructions' ), 'jvm-woocommerce-wishlist-settings', 'jvm-woocommerce-wishlist-settings' );
 
 	}
 
@@ -71,6 +72,10 @@ class JVM_WW_Options {
 		if ( isset( $input['page_id'] ) ) {
 			update_option( 'jvm_woocommerce_wishlist_page_id', intval( $input['page_id'] ) );
 			unset( $input['page_id'] );
+		}
+		if ( isset( $input['version'] ) ) {
+			update_option( 'jvm_woocommerce_wishlist_settings_version', intval( $input['version'] ) );
+			unset( $input['version'] );
 		}
 
 		return $input;
@@ -95,6 +100,7 @@ class JVM_WW_Options {
 				<?php printf( esc_html__( 'It is recommended to set your wishlist page here, so themes and plugins can access its URL with the %s function.', 'jvm-woocommerce-wishlist' ), 'jvm_get_wishlist_url()' );?>
 			</label>
 		</p>
+		
 		<?php
 }
 
@@ -107,17 +113,31 @@ class JVM_WW_Options {
 		<p>Anything you are missing in this plugin? Submit your idea <a target="_blank" href="https://app.loopedin.io/wishlist-for-woocommerce#/ideas">here</a></p>
 		<?php
 }
+	public function upgrade_instructions() {
+		$settings_version = get_option( 'jvm_woocommerce_wishlist_settings_version' );
+
+		
+	?>
+	<input type='checkbox' name='jvm_woocommerce_wishlist_settings[version]' <?php checked( $settings_version, 1 ); ?> value='1'>
+		<label style="color:red;">It is highly recommended to enable it on the staging site first, since all options that are older than version 2.0 will be removed and cannot be retrieved again.<br> Any custom hooks or filters need to be overridden due to conflict issues. <a target="_blank" href="https://app.loopedin.io/wishlist-for-woocommerce#/ideas">Learn More</a></label>
+		<?php
+}
 
 	/**
 	 * Options form
 	 */
 	public function options_form() {
+		
 		?>
 		<div class="wrap">
 			<h2><?php esc_html_e( 'Wishlist Options', 'jvm-woocommerce-wishlist' );?></h2>
 			<form action="options.php" method="post">
 				<?php settings_fields( 'jvm-woocommerce-wishlist-settings' );?>
-				<?php do_settings_sections( 'jvm-woocommerce-wishlist-settings' );?>
+				<?php do_settings_sections( 'jvm-woocommerce-wishlist-settings' );
+				if( get_option( 'jvm_woocommerce_wishlist_settings_version') == 1 ) {
+					wp_redirect( admin_url( 'admin.php?page=cixwishlist_settings' ) );
+				}
+				?>
 				<p class="submit"><input name="save" type="submit" class="button-primary" value="<?php esc_html_e( 'Save Changes', 'jvm-woocommerce-wishlist' );?>" /></p>
 			</form>
 		</div>
