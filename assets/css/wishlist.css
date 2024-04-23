@@ -69,8 +69,12 @@
 .in_wishlist .jvm_add_to_wishlist_heart{
   margin: 0;
 }
-.in_wishlist .jvm_add_to_wishlist_text_add{
+.in_wishlist .jvm_add_to_wishlist_text_add,.jvm_add_to_wishlist .jvm_add_to_wishlist_text_remove{
   display: none;
+}
+.in_wishlist .jvm_add_to_wishlist_text_remove{
+     display: inline-block;
+    margin-left: 5px;
 }
 .jvm_add_to_wishlist.btn-link{
   margin-left: 10px;

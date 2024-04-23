@@ -50,12 +50,19 @@ class Bootstrap {
 			$nonce      = sanitize_text_field( $_POST['nonce'] );
 			$product_id = sanitize_text_field( $_POST['product_id'] );
 			$show_icon  = cixww_get_option( 'product_button_icon' );
-			$data       = array(
+
+			$data = array(
 				'pid'       => $product_id,
 				'show_icon' => $show_icon,
 			);
 			Wishlist::temp_cookie();
-			Wishlist::set_transient( $product_id );
+
+			if ( cixww_get_option( 'remove_on_second_click' ) && Wishlist::wishlist_product_ids() ) {
+				Wishlist::remove_product( $product_id );
+				$data['removed'] = true;
+			} else {
+				Wishlist::set_transient( $product_id );
+			}
 
 			if ( ! wp_verify_nonce( $nonce, 'cix-wishlist-nonce' ) ) {
 				wp_die( 'oops! nonce error' );

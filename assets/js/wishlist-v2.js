@@ -8,7 +8,8 @@
             $(".jvm_add_to_wishlist").on("click", function (e) {
                 console.log('clicked');
                 // get data-product-id from the button
-                var product_id = $(this).data('product-id');
+                var product_id = $(this).data('product-id'),
+                    remove_product = $(this).data('remove');
                 e.preventDefault();
                 var wishlist_btn = $(this);
                 wishlist_btn.addClass('loading');
@@ -22,7 +23,8 @@
                     data: {
                         action: 'cix_update_wishlist',
                         product_id: product_id,
-                        nonce: cix_wishlist_args.nonce
+                        nonce: cix_wishlist_args.nonce,
+                        remove_product: remove_product,
                     },
                     success: function (res) {
                         wishlist_btn.removeClass('loading');
@@ -30,8 +32,13 @@
                         if (res.data.show_icon == 0) {
                             wishlist_btn.hide();
                         }
-                        console.log('Added');
-                        console.log(res.data.show_icon);
+                        if (res.data.show_icon == 1) {
+                            wishlist_btn.show();
+                        }
+                        if (res.data.removed) {
+                            wishlist_btn.removeClass('in_wishlist');
+                        }
+                        console.log(res.data);
 
 
 

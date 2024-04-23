@@ -135,7 +135,17 @@ class Wishlist {
 		}
 		return $cookie;
 	}
+	public static function remove_product( $product_id, $wishlist_id = null ) {
+		if ( $product_id ) {
+			$wishlist = self::wishlist_product_ids();
 
+			$wishlist   = array_diff( $wishlist, array( $product_id ) );
+			$wishlist   = array_unique( $wishlist );
+			$expiration = DAY_IN_SECONDS * 7; // 30 days
+			set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::temp_cookie(), $wishlist, $expiration );
+
+		}
+	}
 	/**
 	 * Adds or removes a product from the wishlist and display button HTML
 	 *
@@ -147,7 +157,7 @@ class Wishlist {
 		$product_id     = empty( $product_id ) ? get_the_ID() : $product_id;
 		$is_in_wishlist = ( $wishlist ) ? ( in_array( $product_id, $wishlist ) ) : false;
 		$class          = ( $is_in_wishlist ) ? 'in_wishlist ' : '';
-		$text           = ( $is_in_wishlist ) ? esc_html__( 'Wishlist', 'jvm-woocommerce-wishlist' ) : esc_html( cixww_get_option( 'product_button_text' ) );
+		$text           = ( $is_in_wishlist && cixww_get_option( 'remove_on_second_click' ) ) ? cixww_get_option( 'product_button_remove_text' ) : esc_html( cixww_get_option( 'product_button_text' ) );
 		$show_icon      = ( cixww_get_option( 'product_button_icon' ) == 1 ) ? true : false;
 		// Hook for icon HTML
 		$icon_html = ( $show_icon ) ? apply_filters( 'cix_add_to_wishlist_icon_html', '<span class="jvm_add_to_wishlist_heart"></span>' ) : '';
@@ -161,9 +171,13 @@ class Wishlist {
 		$button_class = ( cixww_get_option( 'product_button_type' ) == 'button' ) ? 'button' : 'btn-link';
 		$class       .= apply_filters( 'cix_add_to_wishlist_class', ' jvm_add_to_wishlist ' . $button_class );
 		?>
-			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>">
+			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?>>
 					<?php echo $icon_html; ?>
 				<span class="jvm_add_to_wishlist_text_add"><?php echo esc_html( cixww_get_option( 'product_button_text' ) ); ?></span>
+				<?php if ( cixww_get_option( 'remove_on_second_click' ) ) : ?>
+					
+				<span class="jvm_add_to_wishlist_text_remove"><?php echo esc_html( cixww_get_option( 'product_button_remove_text' ) ); ?></span>
+				<?php endif; ?>
 				
 			</a>
 		<?php

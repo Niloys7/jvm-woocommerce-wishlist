@@ -68,6 +68,22 @@ class Settings {
 						'class'       => 'default-wishlist-page-field',
 						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>',
 					),
+					// add switcher for Require Login
+					array(
+						'id'      => 'wishlist_require_login',
+						'type'    => 'switcher',
+						'title'   => __( 'Require Login', 'jvm-woocommerce-wishlist' ),
+						'default' => false,
+						'desc'   => __( 'Require users to be logged in to add items to the wishlist.', 'jvm-woocommerce-wishlist' ),
+					),
+					
+					array(
+						'id'      => 'remove_on_second_click',
+						'type'    => 'switcher',
+						'title'   => __( 'Remove product from Wishlist on the second click', 'jvm-woocommerce-wishlist' ),
+						'default' => false,
+						'desc'   => __( 'Remove product from Wishlist on the second click.', 'jvm-woocommerce-wishlist' ),
+					),
 
 				),
 			)
@@ -157,6 +173,13 @@ class Settings {
 						'type'    => 'text',
 						'title'   => __( 'Button Text', 'jvm-woocommerce-wishlist' ),
 						'default' => 'Add to Wishlist',
+					),
+					// add text field for Remove from Wishlist
+					array(
+						'id'      => 'product_button_remove_text',
+						'type'    => 'text',
+						'title'   => __( '"Remove from Wishlist" Text', 'jvm-woocommerce-wishlist' ),
+						'default' => 'Remove from Wishlist',
 					),
 					// view wishlist text field
 					array(
