@@ -16,7 +16,8 @@
      "autoload": {
         "files": [
             "inc/codestar-framework/codestar-framework.php",
-            "inc/core.php"
+            "inc/core.php",
+            "inc/functions.php"
         ],
         "psr-4": {
             "CIXW_WISHLIST\\": "v2/"

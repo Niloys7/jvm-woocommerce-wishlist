@@ -9,6 +9,7 @@ class ComposerStaticInitbee06180dfee1e9fc609c0ebe8c58354
     public static $files = array (
         '411365114bfd84c3e5d2e5a0b22c4c38' => __DIR__ . '/../..' . '/inc/codestar-framework/codestar-framework.php',
         'a4023d9468bba4a3353a245ddd05e517' => __DIR__ . '/../..' . '/inc/core.php',
+        '38cb64823f5b0a1f66e97249a5114d2b' => __DIR__ . '/../..' . '/inc/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (

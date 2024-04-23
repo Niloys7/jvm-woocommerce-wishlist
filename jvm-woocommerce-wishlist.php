@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Wishlist for WooCommerce
  * Description: A Simple and Lightweight Wishlist for WooCommerce
- * Version: 1.3.6
+ * Version: 2.0
  * Author: WPInteractive
  * Author URI: https://wpinteractive.com
  * Tested up to: 6.1
@@ -21,6 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 define( 'CIXWW_PLUGIN_DIR', __DIR__ );
+define( 'CIXWW_PLUGIN_VER', '2.0');
 define( 'CIXWW_PLUGIN_FILE', __FILE__ );
 define( 'CIXWW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 define( 'CIXWW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -58,7 +59,7 @@ add_action(
 				exit;
 			}
 			new \CIXW_WISHLIST\Bootstrap();
-			require_once __DIR__ . '/inc/class-v1.php';
+		//	require_once __DIR__ . '/inc/class-v1.php';
 		} else {
 			require_once __DIR__ . '/inc/class-v1.php';
 			new \CIXW_WISHLIST\Settings();

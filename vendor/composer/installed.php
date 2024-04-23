@@ -3,7 +3,7 @@
         'name' => 'codeixer/jvm-woocommerce-wishlist',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5196727597b2e2d6f676733adee0b63928ac84f4',
+        'reference' => '8fb46e95f862989ce932dc2d12674751f6090caf',
         'type' => 'woocommerce-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'codeixer/jvm-woocommerce-wishlist' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5196727597b2e2d6f676733adee0b63928ac84f4',
+            'reference' => '8fb46e95f862989ce932dc2d12674751f6090caf',
             'type' => 'woocommerce-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

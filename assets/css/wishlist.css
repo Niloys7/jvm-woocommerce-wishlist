@@ -25,7 +25,7 @@
   display: inline;
 }
 
-.jvm_add_to_wishlist.button .jvm_add_to_wishlist_text_add,
+
 .jvm_add_to_wishlist.button .jvm_add_to_wishlist_text_remove {
   display: none;
 }
@@ -62,4 +62,17 @@
  */
 .jvm-woocommerce-wishlist-container .hidden {
   display: none;
+}
+.jvm_add_to_wishlist_heart{
+  margin-right: 5px;
+}
+.in_wishlist .jvm_add_to_wishlist_heart{
+  margin: 0;
+}
+.in_wishlist .jvm_add_to_wishlist_text_add{
+  display: none;
+}
+.jvm_add_to_wishlist.btn-link{
+  margin-left: 10px;
+  margin-right: 10px;
 }

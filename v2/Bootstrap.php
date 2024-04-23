@@ -8,109 +8,74 @@ class Bootstrap {
 	public function __construct() {
 		new Wishlist();
 		new Settings();
+		add_action( 'wp_ajax_cix_update_wishlist', array( $this, 'update_wishlist' ) );
+		add_action( 'wp_ajax_nopriv_cix_update_wishlist', array( $this, 'update_wishlist' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
-	/**
-	 * Locates and includes a template file for the WooCommerce Wishlist plugin.
-	 *
-	 * @param string $path The path of the template file.
-	 * @param mixed  $params Optional parameters to be passed to the template.
-	 * @return void
-	 */
-	public static function woocommerce_wishlist_locate_template( $path, $params = null ) {
-		$located     = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ) );
-		$plugin_path = CIXWW_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $path;
 
-		if ( ! $located && file_exists( $plugin_path ) ) {
-			$final_file = $plugin_path;
-		} elseif ( $located ) {
-			$final_file = $located;
-		}
-		if ( $params ) {
-			set_query_var( 'params', $params );
-		}
+	public function enqueue_scripts() {
+		wp_enqueue_script( 'cix-wishlist-js', CIXWW_PLUGIN_URL . 'assets/js/wishlist-v2.js', array( 'jquery' ), CIXWW_PLUGIN_VER, true );
+		wp_localize_script(
+			'cix-wishlist-js',
+			'cix_wishlist_args',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'cix-wishlist-nonce' ),
 
-		include $final_file;
-	}
-	/**
-	 * Get site name slug
-	 *
-	 * @return string
-	 */
-	public static function wishlist_get_site_slug() {
-		return str_replace( '-', '_', sanitize_title_with_dashes( get_bloginfo( 'name' ) ) );
-	}
-	public static function wishlist_product_ids( $product_ids = array() ) {
-
-		$clean_product_ids = array();
-
-		foreach ( $product_ids as $product_id ) {
-
-			if ( 'publish' == get_post_status( $product_id ) ) {
-				$clean_product_ids[] = $product_id;
+			)
+		);
+		wp_enqueue_style( 'cix-wishlist', CIXWW_PLUGIN_URL . 'assets/css/wishlist.css', array(), CIXWW_PLUGIN_VER );
+		// add inline css
+		$css = cixww_get_option( 'wishlist_css' );
+		if ( cixww_get_option( 'loop_button_position' ) == 'in_thumb' ) {
+			$css .= '.archive .jvm_add_to_wishlist{position: absolute;
+				top: 5px;
+				left: 5px;
 			}
+			.archive .jvm_add_to_wishlist.btn-link{
+				top: 10px;
+			}';
 		}
-
-		return $clean_product_ids;
-	}
-	/**
-	 * Get a PHP array of products in the wishlist
-	 *
-	 * Retrieve from user data if user is logged in
-	 *
-	 * @since 2.0
-	 */
-	public static function woocommerce_wishlist_get_wishlist_product_ids() {
-
-		$product_ids = array();
-		// add wishlist slug to cookie name
-
-		$cookie_name = self::wishlist_get_site_slug() . '_wc_wishlist';
-		$cookie      = ( isset( $_COOKIE[ $cookie_name ] ) ) ? $_COOKIE[ $cookie_name ] : null;
-
-		$user_id   = get_current_user_id();
-		$user_meta = get_user_meta( $user_id, $cookie_name, true );
-
-		// If we can get the user meta we use it as starting point, always
-		if ( $user_meta ) {
-
-			$product_ids = self::wishlist_product_ids( $user_meta );
-
-			// if the user is not logged in, we use the cookie value
-		} elseif ( $cookie ) {
-			$product_ids = array_unique( json_decode( '[' . $cookie . ']' ) );
+		if ( ! empty( $css ) ) {
+			wp_add_inline_style( 'cix-wishlist', $css );
 		}
-
-		$product_ids = self::wishlist_product_ids( $product_ids ); // cleaned up
-
-		return apply_filters( 'cix_woocommerce_wishlist_product_ids', $product_ids );
 	}
-	/**
-	 * Enqeue styles and scripts
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $product_id
-	 */
-	public static function woocommerce_add_to_wishlist( $product_id = null ) {
-		$wishlist       = self::woocommerce_wishlist_get_wishlist_product_ids();
-		$product_id     = empty( $product_id ) ? get_the_ID() : $product_id;
-		$is_in_wishlist = ( $wishlist ) ? ( in_array( $product_id, $wishlist ) ) : false;
-		$class          = ( $is_in_wishlist ) ? 'in_wishlist ' : '';
-		$text           = ( $is_in_wishlist ) ? esc_html__( 'Remove from wishlist', 'jvm-woocommerce-wishlist' ) : esc_html__( 'Add to wishlist', 'jvm-woocommerce-wishlist' );
+	public function update_wishlist() {
 
-		// Hook for icon HTML
-		$icon_html = apply_filters( 'cix_add_to_wishlist_icon_html', '<span class="jvm_add_to_wishlist_heart"></span>' );
+		if ( ! DOING_AJAX ) {
+			wp_die();
+		} // Not Ajax
 
-		do_action( 'cix_woocommerce_wishlist_before_add_to_wishlist', $product_id );
+			// Check for nonce security
+			$nonce      = sanitize_text_field( $_POST['nonce'] );
+			$product_id = sanitize_text_field( $_POST['product_id'] );
+			$show_icon  = cixww_get_option( 'product_button_icon' );
+			$data       = array(
+				'pid'       => $product_id,
+				'show_icon' => $show_icon,
+			);
+			Wishlist::temp_cookie();
+			Wishlist::set_transient( $product_id );
 
-		$class .= apply_filters( 'jvm_add_to_wishlist_class', ' jvm_add_to_wishlist button' );
-		?>
-			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>">
-					<?php echo $icon_html; ?>
-				<span class="jvm_add_to_wishlist_text_add"><?php _e( 'Add to wishlist', 'jvm-woocommerce-wishlist' ); ?></span>
-				<span class="jvm_add_to_wishlist_text_remove"><?php _e( 'Remove from wishlist', 'jvm-woocommerce-wishlist' ); ?></span>
-			</a>
-		<?php
-		do_action( 'cix_woocommerce_wishlist_after_add_to_wishlist', $product_id );
+			if ( ! wp_verify_nonce( $nonce, 'cix-wishlist-nonce' ) ) {
+				wp_die( 'oops! nonce error' );
+			}
+
+			wp_send_json_success( $data );
+			wp_die(); // this is required to terminate immediately and return a proper response
+
+			if ( isset( $_POST['userId'] ) ) {
+				$product_ids = isset( $_POST['wishlistIds'] ) ? $_POST['wishlistIds'] : array();
+				$user_id     = absint( $_POST['userId'] );
+				$cookie_name = self::wishlist_get_site_slug() . '_wc_wishlist';
+
+				// Clean product ids
+				$product_ids = self::wishlist_product_ids( $product_ids );
+
+				// if user is logged in, we store the wishlist in the user meta
+				if ( $user_id == get_current_user_id() ) {
+					update_user_meta( $user_id, $cookie_name, $product_ids );
+				}
+			}
 	}
 }

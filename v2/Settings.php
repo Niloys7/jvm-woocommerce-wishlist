@@ -65,17 +65,8 @@ class Settings {
 						'default'     => 'option-2',
 						'options'     => 'pages',
 						'width'       => '250px',
-						'class' 	 => 'default-wishlist-page-field',
-						'desc' 	  => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>',
-					),
-
-					array(
-						'id'         => 'global_force_deposit',
-						'type'       => 'switcher',
-						'title'      => __( 'Force Deposit', 'deposits-for-woocommerce' ),
-						'desc'       => __( 'Only deposit payment is allow for this shop.', 'deposits-for-woocommerce' ),
-						'dependency' => array( 'global_deposits_mode', '==', 'true' ),
-
+						'class'       => 'default-wishlist-page-field',
+						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>',
 					),
 
 				),
@@ -94,6 +85,7 @@ class Settings {
 						'id'      => 'loop_button',
 						'type'    => 'switcher',
 						'title'   => __( 'Display "Add to Wishlist" in loop', 'jvm-woocommerce-wishlist' ),
+						'desc'   => __( 'Display "Add to Wishlist" button on product listings like Shop page, categories, etc.', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
 
 					),
@@ -102,9 +94,11 @@ class Settings {
 						'type'       => 'select',
 						'title'      => __( '"Add to Wishlist" Position', 'jvm-woocommerce-wishlist' ),
 						'options'    => array(
-							'woocommerce_after_single_product_summary' => 'After Summary',
-							'woocommerce_before_single_product_summary' => 'Before Summary',
-							'woocommerce_single_product_summary' => 'Inside Summary',
+							'after'    => __( 'After "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'before'   => __( 'Before "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'in_thumb' => __( 'Above Thumbnail', 'jvm-woocommerce-wishlist' ),
+							'custom'   => __( 'Custom Position / Shortcode', 'jvm-woocommerce-wishlist' ),
+
 						),
 						'default'    => 'woocommerce_after_single_product_summary',
 						'dependency' => array( 'loop_button', '==', 'true' ),
@@ -122,12 +116,14 @@ class Settings {
 						'type'       => 'select',
 						'title'      => __( '"Add to Wishlist" Position', 'jvm-woocommerce-wishlist' ),
 						'options'    => array(
-							'woocommerce_after_single_product_summary' => 'After Summary',
-							'woocommerce_before_single_product_summary' => 'Before Summary',
-							'woocommerce_single_product_summary' => 'Inside Summary',
+							'after'    => __( 'After "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'before'   => __( 'Before "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'after_summary' => __( 'After Summary', 'jvm-woocommerce-wishlist' ),
+							'custom'   => __( 'Custom Position / Shortcode', 'jvm-woocommerce-wishlist' ),
 						),
 						'default'    => 'woocommerce_after_single_product_summary',
 						'dependency' => array( 'product_button', '==', 'true' ),
+						'desc' 	 => __( 'Select the position where you want to display "Add to Wishlist" button on the single product page', 'jvm-woocommerce-wishlist' ),
 					),
 					// select field for button type
 					array(
@@ -282,15 +278,15 @@ class Settings {
 						'id'      => 'wishlist_page_table_redirect_to_cart',
 						'type'    => 'switcher',
 						'title'   => __( 'Redirect to Cart', 'jvm-woocommerce-wishlist' ),
-						'desc'   => __( 'Redirect to cart page after adding to cart from wishlist page.', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Redirect to cart page after adding to cart from wishlist page.', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
 					),
-					//  add switcher for remove if added to cart
+					// add switcher for remove if added to cart
 					array(
 						'id'      => 'wishlist_page_table_remove_if_added_to_cart',
 						'type'    => 'switcher',
 						'title'   => __( 'Remove if Added to Cart', 'jvm-woocommerce-wishlist' ),
-						'desc'   => __( 'Remove item from wishlist if added to cart.', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Remove item from wishlist if added to cart.', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
 					),
 					// add switcher for "Add All to Cart" button

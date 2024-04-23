@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <?php
-$product_ids = jvm_woocommerce_wishlist_get_wishlist_product_ids();
+$product_ids = \CIXW_WISHLIST\Wishlist::wishlist_product_ids();
 
 ?>
 <h2>version 2</h2>
@@ -31,8 +31,8 @@ if ( !empty($product_ids)) { ?>
 		</thead>
 		<tbody>
 			<?php 
-			do_action( 'wpi_woocommerce_wishlist_before_wishlist_contents' ); 
-			do_action_deprecated( 'jvm_woocommerce_wishlist_before_wishlist_contents', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_before_wishlist_contents' );
+			do_action( 'cix_woocommerce_wishlist_before_wishlist_contents' ); 
+			
 			?>
 
 			<?php
@@ -96,12 +96,13 @@ if ( !empty($product_ids)) { ?>
 				}
 			}
 
-			do_action( 'wpi_woocommerce_wishlist_after_wishlist_contents' ); 
-			do_action_deprecated( 'jvm_woocommerce_wishlist_after_wishlist_contents', [], WPI_WW_HANDOVER_VERSION, 'wpi_woocommerce_wishlist_after_wishlist_contents' );
+			do_action( 'cix_woocommerce_wishlist_after_wishlist_contents' ); 
+		
 			?>
 		</tbody>
 	</table>
 <?php 
+
 	} 
 	$class = empty($product_ids) ? '' : ' hidden';
 ?>

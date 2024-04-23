@@ -59,4 +59,4 @@ class JVM_WW_Shortcodes {
 
 } // end class
 
-return new JVM_WW_Shortcodes();
+//return new JVM_WW_Shortcodes();
