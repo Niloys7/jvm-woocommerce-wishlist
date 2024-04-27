@@ -29,15 +29,23 @@
                     success: function (res) {
                         wishlist_btn.removeClass('loading');
                         wishlist_btn.addClass('in_wishlist');
-                        if (res.data.show_icon == 0) {
-                            wishlist_btn.hide();
+
+                        // Redirect to the wishlist page
+                        if (res.data.redirect && !res.data.removed && !res.data.already_in_wishlist){
+                            window.location.href = res.data.redirect_url;
                         }
-                        if (res.data.show_icon == 1) {
-                            wishlist_btn.show();
-                        }
+                        
                         if (res.data.removed) {
                             wishlist_btn.removeClass('in_wishlist');
                         }
+
+                        if (res.data.popup){
+                            $('#wishlist-modal').modal({
+                                fadeDuration: 200
+
+                            });
+                        }
+                       
                         console.log(res.data);
 
 

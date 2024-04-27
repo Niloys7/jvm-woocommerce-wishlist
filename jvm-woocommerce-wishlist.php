@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 define( 'CIXWW_PLUGIN_DIR', __DIR__ );
-define( 'CIXWW_PLUGIN_VER', '2.0');
+define( 'CIXWW_PLUGIN_VER', '2.0' );
 define( 'CIXWW_PLUGIN_FILE', __FILE__ );
 define( 'CIXWW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 define( 'CIXWW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -47,7 +47,9 @@ function appsero_init_tracker_jvm_woocommerce_wishlist() {
 
 appsero_init_tracker_jvm_woocommerce_wishlist();
 
+register_activation_hook( __FILE__, ['\CIXW_WISHLIST\Bootstrap','activation'] );
 // plugin_loaded hook
+
 add_action(
 	'plugins_loaded',
 	function () {
@@ -59,13 +61,11 @@ add_action(
 				exit;
 			}
 			new \CIXW_WISHLIST\Bootstrap();
-		//	require_once __DIR__ . '/inc/class-v1.php';
+			// require_once __DIR__ . '/inc/class-v1.php';
 		} else {
-			require_once __DIR__ . '/inc/class-v1.php';
+			//require_once __DIR__ . '/inc/class-v1.php';
 			new \CIXW_WISHLIST\Settings();
 		}
 	},
 	0
 );
-
-// options-general.php?page=jvm-woocommerce-wishlist-settings jvm_woocommerce_wishlist_settings_version

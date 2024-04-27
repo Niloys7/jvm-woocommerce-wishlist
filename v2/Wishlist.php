@@ -5,8 +5,24 @@ class Wishlist {
 	public function __construct() {
 		add_shortcode( 'cix_woocommerce_wishlist', array( $this, 'wishlist_shortcode' ) );
 		add_shortcode( 'cix_add_to_wishlist', array( $this, 'add_to_wishlist_shortcode' ) );
+		self::temp_cookie();
 		$this->display_loop_wishlist_button();
 		$this->display_single_product_wishlist_button();
+		add_action( 'wp_footer', array( $this, 'wishlist_popup' ) );
+	}
+	public function wishlist_popup() {
+		$wishlist_popup = cixww_get_option( 'product_button_action' );
+		if ( $wishlist_popup == 'popup' || get_the_id() == cixww_get_option( 'wishlist_page' ) ) {?>
+			<!-- wishlist modal embedded in page -->
+			<div id="wishlist-modal" class="modal">
+				<div class="modal-wishlist-icon"></div>
+				<p class="modal-product-info">Product Already in Wishlist</p>
+				<div class="modal-action-btns">
+					<a href="<?php echo esc_url( get_the_permalink( cixww_get_option( 'wishlist_page' ) ) ); ?>" class="button modal-btn-view-wishlish"><?php echo esc_html( cixww_get_option( 'product_view_wishlist_text' ) ); ?></a>
+				</div>
+			</div>
+			<?php
+		}
 	}
 	/**
 	 * Display wishlist button on single product
@@ -93,14 +109,14 @@ class Wishlist {
 		$wishlist   = array_unique( $wishlist );
 
 		$expiration = DAY_IN_SECONDS * 7; // 30 days
-		set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::temp_cookie(), $wishlist, $expiration );
+		set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
 	}
 	/**
 	 * Get a PHP array of products in the wishlist
 	 */
 	public static function wishlist_product_ids( $product_ids = array(), $wishlist_id = null ) {
 
-		$clean_product_ids = ( get_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::temp_cookie() ) ) ? get_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::temp_cookie() ) : array();
+		$clean_product_ids = ( get_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
 
 		foreach ( $product_ids as $product_id ) {
 
@@ -132,7 +148,15 @@ class Wishlist {
 			$temp_id = wp_generate_password( 8, false );
 
 			setcookie( $cookie_name, $temp_id, strtotime( '+7 day', time() ), '/' );
+			return $cookie;
 		}
+	}
+	/**
+	 * Get the temporary wishlist ID from the cookie value.
+	 */
+	public static function get_wishlist_temp_id() {
+		$cookie_name = self::wishlist_get_site_slug() . '_wc_wishlist_temp';
+		$cookie      = ( isset( $_COOKIE[ $cookie_name ] ) ) ? $_COOKIE[ $cookie_name ] : null;
 		return $cookie;
 	}
 	public static function remove_product( $product_id, $wishlist_id = null ) {
@@ -142,7 +166,7 @@ class Wishlist {
 			$wishlist   = array_diff( $wishlist, array( $product_id ) );
 			$wishlist   = array_unique( $wishlist );
 			$expiration = DAY_IN_SECONDS * 7; // 30 days
-			set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::temp_cookie(), $wishlist, $expiration );
+			set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
 
 		}
 	}
@@ -162,16 +186,11 @@ class Wishlist {
 		// Hook for icon HTML
 		$icon_html = ( $show_icon ) ? apply_filters( 'cix_add_to_wishlist_icon_html', '<span class="jvm_add_to_wishlist_heart"></span>' ) : '';
 
-		if ( $is_in_wishlist && ! $show_icon ) {
-			do_action( 'cix_woocommerce_wishlist_after_add_to_wishlist', $product_id );
-			return;
-		}
-
 		do_action( 'cix_woocommerce_wishlist_before_add_to_wishlist', $product_id );
 		$button_class = ( cixww_get_option( 'product_button_type' ) == 'button' ) ? 'button' : 'btn-link';
 		$class       .= apply_filters( 'cix_add_to_wishlist_class', ' jvm_add_to_wishlist ' . $button_class );
 		?>
-			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?>>
+			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?> data-modal="#login-modal">
 					<?php echo $icon_html; ?>
 				<span class="jvm_add_to_wishlist_text_add"><?php echo esc_html( cixww_get_option( 'product_button_text' ) ); ?></span>
 				<?php if ( cixww_get_option( 'remove_on_second_click' ) ) : ?>

@@ -43,7 +43,7 @@ class Settings {
 			$prefix,
 			array(
 				'title'  => 'General Settings',
-				'icon'   => 'fas fa-cog',
+				'icon'   => 'fa fa-sliders',
 				'fields' => array(
 
 					// A text field
@@ -60,127 +60,52 @@ class Settings {
 						'type'        => 'select',
 						'title'       => __( 'Wishlist Page', 'jvm-woocommerce-wishlist' ),
 						'placeholder' => 'Select a page',
-						'chosen'      => true,
+
 						'ajax'        => true,
-						'default'     => 'option-2',
+						'default'     => 'wishlist',
 						'options'     => 'pages',
 						'width'       => '250px',
 						'class'       => 'default-wishlist-page-field',
 						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>',
 					),
 					// add switcher for Require Login
+					// array(
+					// 'id'      => 'wishlist_require_login',
+					// 'type'    => 'switcher',
+					// 'title'   => __( 'Require Login', 'jvm-woocommerce-wishlist' ),
+					// 'default' => false,
+					// 'desc'    => __( 'Require users to be logged in to add items to the wishlist.', 'jvm-woocommerce-wishlist' ),
+					// ),
+				// add select field for Action after added to wishlist
 					array(
-						'id'      => 'wishlist_require_login',
-						'type'    => 'switcher',
-						'title'   => __( 'Require Login', 'jvm-woocommerce-wishlist' ),
-						'default' => false,
-						'desc'   => __( 'Require users to be logged in to add items to the wishlist.', 'jvm-woocommerce-wishlist' ),
+						'id'      => 'product_button_action',
+						'type'    => 'select',
+						'title'   => __( 'Action after added to Wishlist', 'jvm-woocommerce-wishlist' ),
+						'options' => array(
+							'none'     => __( 'None', 'jvm-woocommerce-wishlist' ),
+							'redirect' => __( 'Redirect to Wishlist Page', 'jvm-woocommerce-wishlist' ),
+							'popup'    => __( 'Show Popup', 'jvm-woocommerce-wishlist' ),
+						),
+						'default' => 'popup',
 					),
-					
 					array(
 						'id'      => 'remove_on_second_click',
 						'type'    => 'switcher',
 						'title'   => __( 'Remove product from Wishlist on the second click', 'jvm-woocommerce-wishlist' ),
 						'default' => false,
-						'desc'   => __( 'Remove product from Wishlist on the second click.', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Remove product from Wishlist on the second click.', 'jvm-woocommerce-wishlist' ),
 					),
 
 				),
 			)
 		);
-
-		// Create a section
+		// create a popup section
 		\CSF::createSection(
 			$prefix,
 			array(
-				'title'  => __( 'Add To Wishlist Button', 'jvm-woocommerce-wishlist' ), // It will be displayed in the title bar
-				'icon'   => 'fas fa-cog',
+				'title'  => __( 'Popup', 'jvm-woocommerce-wishlist' ), // It will be displayed in the title bar
+				'icon'   => 'fa fa-sliders',
 				'fields' => array(
-					// add switcher field for loop settings
-					array(
-						'id'      => 'loop_button',
-						'type'    => 'switcher',
-						'title'   => __( 'Display "Add to Wishlist" in loop', 'jvm-woocommerce-wishlist' ),
-						'desc'   => __( 'Display "Add to Wishlist" button on product listings like Shop page, categories, etc.', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-
-					),
-					array(
-						'id'         => 'loop_button_position',
-						'type'       => 'select',
-						'title'      => __( '"Add to Wishlist" Position', 'jvm-woocommerce-wishlist' ),
-						'options'    => array(
-							'after'    => __( 'After "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
-							'before'   => __( 'Before "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
-							'in_thumb' => __( 'Above Thumbnail', 'jvm-woocommerce-wishlist' ),
-							'custom'   => __( 'Custom Position / Shortcode', 'jvm-woocommerce-wishlist' ),
-
-						),
-						'default'    => 'woocommerce_after_single_product_summary',
-						'dependency' => array( 'loop_button', '==', 'true' ),
-					),
-					array(
-						'id'      => 'product_button',
-						'type'    => 'switcher',
-						'title'   => __( 'Display "Add to Wishlist" in single product', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-
-					),
-					// select field for button position
-					array(
-						'id'         => 'product_button_position',
-						'type'       => 'select',
-						'title'      => __( '"Add to Wishlist" Position', 'jvm-woocommerce-wishlist' ),
-						'options'    => array(
-							'after'    => __( 'After "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
-							'before'   => __( 'Before "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
-							'after_summary' => __( 'After Summary', 'jvm-woocommerce-wishlist' ),
-							'custom'   => __( 'Custom Position / Shortcode', 'jvm-woocommerce-wishlist' ),
-						),
-						'default'    => 'woocommerce_after_single_product_summary',
-						'dependency' => array( 'product_button', '==', 'true' ),
-						'desc' 	 => __( 'Select the position where you want to display "Add to Wishlist" button on the single product page', 'jvm-woocommerce-wishlist' ),
-					),
-					// select field for button type
-					array(
-						'id'      => 'product_button_type',
-						'type'    => 'select',
-						'title'   => __( 'Button Type', 'jvm-woocommerce-wishlist' ),
-						'options' => array(
-							'button' => 'Button',
-							'link'   => 'Link',
-						),
-						'default' => 'button',
-					),
-					// button icon switcher
-					array(
-						'id'      => 'product_button_icon',
-						'type'    => 'switcher',
-						'title'   => __( 'Button Icon', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-					),
-					// icon color field
-					array(
-						'id'         => 'product_button_icon_color',
-						'type'       => 'color',
-						'title'      => __( 'Icon Color', 'jvm-woocommerce-wishlist' ),
-						'default'    => '#000000',
-						'dependency' => array( 'product_button_icon', '==', 'true' ),
-					),
-					// wisth button text field
-					array(
-						'id'      => 'product_button_text',
-						'type'    => 'text',
-						'title'   => __( 'Button Text', 'jvm-woocommerce-wishlist' ),
-						'default' => 'Add to Wishlist',
-					),
-					// add text field for Remove from Wishlist
-					array(
-						'id'      => 'product_button_remove_text',
-						'type'    => 'text',
-						'title'   => __( '"Remove from Wishlist" Text', 'jvm-woocommerce-wishlist' ),
-						'default' => 'Remove from Wishlist',
-					),
 					// view wishlist text field
 					array(
 						'id'      => 'product_view_wishlist_text',
@@ -209,22 +134,166 @@ class Settings {
 						'title'   => __( 'Product Removed from Wishlist Text', 'jvm-woocommerce-wishlist' ),
 						'default' => 'Product Removed from Wishlist',
 					),
-					// redirect to wishlist page switcher
+				),
+			)
+		);
+		// Create a top-tab
+		\CSF::createSection(
+			$prefix,
+			array(
+				'id'    => 'wb_tab', // Set a unique slug-like ID
+				'title' => __( 'Add To Wishlist Button', 'jvm-woocommerce-wishlist' ), // It will be displayed in the title bar
+				'icon'  => 'fas fa-heart',
+			)
+		);
+
+		// Create a listing page
+		\CSF::createSection(
+			$prefix,
+			array(
+				'parent' => 'wb_tab',
+				'title'  => __( 'Listing Page', 'jvm-woocommerce-wishlist' ), // It will be displayed in the title bar
+				'fields' => array(
+					// add switcher field for loop settings
 					array(
-						'id'      => 'product_redirect_to_wishlist',
+						'id'      => 'loop_button',
 						'type'    => 'switcher',
-						'title'   => __( 'Redirect to Wishlist Page', 'jvm-woocommerce-wishlist' ),
+						'title'   => __( 'Display "Add to Wishlist"', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Display "Add to Wishlist" button on product listings like Shop page, categories, etc.', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
+
+					),
+					array(
+						'id'         => 'loop_button_position',
+						'type'       => 'select',
+						'title'      => __( '"Add to Wishlist" Position', 'jvm-woocommerce-wishlist' ),
+						'options'    => array(
+							'after'    => __( 'After "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'before'   => __( 'Before "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'in_thumb' => __( 'Above Thumbnail', 'jvm-woocommerce-wishlist' ),
+							'custom'   => __( 'Custom Position / Shortcode', 'jvm-woocommerce-wishlist' ),
+
+						),
+						'default'    => 'woocommerce_after_single_product_summary',
+						'dependency' => array( 'loop_button', '==', 'true' ),
 					),
 					// add text field with no edit
 					array(
 						'id'         => 'product_add_to_wishlist_text',
 						'type'       => 'text',
-						'title'      => __( 'Add to Wishlist Text', 'jvm-woocommerce-wishlist' ),
-						'default'    => '[cix_add_to_wishlist product_id="%pid%"]',
+						'title'      => __( 'Shortcode', 'jvm-woocommerce-wishlist' ),
+						'default'    => '[cix_add_to_wishlist]',
 						'attributes' => array(
 							'readonly' => 'readonly',
 						),
+						'dependency' => array( 'loop_button_position', '==', 'custom' ),
+					),
+
+				),
+			)
+		);
+		// single product page
+		\CSF::createSection(
+			$prefix,
+			array(
+				'parent' => 'wb_tab', // The slug of the parent section
+				'title'  => __( 'Product Page', 'deposits-for-woocommerce' ),
+				'icon'   => '',
+				'fields' => array(
+					array(
+						'id'      => 'product_button',
+						'type'    => 'switcher',
+						'title'   => __( 'Display "Add to Wishlist"', 'jvm-woocommerce-wishlist' ),
+						'default' => true,
+						'desc'    => __( 'Display "Add to Wishlist" button on the single product page.', 'jvm-woocommerce-wishlist' ),
+
+					),
+					// select field for button position
+					array(
+						'id'         => 'product_button_position',
+						'type'       => 'select',
+						'title'      => __( '"Add to Wishlist" Position', 'jvm-woocommerce-wishlist' ),
+						'options'    => array(
+							'after'         => __( 'After "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'before'        => __( 'Before "Add to Cart" button', 'jvm-woocommerce-wishlist' ),
+							'after_summary' => __( 'After Summary', 'jvm-woocommerce-wishlist' ),
+							'custom'        => __( 'Custom Position / Shortcode', 'jvm-woocommerce-wishlist' ),
+						),
+						'default'    => 'woocommerce_after_single_product_summary',
+						'dependency' => array( 'product_button', '==', 'true' ),
+						'desc'       => __( 'Select the position where you want to display "Add to Wishlist" button on the single product page', 'jvm-woocommerce-wishlist' ),
+					),
+					// add text field with no edit
+					array(
+						'id'         => 'product_add_to_wishlist_text',
+						'type'       => 'text',
+						'title'      => __( 'Shortcode', 'jvm-woocommerce-wishlist' ),
+						'default'    => '[cix_add_to_wishlist]',
+						'attributes' => array(
+							'readonly' => 'readonly',
+						),
+						'dependency' => array( 'product_button_position', '==', 'custom' ),
+					),
+
+				),
+			)
+		);
+		// button
+		\CSF::createSection(
+			$prefix,
+			array(
+				'parent' => 'wb_tab', // The slug of the parent section
+				'title'  => __( 'Button', 'deposits-for-woocommerce' ),
+				'icon'   => '',
+				'fields' => array(
+					// select field for button type
+					array(
+						'id'      => 'product_button_type',
+						'type'    => 'select',
+						'title'   => __( 'Button Type', 'jvm-woocommerce-wishlist' ),
+						'options' => array(
+							'button' => 'Button',
+							'link'   => 'Link',
+						),
+						'default' => 'button',
+					),
+					// button icon switcher
+					array(
+						'id'      => 'product_button_icon',
+						'type'    => 'switcher',
+						'title'   => __( 'Button Icon', 'jvm-woocommerce-wishlist' ),
+						'default' => true,
+					),
+
+					array(
+						'id'      => 'product_button_txt_color',
+						'type'    => 'link_color',
+						'title'   => 'Icon & Text Color',
+						'color'   => true,
+						'hover'   => true,
+
+						'active'  => true,
+						'output'  => '.jvm_add_to_wishlist span',
+						'default' => array(
+							'color'  => '#1e73be',
+							'hover'  => '#259ded',
+							'active' => '#333',
+						),
+					),
+
+					// wisth button text field
+					array(
+						'id'      => 'product_button_text',
+						'type'    => 'text',
+						'title'   => __( 'Button Text', 'jvm-woocommerce-wishlist' ),
+						'default' => 'Add to Wishlist',
+					),
+					// add text field for Remove from Wishlist
+					array(
+						'id'      => 'product_button_remove_text',
+						'type'    => 'text',
+						'title'   => __( '"Remove from Wishlist" Text', 'jvm-woocommerce-wishlist' ),
+						'default' => 'Remove from Wishlist',
 					),
 
 				),
@@ -267,35 +336,35 @@ class Settings {
 						'title'   => __( 'Show Stock Status', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
 					),
-					// add switcher for quantity
-					array(
-						'id'      => 'wishlist_page_table_quantity',
-						'type'    => 'switcher',
-						'title'   => __( 'Show Quantity', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-					),
-					// add switcher for total price
-					array(
-						'id'      => 'wishlist_page_table_total_price',
-						'type'    => 'switcher',
-						'title'   => __( 'Show Total Price', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-					),
+					// // add switcher for quantity
+					// array(
+					// 'id'      => 'wishlist_page_table_quantity',
+					// 'type'    => 'switcher',
+					// 'title'   => __( 'Show Quantity', 'jvm-woocommerce-wishlist' ),
+					// 'default' => true,
+					// ),
+					// // add switcher for total price
+					// array(
+					// 'id'      => 'wishlist_page_table_total_price',
+					// 'type'    => 'switcher',
+					// 'title'   => __( 'Show Total Price', 'jvm-woocommerce-wishlist' ),
+					// 'default' => true,
+					// ),
 
-					// add switcher for added date
-					array(
-						'id'      => 'wishlist_page_table_added_date',
-						'type'    => 'switcher',
-						'title'   => __( 'Show Added Date', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-					),
-					// add switcher for show checkbox
-					array(
-						'id'      => 'wishlist_page_table_checkbox',
-						'type'    => 'switcher',
-						'title'   => __( 'Show Checkbox', 'jvm-woocommerce-wishlist' ),
-						'default' => true,
-					),
+					// // add switcher for added date
+					// array(
+					// 'id'      => 'wishlist_page_table_added_date',
+					// 'type'    => 'switcher',
+					// 'title'   => __( 'Show Added Date', 'jvm-woocommerce-wishlist' ),
+					// 'default' => true,
+					// ),
+					// // add switcher for show checkbox
+					// array(
+					// 'id'      => 'wishlist_page_table_checkbox',
+					// 'type'    => 'switcher',
+					// 'title'   => __( 'Show Checkbox', 'jvm-woocommerce-wishlist' ),
+					// 'default' => true,
+					// ),
 					// add switcher for redirect to cart
 					array(
 						'id'      => 'wishlist_page_table_redirect_to_cart',
@@ -331,6 +400,7 @@ class Settings {
 				),
 			)
 		);
+
 		// add section for Advanced Settings
 		\CSF::createSection(
 			$prefix,
@@ -357,26 +427,47 @@ class Settings {
 
 		// TODO: move to pro version
 		// License key
+		// \CSF::createSection(
+		// $prefix,
+		// array(
+		// 'title'  => __( 'License', 'deposits-for-woocommerce' ),
+		// 'icon'   => 'fas fa-key',
+		// 'fields' => array(
+
+		// A Callback Field Example
+		// array(
+		// 'id'          => 'license-key',
+		// 'type'        => 'text',
+		// 'title'       => __( 'Purchase Code', 'deposits-for-woocommerce' ),
+		// 'placeholder' => __( 'Enter Purchase Code', 'deposits-for-woocommerce' ),
+		// 'desc'        => __( 'Enter your license key here, to activate <strong>Bayna - Deposits for WooCommerce PRO</strong>, and get automatic updates and premium support. <a href="' . apply_filters( 'bayna_learn_more', 'https://www.codeixer.com/docs/where-is-my-purchase-code/' ) . '" target="_blank">Learn More</a>', 'deposits-for-woocommerce' ),
+		// ),
+		// array(
+		// 'type'     => 'callback',
+		// 'function' => 'wcbaynaLicense',
+		// ),
+
+		// ),
+		// )
+		// );
+		// add backups section
 		\CSF::createSection(
 			$prefix,
 			array(
-				'title'  => __( 'License', 'deposits-for-woocommerce' ),
-				'icon'   => 'fas fa-key',
+				'title'  => 'Backups',
+				'icon'   => 'fas fa-cog',
 				'fields' => array(
-
-					// A Callback Field Example
+					// add backup field
 					array(
-						'id'          => 'license-key',
-						'type'        => 'text',
-						'title'       => __( 'Purchase Code', 'deposits-for-woocommerce' ),
-						'placeholder' => __( 'Enter Purchase Code', 'deposits-for-woocommerce' ),
-						'desc'        => __( 'Enter your license key here, to activate <strong>Bayna - Deposits for WooCommerce PRO</strong>, and get automatic updates and premium support. <a href="' . apply_filters( 'bayna_learn_more', 'https://www.codeixer.com/docs/where-is-my-purchase-code/' ) . '" target="_blank">Learn More</a>', 'deposits-for-woocommerce' ),
+						'id'          => 'backup',
+						'type'        => 'backup',
+						'title'       => 'Backup Settings',
+						'desc'        => 'Backup your settings',
+						'backup'      => 'cixwishlist_settings',
+						'backup_args' => array(
+							'prefix' => 'cixwishlist_settings',
+						),
 					),
-					array(
-						'type'     => 'callback',
-						'function' => 'wcbaynaLicense',
-					),
-
 				),
 			)
 		);

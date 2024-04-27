@@ -6,7 +6,7 @@
   font-style: normal;
 }
 
-.jvm_add_to_wishlist_heart {
+.jvm_add_to_wishlist_heart,.modal-wishlist-icon{
   font-family: 'WooCommerce-Wishlist';
   speak: none;
   font-style: normal;
@@ -18,17 +18,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/**
- * Button mode
- */
-.jvm_add_to_wishlist.button .jvm_add_to_wishlist_heart {
-  display: inline;
-}
-
-
-.jvm_add_to_wishlist.button .jvm_add_to_wishlist_text_remove {
-  display: none;
-}
 
 .jvm_add_to_wishlist .jvm_add_to_wishlist_heart:before {
   content: "\e900";
@@ -37,39 +26,20 @@
   content: "\e901";
 }
 
+.modal-wishlist-icon:before {
+  content: "\e901";
+}
 /**
- * Text mode
+ * Wishlist button
  */
-.jvm_add_to_wishlist.text .jvm_add_to_wishlist_heart {
+.jvm_add_to_wishlist .jvm_add_to_wishlist_text_remove {
   display: none;
-}
-.jvm_add_to_wishlist.text .jvm_add_to_wishlist_text_add {
-  display: inline;
-}
-.jvm_add_to_wishlist.text .jvm_add_to_wishlist_text_remove {
-   display: none;
 }
 
-.jvm_add_to_wishlist.text.in_wishlist .jvm_add_to_wishlist_text_add {
-  display: none;
-}
-.jvm_add_to_wishlist.text.in_wishlist .jvm_add_to_wishlist_text_remove {
-  display: inline;
-}
-
-/**
- * Wishlist page
- */
-.jvm-woocommerce-wishlist-container .hidden {
-  display: none;
-}
-.jvm_add_to_wishlist_heart{
-  margin-right: 5px;
-}
 .in_wishlist .jvm_add_to_wishlist_heart{
   margin: 0;
 }
-.in_wishlist .jvm_add_to_wishlist_text_add,.jvm_add_to_wishlist .jvm_add_to_wishlist_text_remove{
+.in_wishlist .jvm_add_to_wishlist_text_add{
   display: none;
 }
 .in_wishlist .jvm_add_to_wishlist_text_remove{
@@ -79,4 +49,36 @@
 .jvm_add_to_wishlist.btn-link{
   margin-left: 10px;
   margin-right: 10px;
+}
+/**
+ * Wishlist page
+ */
+.jvm-woocommerce-wishlist-container tfoot > tr > td{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.jvm-woocommerce-wishlist-container .hidden {
+  display: none;
+}
+/**
+ * Wishlist modal
+ */
+.modal-wishlist-icon {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 60px;
+    color: deeppink;
+}
+p.modal-product-info {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    color: #333;
+    font-size: 18px;
+}
+.modal-action-btns {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
 }
