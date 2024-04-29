@@ -8,19 +8,13 @@ class Wishlist {
 		self::temp_cookie();
 		$this->display_loop_wishlist_button();
 		$this->display_single_product_wishlist_button();
-		add_action( 'wp_footer', array( $this, 'wishlist_popup' ) );
+		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
 	}
-	public function wishlist_popup() {
+	public function wishlist_popup_html() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
 		if ( $wishlist_popup == 'popup' || get_the_id() == cixww_get_option( 'wishlist_page' ) ) {?>
 			<!-- wishlist modal embedded in page -->
-			<div id="wishlist-modal" class="modal">
-				<div class="modal-wishlist-icon"></div>
-				<p class="modal-product-info">Product Already in Wishlist</p>
-				<div class="modal-action-btns">
-					<a href="<?php echo esc_url( get_the_permalink( cixww_get_option( 'wishlist_page' ) ) ); ?>" class="button modal-btn-view-wishlish"><?php echo esc_html( cixww_get_option( 'product_view_wishlist_text' ) ); ?></a>
-				</div>
-			</div>
+			<div id="wishlist-modal" class="modal"></div>
 			<?php
 		}
 	}
@@ -74,23 +68,34 @@ class Wishlist {
 		return ob_get_clean();
 	}
 	/**
+	 * Render wishlist popup for added item
+	 */
+	public static function wishlist_popup( $args = array() ) {
+
+		
+		ob_start();
+
+		self::woocommerce_wishlist_locate_template( 'wishlist-popup.php', $args );
+
+		return ob_get_clean();
+	}
+
+
+	/**
 	 * Locates and includes a template file for the WooCommerce Wishlist plugin.
 	 *
 	 * @param string $path The path of the template file.
 	 * @param mixed  $params Optional parameters to be passed to the template.
 	 * @return void
 	 */
-	public static function woocommerce_wishlist_locate_template( $path, $params = null ) {
-		$located     = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ) );
+	public static function woocommerce_wishlist_locate_template( $path, $args = array() ) {
+		$located     = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ), true, true, $args );
 		$plugin_path = CIXWW_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $path;
 
 		if ( ! $located && file_exists( $plugin_path ) ) {
 			$final_file = $plugin_path;
 		} elseif ( $located ) {
 			$final_file = $located;
-		}
-		if ( $params ) {
-			set_query_var( 'params', $params );
 		}
 
 		include $final_file;
@@ -193,9 +198,13 @@ class Wishlist {
 			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?> data-modal="#login-modal">
 					<?php echo $icon_html; ?>
 				<span class="jvm_add_to_wishlist_text_add"><?php echo esc_html( cixww_get_option( 'product_button_text' ) ); ?></span>
+
 				<?php if ( cixww_get_option( 'remove_on_second_click' ) ) : ?>
-					
 				<span class="jvm_add_to_wishlist_text_remove"><?php echo esc_html( cixww_get_option( 'product_button_remove_text' ) ); ?></span>
+				<?php endif; ?>
+
+				<?php if ( cixww_get_option( 'product_button_already_wishlist_text' ) && !cixww_get_option( 'remove_on_second_click' ) ) : ?>
+				<span class="jvm_add_to_wishlist_text_already_in"><?php echo esc_html( cixww_get_option( 'product_button_already_wishlist_text' ) ); ?></span>
 				<?php endif; ?>
 				
 			</a>

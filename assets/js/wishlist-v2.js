@@ -29,6 +29,7 @@
                     success: function (res) {
                         wishlist_btn.removeClass('loading');
                         wishlist_btn.addClass('in_wishlist');
+                        wishlist_btn.addClass('wishlist_added');
 
                         // Redirect to the wishlist page
                         if (res.data.redirect && !res.data.removed && !res.data.already_in_wishlist){
@@ -40,6 +41,8 @@
                         }
 
                         if (res.data.popup){
+                            $('#wishlist-modal').html(res.data.template);
+                            console.log(res.data.template);
                             $('#wishlist-modal').modal({
                                 fadeDuration: 200
 

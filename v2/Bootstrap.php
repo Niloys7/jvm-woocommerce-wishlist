@@ -11,8 +11,24 @@ class Bootstrap {
 		add_action( 'wp_ajax_cix_update_wishlist', array( $this, 'update_wishlist' ) );
 		add_action( 'wp_ajax_nopriv_cix_update_wishlist', array( $this, 'update_wishlist' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_filter( 'display_post_states', array( $this, 'wishlist_page_state' ), 10, 2 );
 	}
-
+	/**
+	 * Adds the "Wishlist Page" state to the post states array.
+	 *
+	 * This function is used to modify the post states array by adding the "Wishlist Page" state
+	 * if the current post ID matches the wishlist page ID set in the plugin options.
+	 *
+	 * @param array   $states The array of post states.
+	 * @param WP_Post $post   The current post object.
+	 * @return array The modified array of post states.
+	 */
+	public function wishlist_page_state( $states, $post ) {
+		if ( $post->ID == cixww_get_option( 'wishlist_page' ) ) {
+			$states[] = __( 'Wishlist Page', 'jvm-woocommerce-wishlist' );
+		}
+		return $states;
+	}
 	public function enqueue_scripts() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
 		$js_deps        = array( 'jquery' );
@@ -76,10 +92,11 @@ class Bootstrap {
 			$after_added_action = cixww_get_option( 'product_button_action' );
 
 			$data = array(
-				'pid'                 => $product_id,
+				'product_id'          => $product_id,
 				'show_icon'           => $show_icon,
 				'already_in_wishlist' => in_array( $product_id, Wishlist::wishlist_product_ids() ),
 			);
+
 			if ( $after_added_action == 'redirect' ) {
 				$data['redirect']     = true;
 				$data['redirect_url'] = get_the_permalink( cixww_get_option( 'wishlist_page' ) );
@@ -90,12 +107,21 @@ class Bootstrap {
 			if ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, Wishlist::wishlist_product_ids() ) ) {
 				Wishlist::remove_product( $product_id );
 				$data['removed'] = true;
+				unset( $data['already_in_wishlist'] );
+				$data['template'] = Wishlist::wishlist_popup( $data );
+			} elseif ( in_array( $product_id, Wishlist::wishlist_product_ids() ) ) {
+
+				$data['template'] = Wishlist::wishlist_popup( $data );
+
 			} else {
 				Wishlist::set_transient( $product_id );
+				$data['added']    = true;
+				$data['template'] = Wishlist::wishlist_popup( $data );
+
 			}
 
 			if ( ! wp_verify_nonce( $nonce, 'cix-wishlist-nonce' ) ) {
-				wp_die( 'oops! nonce error' );
+				wp_die( 'Oops! nonce error' );
 			}
 
 			wp_send_json_success( $data );

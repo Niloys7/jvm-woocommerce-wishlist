@@ -295,6 +295,13 @@ class Settings {
 						'title'   => __( '"Remove from Wishlist" Text', 'jvm-woocommerce-wishlist' ),
 						'default' => 'Remove from Wishlist',
 					),
+					array(
+						'id'      => 'product_button_already_wishlist_text',
+						'type'    => 'text',
+						'title'   => __( '"Already in wishlist" Text', 'jvm-woocommerce-wishlist' ),
+						'default' => 'Already in Wishlist',
+					),
+
 
 				),
 			)

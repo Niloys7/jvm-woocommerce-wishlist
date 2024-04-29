@@ -19,7 +19,8 @@
 }
 
 
-.jvm_add_to_wishlist .jvm_add_to_wishlist_heart:before {
+.jvm_add_to_wishlist .jvm_add_to_wishlist_heart:before,
+.not.modal-wishlist-icon:before {
   content: "\e900";
 }
 .jvm_add_to_wishlist.in_wishlist .jvm_add_to_wishlist_heart:before {
@@ -32,7 +33,7 @@
 /**
  * Wishlist button
  */
-.jvm_add_to_wishlist .jvm_add_to_wishlist_text_remove {
+.jvm_add_to_wishlist .jvm_add_to_wishlist_text_remove,.jvm_add_to_wishlist_text_already_in,body .wishlist_added .jvm_add_to_wishlist_text_already_in {
   display: none;
 }
 
@@ -42,7 +43,8 @@
 .in_wishlist .jvm_add_to_wishlist_text_add{
   display: none;
 }
-.in_wishlist .jvm_add_to_wishlist_text_remove{
+.in_wishlist .jvm_add_to_wishlist_text_remove,
+.in_wishlist .jvm_add_to_wishlist_text_already_in{
      display: inline-block;
     margin-left: 5px;
 }
@@ -59,6 +61,9 @@
 }
 .jvm-woocommerce-wishlist-container .hidden {
   display: none;
+}
+.www-remove:before {
+    content: "\f2ed" !important;
 }
 /**
  * Wishlist modal
