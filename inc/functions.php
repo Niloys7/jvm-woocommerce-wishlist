@@ -1,4 +1,6 @@
 <?php
+
+use CIXW_WISHLIST\Helper;
 /**
  * Get the value of a settings field
  *
@@ -11,3 +13,4 @@ function cixww_get_option( $option = '', $default = '', $section = 'cixwishlist_
 	$options = get_option( $section );
 	return ( isset( $options[ $option ] ) ) ? $options[ $option ] : $default;
 }
+

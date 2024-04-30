@@ -9,6 +9,7 @@ class Wishlist {
 		$this->display_loop_wishlist_button();
 		$this->display_single_product_wishlist_button();
 		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
+		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
 	}
 	public function wishlist_popup_html() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
@@ -60,11 +61,8 @@ class Wishlist {
 
 		ob_start();
 		do_action( 'cix_woocommerce_wishlist_before_wishlist' );
-
 		self::woocommerce_wishlist_locate_template( 'wishlist-v2.php' );
-
 		do_action( 'cix_woocommerce_wishlist_after_wishlist' );
-
 		return ob_get_clean();
 	}
 	/**
@@ -72,11 +70,17 @@ class Wishlist {
 	 */
 	public static function wishlist_popup( $args = array() ) {
 
-		
 		ob_start();
-
 		self::woocommerce_wishlist_locate_template( 'wishlist-popup.php', $args );
+		return ob_get_clean();
+	}
+	/**
+	 * Render wishlist loop items
+	 */
+	public static function wishlist_loop_items( $args = array() ) {
 
+		ob_start();
+		self::woocommerce_wishlist_locate_template( 'wishlist-loop-item.php', $args );
 		return ob_get_clean();
 	}
 
@@ -100,28 +104,21 @@ class Wishlist {
 
 		include $final_file;
 	}
-	/**
-	 * Get site name slug
-	 *
-	 * @return string
-	 */
-	public static function wishlist_get_site_slug() {
-		return str_replace( '-', '_', sanitize_title_with_dashes( get_bloginfo( 'name' ) ) );
-	}
+
 	public static function set_transient( $product_id ) {
 		$wishlist   = self::wishlist_product_ids();
 		$wishlist[] = $product_id;
 		$wishlist   = array_unique( $wishlist );
 
-		$expiration = DAY_IN_SECONDS * 7; // 30 days
-		set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
+		$expiration = DAY_IN_SECONDS * cixww_get_option( 'guest_wishlist_delete', 30 ); // 30 days
+		set_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
 	}
 	/**
 	 * Get a PHP array of products in the wishlist
 	 */
 	public static function wishlist_product_ids( $product_ids = array(), $wishlist_id = null ) {
 
-		$clean_product_ids = ( get_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
+		$clean_product_ids = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
 
 		foreach ( $product_ids as $product_id ) {
 
@@ -146,7 +143,7 @@ class Wishlist {
 	public static function temp_cookie() {
 
 		// add wishlist slug to cookie name
-		$cookie_name = self::wishlist_get_site_slug() . '_wc_wishlist_temp';
+		$cookie_name = 'cix_wc_wishlist_temp';
 		$cookie      = ( isset( $_COOKIE[ $cookie_name ] ) ) ? $_COOKIE[ $cookie_name ] : null;
 
 		if ( ! $cookie ) {
@@ -160,21 +157,30 @@ class Wishlist {
 	 * Get the temporary wishlist ID from the cookie value.
 	 */
 	public static function get_wishlist_temp_id() {
-		$cookie_name = self::wishlist_get_site_slug() . '_wc_wishlist_temp';
+		$cookie_name = 'cix_wc_wishlist_temp';
 		$cookie      = ( isset( $_COOKIE[ $cookie_name ] ) ) ? $_COOKIE[ $cookie_name ] : null;
 		return $cookie;
 	}
+
+	/**
+	 * Removes a product from the wishlist.
+	 *
+	 * @param int      $product_id   The ID of the product to be removed.
+	 * @param int|null $wishlist_id  The ID of the wishlist. If null, the default wishlist is used.
+	 * @return void
+	 */
 	public static function remove_product( $product_id, $wishlist_id = null ) {
 		if ( $product_id ) {
 			$wishlist = self::wishlist_product_ids();
 
 			$wishlist   = array_diff( $wishlist, array( $product_id ) );
 			$wishlist   = array_unique( $wishlist );
-			$expiration = DAY_IN_SECONDS * 7; // 30 days
-			set_transient( self::wishlist_get_site_slug() . '_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
+			$expiration = DAY_IN_SECONDS * cixww_get_option( 'guest_wishlist_delete', 30 ); // 30 days
+			set_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
 
 		}
 	}
+	
 	/**
 	 * Adds or removes a product from the wishlist and display button HTML
 	 *
@@ -203,12 +209,32 @@ class Wishlist {
 				<span class="jvm_add_to_wishlist_text_remove"><?php echo esc_html( cixww_get_option( 'product_button_remove_text' ) ); ?></span>
 				<?php endif; ?>
 
-				<?php if ( cixww_get_option( 'product_button_already_wishlist_text' ) && !cixww_get_option( 'remove_on_second_click' ) ) : ?>
+				<?php if ( cixww_get_option( 'product_button_already_wishlist_text' ) && ! cixww_get_option( 'remove_on_second_click' ) ) : ?>
 				<span class="jvm_add_to_wishlist_text_already_in"><?php echo esc_html( cixww_get_option( 'product_button_already_wishlist_text' ) ); ?></span>
 				<?php endif; ?>
 				
 			</a>
 		<?php
 		do_action( 'cix_woocommerce_wishlist_after_add_to_wishlist', $product_id );
+	}
+	public function replace_info( $param_list, $post_id ) {
+
+		$param_list['{guest_session_in_days}'] = Helper::get_transient_expiration( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() );
+		$param_list['{product_name}']          = get_the_title( $post_id );
+		$param_list['{view_cart_url}']                 = '<a class="ciww-cart-link" href="' . wc_get_cart_url() . '">' . __( 'View Cart', 'jvm-woocommerce-wishlist' ) . '</a>';
+
+		return $param_list;
+	}
+	public static function already_in_wishlist_text( $product_id ) {
+
+		return Helper::replace_text( cixww_get_option( 'product_already_in_wishlist_text' ), '{product_name}', $product_id );
+	}
+	public static function added_to_wishlist_text( $product_id ) {
+
+		return Helper::replace_text( cixww_get_option( 'product_added_to_wishlist_text' ), '{product_name}', $product_id );
+	}
+	public static function removed_from_wishlist_text( $product_id ) {
+
+		return Helper::replace_text( cixww_get_option( 'product_removed_from_wishlist_text' ), '{product_name}', $product_id );
 	}
 }

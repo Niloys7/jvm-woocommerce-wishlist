@@ -14,7 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_ids = \CIXW_WISHLIST\Wishlist::wishlist_product_ids();
 
 ?>
+
 <?php echo ( cixww_get_option( 'wishlist_name' ) ) ? '<h2>' . esc_html( cixww_get_option( 'wishlist_name' ) ) . '</h2>' : ''; ?>
+<div id="cixwishlist-notice" class="cixwishlist-notice"></div>
 <div class="jvm-woocommerce-wishlist-container woocommerce-cart-form">
 <?php
 if ( ! empty( $product_ids ) ) {
@@ -50,63 +52,8 @@ if ( ! empty( $product_ids ) ) {
 				$product = wc_get_product( $product_id );
 
 				if ( $product && $product->exists() ) {
-					$permalink = get_permalink( $product_id );
-					?>
-					<tr class="jvm-woocommerce-wishlist-product">
-
-						<td class="product-remove">
-							<a href="#"
-							class="remove www-remove"
-							title="<?php esc_html_e( 'Remove this item', 'jvm-woocommerce-wishlist' ); ?>"
-							data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>"
-							data-product-id="<?php echo absint( $product_id ); ?>">
-								&times;
-							</a>
-						</td>
-
-						<td class="product-thumbnail">
-							<a href="<?php echo esc_url( $permalink ); ?>">
-								<?php echo $product->get_image(); ?>
-							</a>
-						</td>
-
-						<td class="product-name" data-title="<?php esc_html_e( 'Product', 'jvm-woocommerce-wishlist' ); ?>">
-							<a href="<?php echo esc_url( $permalink ); ?>">
-								<?php echo get_the_title( $product_id ); ?>
-							</a>
-						</td>
-						<?php if ( cixww_get_option( 'wishlist_page_table_unit_price' ) ) : ?>
-							<td class="product-price" data-title="<?php esc_html_e( 'Price', 'jvm-woocommerce-wishlist' ); ?>">
-								
-									<?php
-									if ( $product->get_price() != '0' ) {
-										echo wp_kses_post( $product->get_price_html() );
-									}
-									?>
-								
-							</td>
-						<?php endif; ?>
-						<?php if ( cixww_get_option( 'wishlist_page_table_stock_status' ) ) : ?>
-						<td class="product-stock-status">
-							<?php
-							$availability = $product->get_availability();
-							$stock_status = $availability['class'];
-
-							if ( $stock_status == 'out-of-stock' ) {
-								$stock_status = 'Out';
-								echo '<span class="wishlist-out-of-stock">' . esc_html__( 'Out of Stock', 'jvm-woocommerce-wishlist' ) . '</span>';
-							} else {
-								$stock_status = 'In';
-								echo '<span class="wishlist-in-stock">' . esc_html__( 'In Stock', 'jvm-woocommerce-wishlist' ) . '</span>';
-							}
-							?>
-						</td>
-						<?php endif; ?>
-						
-						<td class="product-add-to-cart">
-							<button class="button cixww-button" name="cixww-add-to-cart" value="<?php echo absint( $product_id ); ?>" title="Add to Cart"><?php echo esc_html( cixww_get_option( 'wishlist_page_table_add_to_cart_text' ) ); ?></button>
-					</tr>
-					<?php
+					
+				\CIXW_WISHLIST\Wishlist::woocommerce_wishlist_locate_template( 'wishlist-loop-item.php', array( 'product_id' => $product_id));
 				}
 			}
 
@@ -120,7 +67,7 @@ if ( ! empty( $product_ids ) ) {
 			<tr>
 				<td colspan="6">
 					
-					<a href="#" class="button cixww-wishlist-cart"><?php echo esc_html( cixww_get_option( 'table_add_all_to_cart_text' ) ); ?></a>
+					<a href="#" class="button cixww-wishlist-all-cart" data-cart-all="true" ><?php echo esc_html( cixww_get_option( 'table_add_all_to_cart_text' ) ); ?></a>
 					
 				</td>
 			</tr>

@@ -4,18 +4,17 @@
     var cix_wishlist = {
 
 
-        add_to_wishlist: function () {
-            $(".jvm_add_to_wishlist").on("click", function (e) {
+        add_to_wishlist: function (is_wishlist_page = false) {
+            $(".jvm_add_to_wishlist, .wishlist-undo, .cixww-wishlist-all-cart").on("click", function (e) {
                 console.log('clicked');
                 // get data-product-id from the button
                 var product_id = $(this).data('product-id'),
-                    remove_product = $(this).data('remove');
+                    remove_product = $(this).data('remove'),
+                    cart_all = $(this).data('cart-all');
                 e.preventDefault();
                 var wishlist_btn = $(this);
                 wishlist_btn.addClass('loading');
-                var child_res_form = jQuery("#registration-fee-form").serializeArray();
-                // console.log(child_res_form);
-                // console.log(camp_addon_price);
+
                 $.ajax({
                     url: cix_wishlist_args.ajax_url,
                     type: 'post',
@@ -25,22 +24,34 @@
                         product_id: product_id,
                         nonce: cix_wishlist_args.nonce,
                         remove_product: remove_product,
+                        cart_all: cart_all
                     },
                     success: function (res) {
+
+                        if (is_wishlist_page) {
+                            console.log(res.data);
+                            $(document).find('.jvm-woocommerce-wishlist-table tbody').append(res.data.loop_item);
+
+                            return;
+                        }
                         wishlist_btn.removeClass('loading');
                         wishlist_btn.addClass('in_wishlist');
-                        wishlist_btn.addClass('wishlist_added');
+
+                        if (!wishlist_btn.hasClass('in_wishlist')) {
+                            wishlist_btn.addClass('wishlist_added');
+                        }
+
 
                         // Redirect to the wishlist page
-                        if (res.data.redirect && !res.data.removed && !res.data.already_in_wishlist){
+                        if (res.data.redirect && !res.data.removed && !res.data.already_in_wishlist) {
                             window.location.href = res.data.redirect_url;
                         }
-                        
+
                         if (res.data.removed) {
                             wishlist_btn.removeClass('in_wishlist');
                         }
 
-                        if (res.data.popup){
+                        if (res.data.popup) {
                             $('#wishlist-modal').html(res.data.template);
                             console.log(res.data.template);
                             $('#wishlist-modal').modal({
@@ -48,10 +59,8 @@
 
                             });
                         }
-                       
+
                         console.log(res.data);
-
-
 
                     },
                     error: function () {
@@ -63,9 +72,140 @@
 
 
         },
+        add_to_cart: function () {
+            $(".cixww-add-to-cart").on("click", function (e) {
+                console.log('clicked');
+                var product_id = $(this).val();
+                console.log(product_id);
+                e.preventDefault();
+                var wishlist_btn = $(this);
+                wishlist_btn.addClass('loading');
+
+                $.ajax({
+                    url: cix_wishlist_args.ajax_url,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        action: 'cix_wishlist_add_to_cart',
+                        product_id: product_id,
+                        nonce: cix_wishlist_args.nonce,
+                    },
+                    success: function (res) {
+                        wishlist_btn.removeClass('loading');
+
+                        if (res.data.cart_url) {
+                            window.location.href = res.data.cart_url;
+                        } {
+                            $(document).find('#cixwishlist-notice').empty();
+                            $(document).find('#cixwishlist-notice').append(res.data.add_to_cart_notice).addClass('wishlist-info');
+                        }
+                        if (res.data.removed) {
+                            // find closet .jvm-woocommerce-wishlist-product and remove it
+                            wishlist_btn.closest('.jvm-woocommerce-wishlist-product').fadeOut();
+                        }
+
+                        console.log(res.data.cart_url);
+
+                    },
+                    error: function () {
+                        console.log('Ajax Error: cix_wishlist_add_to_cart ');
+                    }
+                });
+
+            });
+
+
+        },
+        remove_product: function () {
+            $(".www-remove").on("click", function (e) {
+                e.preventDefault();
+                console.log('clicked');
+                // get data-product-id from the button
+                var product_id = $(this).data('product-id');
+
+                console.log(product_id);
+
+                var rm_btn = $(this);
+
+                $.ajax({
+                    url: cix_wishlist_args.ajax_url,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        action: 'cix_remove_product',
+                        product_id: product_id,
+                        nonce: cix_wishlist_args.nonce,
+                    },
+                    success: function (res) {
+
+
+                        if (res.data.remove_notice) {
+                            rm_btn.closest('.jvm-woocommerce-wishlist-product').fadeOut();
+                            $(document).find('#cixwishlist-notice').empty();
+                            $(document).find('#cixwishlist-notice').append(res.data.remove_notice).addClass('wishlist-danger');
+                        }
+
+                        cix_wishlist.add_to_wishlist(true);
+                    },
+                    error: function () {
+                        console.log('Ajax Error: remove_product ');
+                    }
+                });
+
+            });
+
+
+        },
+        add_to_cart: function () {
+            $(".cixww-add-to-cart").on("click", function (e) {
+                console.log('clicked');
+                var product_id = $(this).val();
+                console.log(product_id);
+                e.preventDefault();
+                var wishlist_btn = $(this);
+                wishlist_btn.addClass('loading');
+
+                $.ajax({
+                    url: cix_wishlist_args.ajax_url,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        action: 'cix_wishlist_add_to_cart',
+                        product_id: product_id,
+                        nonce: cix_wishlist_args.nonce,
+                    },
+                    success: function (res) {
+                        wishlist_btn.removeClass('loading');
+
+                        if (res.data.cart_url) {
+                            window.location.href = res.data.cart_url;
+                        } {
+                            $(document).find('#cixwishlist-notice').empty();
+                            $(document).find('#cixwishlist-notice').append(res.data.add_to_cart_notice).addClass('wishlist-info');
+                        }
+                        if (res.data.removed) {
+                            // find closet .jvm-woocommerce-wishlist-product and remove it
+                            wishlist_btn.closest('.jvm-woocommerce-wishlist-product').fadeOut();
+                        }
+
+                        console.log(res.data.cart_url);
+
+                    },
+                    error: function () {
+                        console.log('Ajax Error: cix_wishlist_add_to_cart ');
+                    }
+                });
+
+            });
+
+
+        },
 
         misc: function () {
+            if (!cix_wishlist_args.logged_in && cix_wishlist_args.wishlist_count > 0) {
 
+                $(document).find('#cixwishlist-notice').append(cix_wishlist_args.guest_notice).addClass('wishlist-danger');
+            }
 
 
         },
@@ -75,6 +215,9 @@
     $(document).ready(function () {
 
         cix_wishlist.add_to_wishlist();
+        cix_wishlist.add_to_cart();
+        cix_wishlist.remove_product();
+        cix_wishlist.misc();
 
     });
 

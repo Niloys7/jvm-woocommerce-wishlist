@@ -17,8 +17,35 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
+.cixwishlist-notice {
+    border: 1px solid transparent;
+    padding: .75rem 1.25rem;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+.cixwishlist-notice a.ciww-cart-link {
+  float: right;
+}
+.wishlist-danger {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+.wishlist-info {
+        color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
+}
+.wishlist-info a.ciww-cart-link {
+   
+    font-weight: 600;
+    color: #055160;
+}
+.wishlist-danger a.ciww-cart-link {
+   
+    font-weight: 600;
+    color: #842029 !important;
+}
 .jvm_add_to_wishlist .jvm_add_to_wishlist_heart:before,
 .not.modal-wishlist-icon:before {
   content: "\e900";

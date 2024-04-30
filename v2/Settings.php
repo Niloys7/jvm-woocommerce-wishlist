@@ -66,7 +66,7 @@ class Settings {
 						'options'     => 'pages',
 						'width'       => '250px',
 						'class'       => 'default-wishlist-page-field',
-						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>',
+						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>The page must contain the <code>[cix_woocommerce_wishlist]</code> shortcode.',
 					),
 					// add switcher for Require Login
 					// array(
@@ -95,6 +95,15 @@ class Settings {
 						'default' => false,
 						'desc'    => __( 'Remove product from Wishlist on the second click.', 'jvm-woocommerce-wishlist' ),
 					),
+					// add filed for guest wishlist delete
+					array(
+						'id'      => 'guest_wishlist_delete',
+						'type'    => 'number',
+						'title'   => __( 'Delete Guest Wishlist', 'jvm-woocommerce-wishlist' ),
+						'default' => 30,
+						'unit'    => 'Days',
+						'desc'    => __( 'Delete guest wishlist after x days.', 'jvm-woocommerce-wishlist' ),
+					),
 
 				),
 			)
@@ -118,21 +127,24 @@ class Settings {
 						'id'      => 'product_already_in_wishlist_text',
 						'type'    => 'text',
 						'title'   => __( 'Product Already in Wishlist Text', 'jvm-woocommerce-wishlist' ),
-						'default' => 'Product Already in Wishlist',
+						'default' => '{product_name} Already in Wishlist',
+						'desc'   => __( 'Text to display when the product is already in the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 					// product added to wishlist text field
 					array(
 						'id'      => 'product_added_to_wishlist_text',
 						'type'    => 'text',
 						'title'   => __( 'Product Added to Wishlist Text', 'jvm-woocommerce-wishlist' ),
-						'default' => 'Product Added to Wishlist',
+						'default' => '{product_name} Added to Wishlist',
+						'desc'  => __( 'Text to display when the product is added to the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 					// product removed from wishlist text field
 					array(
 						'id'      => 'product_removed_from_wishlist_text',
 						'type'    => 'text',
 						'title'   => __( 'Product Removed from Wishlist Text', 'jvm-woocommerce-wishlist' ),
-						'default' => 'Product Removed from Wishlist',
+						'default' => '{product_name} Removed from Wishlist',
+						'desc' => __( 'Text to display when the product is removed from the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 				),
 			)
@@ -302,7 +314,6 @@ class Settings {
 						'default' => 'Already in Wishlist',
 					),
 
-
 				),
 			)
 		);
@@ -311,9 +322,17 @@ class Settings {
 			$prefix,
 			array(
 				'title'  => 'Wishlist Page',
-				'icon'   => 'fas fa-cog',
+				'icon'   => 'fa fa-sliders',
 				'fields' => array(
-
+					// add guest_notice field
+					array(
+						'id'      => 'guest_notice',
+						'type'    => 'textarea',
+						'title'   => __( 'Guest Notice', 'jvm-woocommerce-wishlist' ),
+						'default' => 'please log in to save items to your wishlist. This wishlist will be deleted after {guest_session_in_days} days.',
+						'desc'    => __( 'Guest notice message.Use, placeholder <code>{guest_session_in_days}</code> to display expired tme.', 'jvm-woocommerce-wishlist' ),
+						
+					),
 					// wishlist page no item text field
 					array(
 						'id'      => 'wishlist_page_no_item_text',
@@ -329,7 +348,20 @@ class Settings {
 						'title'   => __( 'Add to Cart Text', 'jvm-woocommerce-wishlist' ),
 						'default' => 'Add to Cart',
 					),
-
+					// add in stock text field
+					array(
+						'id'      => 'wishlist_in_stock_text',
+						'type'    => 'text',
+						'title'   => __( 'In Stock Text', 'jvm-woocommerce-wishlist' ),
+						'default' => 'In Stock',
+					),
+					// add out of stock text field
+					array(
+						'id'      => 'wishlist_out_of_stock_text',
+						'type'    => 'text',
+						'title'   => __( 'Out of Stock Text', 'jvm-woocommerce-wishlist' ),
+						'default' => 'Out of Stock',
+					),
 					array(
 						'id'      => 'wishlist_page_table_unit_price',
 						'type'    => 'switcher',
@@ -342,6 +374,22 @@ class Settings {
 						'type'    => 'switcher',
 						'title'   => __( 'Show Stock Status', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
+					),
+					// add_to_cart_notice
+					array(
+						'id'      => 'add_to_cart_notice',
+						'type'    => 'text',
+						'title'   => __( 'Add to Cart Notice', 'jvm-woocommerce-wishlist' ),
+						'default' => '{product_name} added to cart',
+						'desc'    => __( 'Add to cart notice message. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
+					),
+					// removed_cart_notice notice field
+					array(
+						'id'      => 'removed_cart_notice',
+						'type'    => 'text',
+						'title'   => __( 'Removed from Cart Notice', 'jvm-woocommerce-wishlist' ),
+						'default' => '{product_name} removed from cart',
+						'desc'    => __( 'Removed from cart notice message. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 					// // add switcher for quantity
 					// array(
@@ -413,7 +461,7 @@ class Settings {
 			$prefix,
 			array(
 				'title'  => 'Advanced Settings',
-				'icon'   => 'fas fa-cog',
+				'icon'   => 'fa fa-sliders',
 				'fields' => array(
 					// add css field
 					array(
