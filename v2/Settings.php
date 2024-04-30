@@ -375,14 +375,7 @@ class Settings {
 						'title'   => __( 'Show Stock Status', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
 					),
-					// add_to_cart_notice
-					array(
-						'id'      => 'add_to_cart_notice',
-						'type'    => 'text',
-						'title'   => __( 'Add to Cart Notice', 'jvm-woocommerce-wishlist' ),
-						'default' => '{product_name} added to cart',
-						'desc'    => __( 'Add to cart notice message. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
-					),
+					
 					// removed_cart_notice notice field
 					array(
 						'id'      => 'removed_cart_notice',

@@ -6,12 +6,15 @@ class Bootstrap {
 	protected $wishlist_slug;
 
 	public function __construct() {
+		
+		$this->load_classes();
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_filter( 'display_post_states', array( $this, 'wishlist_page_state' ), 10, 2 );
+	}
+	protected function load_classes() {
 		new AjaxActions();
 		new Wishlist();
 		new Settings();
-		
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_filter( 'display_post_states', array( $this, 'wishlist_page_state' ), 10, 2 );
 	}
 
 	/**
@@ -83,7 +86,7 @@ class Bootstrap {
 		wp_add_inline_style( 'cix-wishlist', $css );
 	}
 
-	
+
 	public static function activation() {
 		// add if_page_exist
 		self::if_page_exist( 'wishlist' );
