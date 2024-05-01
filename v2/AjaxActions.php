@@ -40,9 +40,10 @@ class AjaxActions {
 			$product_ids = Wishlist::wishlist_product_ids();
 			foreach ( $product_ids as $product_id ) {
 				$added_to_cart = WC()->cart->add_to_cart( $product_id );
-				wc_add_to_cart_message( $product_id );
+
 				if ( $added_to_cart && cixww_get_option( 'wishlist_page_table_remove_if_added_to_cart' ) ) {
 					// wishlist_page_table_remove_if_added_to_cart
+					wc_add_to_cart_message( $product_id );
 
 						Wishlist::remove_product( $product_id );
 						$data['removed'] = true;
@@ -162,7 +163,7 @@ class AjaxActions {
 			$data['template'] = Wishlist::wishlist_popup( $data );
 
 		} else {
-			Wishlist::set_transient( $product_id );
+			Wishlist::set_product( $product_id );
 			$data['added']     = true;
 			$data['template']  = Wishlist::wishlist_popup( $data );
 			$data['loop_item'] = Wishlist::wishlist_loop_items( array( 'product_id' => $product_id ) );

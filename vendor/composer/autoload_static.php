@@ -10,11 +10,13 @@ class ComposerStaticInitbee06180dfee1e9fc609c0ebe8c58354
         '411365114bfd84c3e5d2e5a0b22c4c38' => __DIR__ . '/../..' . '/inc/codestar-framework/codestar-framework.php',
         'a4023d9468bba4a3353a245ddd05e517' => __DIR__ . '/../..' . '/inc/core.php',
         '38cb64823f5b0a1f66e97249a5114d2b' => __DIR__ . '/../..' . '/inc/functions.php',
+        '2db7b7a38c6be07cf58b2c40a08b745e' => __DIR__ . '/../..' . '/inc/onboarding/Onboarding.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'C' => 
         array (
+            'CodesVault\\Howdyqb\\' => 19,
             'CIXW_WISHLIST\\' => 14,
         ),
         'A' => 
@@ -24,6 +26,10 @@ class ComposerStaticInitbee06180dfee1e9fc609c0ebe8c58354
     );
 
     public static $prefixDirsPsr4 = array (
+        'CodesVault\\Howdyqb\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codesvault/howdy-qb/src',
+        ),
         'CIXW_WISHLIST\\' => 
         array (
             0 => __DIR__ . '/../..' . '/v2',

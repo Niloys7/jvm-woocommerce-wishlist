@@ -6,9 +6,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Settings {
+
 	public function __construct() {
 		$this->pluginOptions();
 		add_action( 'csf_cixwishlist_settings_save_after', array( $this, 'save_after' ) );
+		add_filter( 'plugin_action_links_' . CIXWW_PLUGIN_BASE, array( $this, 'plugin_links' ) );
+	}
+	public function plugin_links( $links ) {
+		$settings_link = '<a href="' . get_admin_url( null, 'admin.php?page=cixwishlist_settings' ) . '">' . __( 'Settings', 'jvm-woocommerce-wishlist' ) . '</a>';
+		array_unshift( $links, $settings_link );
+		return $links;
 	}
 	public function save_after( $data ) {
 	}
@@ -128,7 +135,7 @@ class Settings {
 						'type'    => 'text',
 						'title'   => __( 'Product Already in Wishlist Text', 'jvm-woocommerce-wishlist' ),
 						'default' => '{product_name} Already in Wishlist',
-						'desc'   => __( 'Text to display when the product is already in the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Text to display when the product is already in the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 					// product added to wishlist text field
 					array(
@@ -136,7 +143,7 @@ class Settings {
 						'type'    => 'text',
 						'title'   => __( 'Product Added to Wishlist Text', 'jvm-woocommerce-wishlist' ),
 						'default' => '{product_name} Added to Wishlist',
-						'desc'  => __( 'Text to display when the product is added to the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Text to display when the product is added to the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 					// product removed from wishlist text field
 					array(
@@ -144,7 +151,7 @@ class Settings {
 						'type'    => 'text',
 						'title'   => __( 'Product Removed from Wishlist Text', 'jvm-woocommerce-wishlist' ),
 						'default' => '{product_name} Removed from Wishlist',
-						'desc' => __( 'Text to display when the product is removed from the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
+						'desc'    => __( 'Text to display when the product is removed from the wishlist. Use, placeholder <code>{product_name}</code> to display name of the product.', 'jvm-woocommerce-wishlist' ),
 					),
 				),
 			)
@@ -331,7 +338,7 @@ class Settings {
 						'title'   => __( 'Guest Notice', 'jvm-woocommerce-wishlist' ),
 						'default' => 'please log in to save items to your wishlist. This wishlist will be deleted after {guest_session_in_days} days.',
 						'desc'    => __( 'Guest notice message.Use, placeholder <code>{guest_session_in_days}</code> to display expired tme.', 'jvm-woocommerce-wishlist' ),
-						
+
 					),
 					// wishlist page no item text field
 					array(
@@ -375,7 +382,7 @@ class Settings {
 						'title'   => __( 'Show Stock Status', 'jvm-woocommerce-wishlist' ),
 						'default' => true,
 					),
-					
+
 					// removed_cart_notice notice field
 					array(
 						'id'      => 'removed_cart_notice',

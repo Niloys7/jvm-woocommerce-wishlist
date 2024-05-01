@@ -5,17 +5,40 @@ class Wishlist {
 	public function __construct() {
 		add_shortcode( 'cix_woocommerce_wishlist', array( $this, 'wishlist_shortcode' ) );
 		add_shortcode( 'cix_add_to_wishlist', array( $this, 'add_to_wishlist_shortcode' ) );
-		self::temp_cookie();
+
 		$this->display_loop_wishlist_button();
 		$this->display_single_product_wishlist_button();
 		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
 		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
+		add_action( 'wp_login', array( $this, 'merge_wishlists' ), 10, 1 );
+	}
+
+	/**
+	 * Merge the user's wishlist with the guest wishlist.
+	 *
+	 * This function merges the user's wishlist with the guest wishlist and updates the user meta.
+	 *
+	 * @param string $user_login The login name of the user.
+	 * @return void
+	 */
+	public function merge_wishlists( $user_login ) {
+
+		$user_id = get_current_user_id();
+		// add user wishlist to user meta
+		$wishlist       = ( get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) ) ? get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) : array();
+		$guest_wishlist = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
+
+		update_user_meta( $user_id, 'cix_default_wc_wishlist', array_merge( $wishlist, $guest_wishlist ) );
+
+		// delete guest wishlist
+		delete_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() );
+
+		do_action( 'cix_woocommerce_wishlist_after_merge_wishlists', $user_id, $wishlist );
 	}
 	/**
 	 * Generates the HTML for the wishlist popup.
 	 *
 	 * This function checks the value of the 'product_button_action' option and the current post ID to determine if the wishlist popup should be displayed. If the value is 'popup' or the current post ID matches the 'wishlist_page' option, the wishlist modal is embedded in the page.
-	 *
 	 */
 	public function wishlist_popup_html() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
@@ -111,54 +134,48 @@ class Wishlist {
 		include $final_file;
 	}
 
-	public static function set_transient( $product_id ) {
+	/**
+	 * Sets a product in the wishlist.
+	 *
+	 * This function adds a product to the wishlist by updating the wishlist array and storing it in user meta if the user is logged in,
+	 * or storing it in a transient if the user is not logged in.
+	 *
+	 * @param int $product_id The ID of the product to be added to the wishlist.
+	 * @return void
+	 */
+	public static function set_product( $product_id ) {
 		$wishlist   = self::wishlist_product_ids();
 		$wishlist[] = $product_id;
 		$wishlist   = array_unique( $wishlist );
 
-		$expiration = DAY_IN_SECONDS * cixww_get_option( 'guest_wishlist_delete', 30 ); // 30 days
-		set_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
+		// if user is logged in, add to user meta
+		if ( is_user_logged_in() ) {
+			$user_id = get_current_user_id();
+			update_user_meta( $user_id, 'cix_default_wc_wishlist', $wishlist );
+		} else {
+
+			$expiration = DAY_IN_SECONDS * cixww_get_option( 'guest_wishlist_delete', 30 ); // 30 days
+			set_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
+		}
 	}
 	/**
 	 * Get a PHP array of products in the wishlist
 	 */
 	public static function wishlist_product_ids( $product_ids = array(), $wishlist_id = null ) {
 
-		$clean_product_ids = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
+		// if user is logged in, get the wishlist from user meta
+		if ( is_user_logged_in() ) {
+			$user_id  = get_current_user_id();
+			$wishlist = get_user_meta( $user_id, 'cix_default_wc_wishlist', true );
 
-		foreach ( $product_ids as $product_id ) {
-
-			if ( 'publish' == get_post_status( $product_id ) ) {
-				$clean_product_ids[] = $product_id;
-			}
+		} else {
+			$wishlist = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
 		}
 
-		return $clean_product_ids;
+		return $wishlist;
 	}
 
-	/**
-	 * Generates and retrieves a temporary cookie for the wishlist.
-	 *
-	 * This function generates a temporary cookie for the wishlist and retrieves its value if it already exists.
-	 * The cookie name is determined by appending the site slug with '_wc_wishlist_temp'.
-	 * If the cookie does not exist, a new temporary ID is generated using wp_generate_password() function.
-	 * The cookie is then set with the generated ID, and its expiration is set to 7 days from the current time.
-	 *
-	 * @return string|null The value of the temporary cookie, or null if it does not exist.
-	 */
-	public static function temp_cookie() {
 
-		// add wishlist slug to cookie name
-		$cookie_name = 'cix_wc_wishlist_temp';
-		$cookie      = ( isset( $_COOKIE[ $cookie_name ] ) ) ? $_COOKIE[ $cookie_name ] : null;
-
-		if ( ! $cookie ) {
-			$temp_id = wp_generate_password( 8, false );
-
-			setcookie( $cookie_name, $temp_id, strtotime( '+7 day', time() ), '/' );
-			return $cookie;
-		}
-	}
 	/**
 	 * Get the temporary wishlist ID from the cookie value.
 	 */
@@ -179,14 +196,21 @@ class Wishlist {
 		if ( $product_id ) {
 			$wishlist = self::wishlist_product_ids();
 
-			$wishlist   = array_diff( $wishlist, array( $product_id ) );
-			$wishlist   = array_unique( $wishlist );
-			$expiration = DAY_IN_SECONDS * cixww_get_option( 'guest_wishlist_delete', 30 ); // 30 days
-			set_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
+			$wishlist = array_diff( $wishlist, array( $product_id ) );
+			$wishlist = array_unique( $wishlist );
 
+			// if user is logged in, remove from user meta
+			if ( is_user_logged_in() ) {
+				$user_id = get_current_user_id();
+				update_user_meta( $user_id, 'cix_default_wc_wishlist', $wishlist );
+			} else {
+				$expiration = DAY_IN_SECONDS * cixww_get_option( 'guest_wishlist_delete', 30 ); // 30 days
+				set_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id(), $wishlist, $expiration );
+
+			}
 		}
 	}
-	
+
 	/**
 	 * Adds or removes a product from the wishlist and display button HTML
 	 *
@@ -234,7 +258,7 @@ class Wishlist {
 
 		$param_list['{guest_session_in_days}'] = Helper::get_transient_expiration( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() );
 		$param_list['{product_name}']          = get_the_title( $post_id );
-		$param_list['{view_cart_url}']                 = '<a class="ciww-cart-link" href="' . wc_get_cart_url() . '">' . __( 'View Cart', 'jvm-woocommerce-wishlist' ) . '</a>';
+		$param_list['{view_cart_url}']         = '<a class="ciww-cart-link" href="' . wc_get_cart_url() . '">' . __( 'View Cart', 'jvm-woocommerce-wishlist' ) . '</a>';
 
 		return $param_list;
 	}

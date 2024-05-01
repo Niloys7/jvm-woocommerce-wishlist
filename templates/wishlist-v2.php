@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_ids = \CIXW_WISHLIST\Wishlist::wishlist_product_ids();
 
 ?>
-
+<div id="cixwishlist-guest-notice"></div>
 <?php echo ( cixww_get_option( 'wishlist_name' ) ) ? '<h2>' . esc_html( cixww_get_option( 'wishlist_name' ) ) . '</h2>' : ''; ?>
 <div id="cixwishlist-notice" class="cixwishlist-notice"></div>
 <div class="jvm-woocommerce-wishlist-container woocommerce-cart-form">

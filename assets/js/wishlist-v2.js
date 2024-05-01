@@ -31,7 +31,7 @@
                         if (is_wishlist_page) {
 
 
-                            $(document).find('#cixwishlist-notice').empty().removeClass('wishlist-info cixwishlist-notice');
+                            $(document).find('#cixwishlist-notice').empty().removeClass('wishlist-info ');
                             $(document).find('.jvm-woocommerce-wishlist-table tbody').append(res.data.loop_item);
                             $.event.trigger({
                                 type: "action_init.cix_wishlist"
@@ -114,7 +114,7 @@
                             // find closet .jvm-woocommerce-wishlist-product and remove it
                             wishlist_btn.closest('.jvm-woocommerce-wishlist-product').fadeOut();
                         }
-                        if (res.data.loop_item || res.data.removed) {
+                        if (res.data.loop_item && res.data.removed) {
 
                             $(document).find('.jvm-woocommerce-wishlist-table tbody').empty();
                             $(document).find('.jvm-woocommerce-wishlist-table tbody').append(res.data.loop_item);
@@ -125,6 +125,9 @@
                         $.event.trigger({
                             type: "add_to_cart.cix_wishlist",
                             id: product_id,
+                        });
+                        $.event.trigger({
+                            type: "action_init.cix_wishlist"
                         });
 
                     },
@@ -184,20 +187,29 @@
 
 
         },
+        
         misc: function () {
             if (!cix_wishlist_args.logged_in && cix_wishlist_args.wishlist_count > 0) {
-
-                $(document).find('#cixwishlist-notice').append(cix_wishlist_args.guest_notice).addClass('wishlist-info');
+                $(document).find('#cixwishlist-guest-notice').empty();
+                $(document).find('#cixwishlist-guest-notice').append('<div class="cixwishlist-notice">'+cix_wishlist_args.guest_notice+'</div>').addClass('wishlist-info');
             }
 
+            //  Cookies.set('cix_wc_wishlist_temp', 'value');
+            var cix_cookie = Math.random().toString(36).substring(2, 9);
+            console.log(Cookies.get('cix_wc_wishlist_temp'));
+            if (!Cookies.get('cix_wc_wishlist_temp')){
+                Cookies.set('cix_wc_wishlist_temp', 'cookieID-' + cix_cookie, { expires: 30 });
+            }
 
         },
 
     };
 
+    // before document ready
+
 
     $(document).ready(function () {
-
+        cix_wishlist.misc();
         $.event.trigger({
             type: "action_init.cix_wishlist"
         });
@@ -208,7 +220,7 @@
         cix_wishlist.add_to_wishlist();
         cix_wishlist.add_to_cart();
         cix_wishlist.remove_product();
-        cix_wishlist.misc();
+       
     });
 
 

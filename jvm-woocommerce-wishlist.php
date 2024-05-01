@@ -1,15 +1,16 @@
 <?php
 /**
  * Plugin Name: Wishlist for WooCommerce
- * Description: A Simple and Lightweight Wishlist for WooCommerce
+ * Description: Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store.
  * Version: 2.0
- * Author: WPInteractive
- * Author URI: https://wpinteractive.com
- * Tested up to: 6.1
- * WC requires at least: 4.0
- * WC tested up to: 7.1
- * Requires PHP: 7.2
- * Stable Tag: 1.3.6
+ * Author: Codeixer
+ * Author URI: https://codeixer.com
+ * Tested up to: 6.5.2
+ * WC requires at least: 5.0
+ * WC tested up to: 8.8.3
+ * Requires PHP: 7.4
+ * Stable Tag: 2.0
+ * Requires Plugins:  woocommerce
  *
  * Text Domain: jvm-woocommerce-wishlist
  * Domain Path: /languages/

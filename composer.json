@@ -11,13 +11,15 @@
     ],
     "require": {
         "appsero/client": "^1.2",
-        "collizo4sky/persist-admin-notices-dismissal": "^1.4"
+        "collizo4sky/persist-admin-notices-dismissal": "^1.4.5",
+        "codesvault/howdy-qb": "1.6.2"
     },
      "autoload": {
         "files": [
             "inc/codestar-framework/codestar-framework.php",
             "inc/core.php",
-            "inc/functions.php"
+            "inc/functions.php",
+            "inc/onboarding/Onboarding.php"
         ],
         "psr-4": {
             "CIXW_WISHLIST\\": "v2/"

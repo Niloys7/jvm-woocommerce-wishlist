@@ -6,7 +6,7 @@ class Bootstrap {
 	protected $wishlist_slug;
 
 	public function __construct() {
-		
+
 		$this->load_classes();
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'display_post_states', array( $this, 'wishlist_page_state' ), 10, 2 );
@@ -15,7 +15,10 @@ class Bootstrap {
 		new AjaxActions();
 		new Wishlist();
 		new Settings();
+
+		WishlistDB::insert();
 	}
+
 
 	/**
 	 * Adds the "Wishlist Page" state to the post states array.
@@ -35,14 +38,14 @@ class Bootstrap {
 	}
 	public function enqueue_scripts() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
-		$js_deps        = array( 'jquery' );
+		$js_deps        = array( 'jquery', 'cix-cookie' );
 		if ( $wishlist_popup == 'popup' || get_the_id() == cixww_get_option( 'wishlist_page' ) ) {
 			wp_enqueue_style( 'cix-wishlist-modal', CIXWW_PLUGIN_URL . 'assets/css/jquery.modal.min.css', array(), CIXWW_PLUGIN_VER, 'all' );
 			wp_enqueue_script( 'cix-wishlist-modal', CIXWW_PLUGIN_URL . 'assets/js/jquery.modal.min.js', array( 'jquery' ), CIXWW_PLUGIN_VER, true );
 
 			$js_deps = array( 'jquery', 'cix-wishlist-modal' );
 		}
-
+		wp_enqueue_script( 'cix-cookie', CIXWW_PLUGIN_URL . 'assets/js/js.cookie.min.js', array(), CIXWW_PLUGIN_VER, true );
 		wp_enqueue_script( 'cix-wishlist', CIXWW_PLUGIN_URL . 'assets/js/wishlist-v2.js', $js_deps, CIXWW_PLUGIN_VER, true );
 
 		wp_localize_script(
@@ -90,6 +93,8 @@ class Bootstrap {
 	public static function activation() {
 		// add if_page_exist
 		self::if_page_exist( 'wishlist' );
+
+		WishlistDB::add_table();
 	}
 	/**
 	 * Check if a page exists by slug and create it if it doesn't.
