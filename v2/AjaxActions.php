@@ -40,7 +40,7 @@ class AjaxActions {
 			$product_ids = Wishlist::wishlist_product_ids();
 			foreach ( $product_ids as $product_id ) {
 				$added_to_cart = WC()->cart->add_to_cart( $product_id );
-
+				wc_add_to_cart_message( $product_id );
 				if ( $added_to_cart && cixww_get_option( 'wishlist_page_table_remove_if_added_to_cart' ) ) {
 					// wishlist_page_table_remove_if_added_to_cart
 
@@ -114,7 +114,7 @@ class AjaxActions {
 
 		wp_die();
 	}
-	
+
 	/**
 	 * Update the wishlist via AJAX.
 	 *
@@ -124,7 +124,6 @@ class AjaxActions {
 	 *
 	 * @since 2.0
 	 */
-	
 	public function update_wishlist() {
 
 		if ( ! DOING_AJAX ) {

@@ -11,6 +11,12 @@ class Wishlist {
 		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
 		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
 	}
+	/**
+	 * Generates the HTML for the wishlist popup.
+	 *
+	 * This function checks the value of the 'product_button_action' option and the current post ID to determine if the wishlist popup should be displayed. If the value is 'popup' or the current post ID matches the 'wishlist_page' option, the wishlist modal is embedded in the page.
+	 *
+	 */
 	public function wishlist_popup_html() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
 		if ( $wishlist_popup == 'popup' || get_the_id() == cixww_get_option( 'wishlist_page' ) ) {?>
@@ -217,6 +223,13 @@ class Wishlist {
 		<?php
 		do_action( 'cix_woocommerce_wishlist_after_add_to_wishlist', $product_id );
 	}
+	/**
+	 * Replaces the placeholders in the text with the actual values.
+	 *
+	 * @param array $param_list The list of placeholders and their corresponding values.
+	 * @param int   $post_id    The ID of the post.
+	 * @return array The list of placeholders and their corresponding values.
+	 */
 	public function replace_info( $param_list, $post_id ) {
 
 		$param_list['{guest_session_in_days}'] = Helper::get_transient_expiration( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() );
@@ -225,14 +238,32 @@ class Wishlist {
 
 		return $param_list;
 	}
+	/**
+	 * Returns the text for the 'Already in Wishlist' notice.
+	 *
+	 * @param int $product_id The ID of the product.
+	 * @return string The text for the 'Already in Wishlist' notice.
+	 */
 	public static function already_in_wishlist_text( $product_id ) {
 
 		return Helper::replace_text( cixww_get_option( 'product_already_in_wishlist_text' ), '{product_name}', $product_id );
 	}
+	/**
+	 * Returns the text for the 'Added to Wishlist' notice.
+	 *
+	 * @param int $product_id The ID of the product.
+	 * @return string The text for the 'Added to Wishlist' notice.
+	 */
 	public static function added_to_wishlist_text( $product_id ) {
 
 		return Helper::replace_text( cixww_get_option( 'product_added_to_wishlist_text' ), '{product_name}', $product_id );
 	}
+	/**
+	 * Returns the text for the 'Removed from Wishlist' notice.
+	 *
+	 * @param int $product_id The ID of the product.
+	 * @return string The text for the 'Removed from Wishlist' notice.
+	 */
 	public static function removed_from_wishlist_text( $product_id ) {
 
 		return Helper::replace_text( cixww_get_option( 'product_removed_from_wishlist_text' ), '{product_name}', $product_id );
