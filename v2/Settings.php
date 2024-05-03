@@ -10,8 +10,31 @@ class Settings {
 	public function __construct() {
 		$this->pluginOptions();
 		add_action( 'csf_cixwishlist_settings_save_after', array( $this, 'save_after' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_links' ), 10, 2 );
 		add_filter( 'plugin_action_links_' . CIXWW_PLUGIN_BASE, array( $this, 'plugin_links' ) );
 	}
+
+	/**
+	 * Add links to plugin's description in plugins table
+	 *
+	 * @param array  $links Initial list of links.
+	 * @param string $file  Basename of current plugin.
+	 */
+	function plugin_meta_links( $links, string $file ) {
+		if ( CIXWW_PLUGIN_BASE !== $file ) {
+			return $links;
+		}
+		// add doc link
+		$doc_link     = '<a target="_blank" href="https://codeixer.com/docs/jvm-woocommerce-wishlist/" title="' . __( 'Documentation', 'jvm-woocommerce-wishlist' ) . '">' . __( 'Docs', 'woo-product-gallery-slider' ) . '</a>';
+		$support_link = '<a style="color:red;" target="_blank" href="https://codeixer.com/contact-us/" title="' . __( 'Get help', 'jvm-woocommerce-wishlist' ) . '">' . __( 'Support', 'woo-product-gallery-slider' ) . '</a>';
+		$rate_plugin  = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5"> Rate this plugin » </a>';
+
+		$links[] = $doc_link;
+		$links[] = $support_link;
+		$links[] = $rate_plugin;
+
+		return $links;
+	} // plugin_meta_links
 	public function plugin_links( $links ) {
 		$settings_link = '<a href="' . get_admin_url( null, 'admin.php?page=cixwishlist_settings' ) . '">' . __( 'Settings', 'jvm-woocommerce-wishlist' ) . '</a>';
 		array_unshift( $links, $settings_link );

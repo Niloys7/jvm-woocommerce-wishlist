@@ -1,13 +1,13 @@
 === Wishlist for WooCommerce  ===
-Contributors: wpinteractive,im_niloy,jorisvanmontfort
-Tags: woocommerce wishlist, wishlist, woocommerce
+Contributors: im_niloy,jorisvanmontfort,wpinteractive,codeixer
+Tags: wishlist for woocommerce, yith wishlist, woocommerce wishlist,ti wishlist
 Requires at least: 5.0
 Tested up to: 6.5.2
 Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple and lightweight wishlist for WooCommerce, with plenty of hooks for customization to fit your WooCommerce theme.
+Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store. 🚀
 
 == Description ==
 A simple and lightweight wishlist for WooCommerce, with plenty of hooks for customization to fit your WooCommerce theme.
@@ -21,73 +21,6 @@ The wishlist can be added to a page using the `[jvm_woocommerce_add_to_wishlist]
 2. Go to the plugin setting screen to define a wishlist page.
 3. Go to the plugin settings page from the plugins screen and create your wishlist page.
 
-== Hooks ==
-
-For advanced users and developers, a few WordPress actions and filters are supplied to modify the behavior of the wishlist. 
-
-Example usage removing the button from the archive page:
-`
-remove_action( 'woocommerce_after_shop_loop_item', 'jvm_woocommerce_add_to_wishlist', 15 );
-`
-
-Example usage switching to text links instead of icons:
-`
-add_filter( 'jvm_add_to_wishlist_class', function($class) {
-	return 'jvm_add_to_wishlist text';
-});
-`
-== Actions ==
-
-Available actions:
-
-* jvm_woocommerce_wishlist_loaded 
-* jvm_woocommerce_wishlist_before_wishlist
-* jvm_woocommerce_wishlist_after_wishlist
-* jvm_woocommerce_wishlist_before_wishlist_contents
-* jvm_woocommerce_wishlist_after_wishlist_contents
-* jvm_woocommerce_wishlist_before_add_to_wishlist
-* jvm_woocommerce_wishlist_after_add_to_wishlist
-
-== Filters ==
-
-* jvm_add_to_wishlist_class
-* jvm_add_to_wishlist_icon_html
-* jvm_woocommerce_wishlist_product_ids
-
-== Functions ==
-
-* jvm_woocommerce_wishlist_get_count()
-* jvm_woocommerce_wishlist_get_wishlist_product_ids()
-
-== Templates ==
-
-The default wishlist page can be overridden in your theme. From the plugin directory copy 
-`
-templates/wishlist.php 
-`
-to:
-`
-your-theme-directory/jvm-woocommerce-wishlist/wishlist.php 
-`
-Modify what you need in the copy.
-
-== Javascript API ==
-
-For further theme integration the javascript file in the plugin has a few custom events that are fired for wishlist user activity.
-
-* add.JVMWooCommerceWishlist
-* remove.JVMWooCommerceWishlist
-* beforeupdate.JVMWooCommerceWishlist
-* afterupdate.JVMWooCommerceWishlist
-
-Example usage:
-`
-$(document).on("beforeupdate.JVMWooCommerceWishlist", function(e) {
-  console.log(e);
-
-  // Do something like update some custom counter, show a message or whatever.
-});
-`
 
 == Changelog ==
 
