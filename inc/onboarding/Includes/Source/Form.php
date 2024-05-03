@@ -121,7 +121,11 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 				$args['placeholder'] = isset( $args['placeholder'] ) ? $args['placeholder'] : 'Example placeholder&#13;Another feature in new line&#13;Last feature in new line&#13;and so on....';
 			} elseif ( 'radio' === $type || 'select' === $type ) {
 				$args['options'] = isset( $args['options'] ) && is_array( $args['options'] ) ? $args['options'] : array();
+			} elseif ( 'checkbox' === $type ) {
+				$args['default'] = isset( $args['default'] ) ? $args['default'] : '0';
+				
 			}
+			$args['placeholder'] = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
 
 			$this->show( $type, $this->set_args( $args ) );
 		}
@@ -178,8 +182,8 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 						$default  = '';
 						break;
 					case 'checkbox':
-						$callback = 'sanitize_key';
-						$default  = 'off';
+						$callback = [ $this, 'checkbox_value'];
+						$default  = '0';
 						break;
 					case 'radio':
 					case 'select':
@@ -196,10 +200,18 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 
 			// Save current step's field values in an array, if exist.
 			if ( ! empty( $save ) ) {
-				update_option( $this->get_key(), $save, false );
+				do_action( 'cix_onboarding_wizard_save', $this->get_key(), $save );
+				// update_option( apply_filters( 'cix_onboarding_wizard_option_key', $this->get_key() ), $save, false );
 			}
 		}
-
+		// create a function if parm is 'on' return 1 else return 0
+		public function checkbox_value( $parm ) {
+			if ( $parm == 'on' ) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 		/**
 		 * Gets saved form field values of the given step.
 		 *
@@ -212,7 +224,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 		 * @since 1.1
 		 */
 		public function get_value_by( string $step, string $id = '', $default = '' ) {
-			$option = get_option( $this->get_key( $step ) );
+			$option = get_option( apply_filters( 'cix_onboarding_wizard_option', $this->get_key( $step ) ) );
 
 			if ( ! $id ) {
 				return $option;
@@ -230,7 +242,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 		 *
 		 * @since 1.1
 		 */
-		protected function get_key( string $step = '' ) : string {
+		protected function get_key( string $step = '' ): string {
 			$_step = $step ? $step : $this->step;
 
 			return $this->prefix . '_' . $_step;
@@ -245,12 +257,13 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 		 *
 		 * @since 1.1
 		 */
-		protected function set_args( array $args ) : array {
+		protected function set_args( array $args ): array {
 			$default_value = isset( $args['default'] ) ? $args['default'] : '';
+			$label         = isset( $args['label'] ) ? $args['label'] : $args['title'];
 
 			$template_args = array(
 				'id'    => $this->get_key() . '[' . $args['id'] . ']',
-				'label' => $args['label'],
+				'label' => $label,
 				'desc'  => isset( $args['desc'] ) ? $args['desc'] : '',
 				'value' => $this->get_value_by( $this->step, $args['id'], $default_value ),
 				'class' => isset( $args['class'] ) ? ' ' . $args['class'] : '',

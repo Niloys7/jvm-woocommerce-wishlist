@@ -41,8 +41,8 @@ final class Onboarding {
 	 */
 	private function __construct() {
 		$this->config();
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+		register_activation_hook( CIXWW_PLUGIN_FILE, array( $this, 'activate' ) );
+		register_deactivation_hook( CIXWW_PLUGIN_FILE, array( $this, 'deactivate' ) );
 
 		/**
 		 * If all onboarding steps are not completed, show admin notice.
@@ -78,16 +78,21 @@ final class Onboarding {
 	 * Sets onboarding notice if not completed.
 	 */
 	public function onboarding_notice() {
+		if ( ! \PAnD::is_admin_notice_active( 'notice-one-forever' ) ) {
+			return;
+		}
+
 		$msg = sprintf(
-			'<p><b>%1$s</b> - %2$s.</p><p><a href="%3$s" class="button-primary">%4$s</a></p>',
-			__( 'Namaste! from The Web Solver Onboarding Wizard', 'tws-onboarding' ),
-			__( 'Let us help you quickly setup the plugin with our onboarding wizard', 'tws-onboarding' ),
+			'<p><strong>%1$s</strong>%2$s</p><p><a href="%3$s" class="button-primary">%4$s</a></p>',
+			__( 'It looks like the WooCommerce Wishlist setup is pending!', 'tws-onboarding' ),
+			__( '<br>No worries, let\'s run the setup wizard together to quickly configure the basic settings. This will ensure that everything runs smoothly and you get the most out of the application.', 'tws-onboarding' ),
 			admin_url( 'admin.php?page=' . $this->config->get_page() ),
 			__( 'Run the Wizard Now', 'tws-onboarding' )
 		);
 
-		echo '<div class="notice notice-info">' . wp_kses_post( $msg ) . '</div>';
+		echo '<div data-dismissible="cixww-onboarding-notice-forever" class="updated notice notice-success">' . wp_kses_post( $msg ) . '</div>';
 	}
+
 
 	/**
 	 * Performs task on plugin activation.
@@ -95,7 +100,7 @@ final class Onboarding {
 	 * @todo Configured with example codes. Make changes as needed.
 	 */
 	public function activate() {
-		error_log('activate');
+
 		// Check if plugin is already installed.
 		$old_install = get_option( $this->prefix . '_install_version', false );
 
@@ -104,14 +109,14 @@ final class Onboarding {
 			$check[] = 'true';
 
 			// Set the plugin install version to "1.0".
-			update_option( $this->prefix . '_install_version', '1.0' );
+			update_option( $this->prefix . '_install_version', CIXWW_PLUGIN_VER );
 		} else {
 			// There is now installed version "1.0" => disable onboarding.
 			$check[] = 'false';
 		}
 
-		// If PHP version less than or equal to "7.0" => disable onboarding.
-		if ( version_compare( phpversion(), '7.0', '<=' ) ) {
+		// If PHP version less than or equal to "7.2" => disable onboarding.
+		if ( version_compare( phpversion(), '7.2', '<=' ) ) {
 			$check[] = 'false';
 		}
 
@@ -131,13 +136,13 @@ final class Onboarding {
 	 */
 	public function deactivate() {
 		// Onboarding options.
-		delete_option( $this->prefix . '_onboarding_steps_status' );
+		// delete_option( $this->prefix . '_onboarding_steps_status' );
 		delete_option( $this->prefix . '_onboarding_dependency_status' );
 		delete_option( $this->prefix . '_onboarding_dependency_name' );
-		delete_option( $this->prefix . '_install_version' );
+		// delete_option( $this->prefix . '_install_version' );
 
 		// Onboarding transitents.
-		delete_transient( $this->prefix . '_onboarding_redirect' );
+		// delete_transient( $this->prefix . '_onboarding_redirect' );
 	}
 }
 Onboarding::start();

@@ -18,7 +18,32 @@ class Settings {
 		return $links;
 	}
 	public function save_after( $data ) {
+		update_option( 'cixww_onboarding_onboarding_steps_status', 'complete' );
 	}
+	// create a function that return all publish pages
+	public static function get_pages( $create = '' ) {
+		$pages       = get_pages(
+			array(
+				'sort_order'   => 'asc',
+				'sort_column'  => 'post_title',
+				'hierarchical' => 0,
+				'parent'       => -1,
+				'post_type'    => 'page',
+				'post_status'  => 'publish',
+			)
+		);
+		$pages_array = array();
+		if ( $create ) {
+			$pages_array['gen_page'] = 'Create Automatically';
+		}
+		foreach ( $pages as $page ) {
+			$pages_array[ $page->ID ] = $page->post_title;
+		}
+			return $pages_array;
+	}
+
+
+
 	public function pluginOptions() {
 
 		// Set a unique slug-like ID
@@ -31,7 +56,7 @@ class Settings {
 			array(
 				'menu_title'      => 'Wishlist Settings',
 				'menu_slug'       => $prefix,
-				'framework_title' => 'Wishlist for WooCommerce Settings <small>v</small>',
+				'framework_title' => 'Wishlist for WooCommerce Settings <small>v' . CIXWW_PLUGIN_VER . '</small>',
 				'menu_type'       => 'submenu',
 				'menu_parent'     => apply_filters( 'ciwishlist_menu_parent', 'codeixer' ),
 				// 'nav'             => 'tab',
@@ -41,6 +66,7 @@ class Settings {
 				'show_bar_menu'   => false,
 				'show_footer'     => false,
 				'ajax_save'       => false,
+				'defaults'        => self::defaults(),
 
 			)
 		);
@@ -69,7 +95,6 @@ class Settings {
 						'placeholder' => 'Select a page',
 
 						'ajax'        => true,
-						'default'     => 'wishlist',
 						'options'     => 'pages',
 						'width'       => '250px',
 						'class'       => 'default-wishlist-page-field',
@@ -527,7 +552,48 @@ class Settings {
 			)
 		);
 	}
-
+	public static function defaults() {
+		$data = array(
+			'wishlist_name'                               => 'Wishlist',
+			'product_button_action'                       => 'popup',
+			'remove_on_second_click'                      => false,
+			'guest_wishlist_delete'                       => 30,
+			'product_view_wishlist_text'                  => 'View Wishlist',
+			'product_already_in_wishlist_text'            => '{product_name} Already in Wishlist',
+			'product_added_to_wishlist_text'              => '{product_name} Added to Wishlist',
+			'product_removed_from_wishlist_text'          => '{product_name} Removed from Wishlist',
+			'loop_button'                                 => true,
+			'loop_button_position'                        => 'woocommerce_after_single_product_summary',
+			'product_add_to_wishlist_text'                => '[cix_add_to_wishlist]',
+			'product_button'                              => true,
+			'product_button_position'                     => 'woocommerce_after_single_product_summary',
+			'product_button_type'                         => 'button',
+			'product_button_icon'                         => true,
+			'product_button_txt_color'                    => array(
+				'color'  => '#1e73be',
+				'hover'  => '#259ded',
+				'active' => '#333',
+			),
+			'product_button_text'                         => 'Add to Wishlist',
+			'product_button_remove_text'                  => 'Remove from Wishlist',
+			'product_button_already_wishlist_text'        => 'Already in Wishlist',
+			'guest_notice'                                => 'please log in to save items to your wishlist. This wishlist will be deleted after {guest_session_in_days} days.',
+			'wishlist_page_no_item_text'                  => 'No items in your wishlist',
+			'wishlist_page_table_add_to_cart_text'        => 'Add to Cart',
+			'wishlist_in_stock_text'                      => 'In Stock',
+			'wishlist_out_of_stock_text'                  => 'Out of Stock',
+			'wishlist_page_table_unit_price'              => true,
+			'wishlist_page_table_stock_status'            => true,
+			'removed_cart_notice'                         => '{product_name} removed from cart',
+			'wishlist_page_table_redirect_to_cart'        => true,
+			'wishlist_page_table_remove_if_added_to_cart' => true,
+			'table_add_all_to_cart'                       => true,
+			'table_add_all_to_cart_text'                  => 'Add All to Cart',
+			'wishlist_css'                                => '',
+			'backup'                                      => '',
+		);
+		return $data;
+	}
 	/**
 	 * Delete all '$preifx' transients from the database.
 	 */

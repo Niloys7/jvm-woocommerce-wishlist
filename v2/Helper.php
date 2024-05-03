@@ -67,4 +67,42 @@ class Helper {
 		return human_time_diff( time(), $expires );
 		// write function for The difference is returned in a human readable format such as "1 hour", "5 mins", "2 days"
 	}
+
+	/**
+	 * Creates a new WordPress page with the given title and content.
+	 *
+	 * @param string $title   The title of the page.
+	 * @param string $content The content of the page.
+	 *
+	 * @return int The ID of the newly created page, or the ID of an existing page with the same title.
+	 */
+	public static function create_page( $title, $content ) {
+		$args = array(
+			'post_type'      => 'page',
+			'post_status'    => 'publish',
+			'title'          => $title,
+			'fields'         => 'ids',
+			'posts_per_page' => -1,
+		);
+
+		$query = new \WP_Query( $args );
+
+		if ( ! $query->have_posts() ) {
+			$page = array(
+				'post_title'   => $title,
+				'post_content' => $content,
+				'post_status'  => 'publish',
+				'post_type'    => 'page',
+				'post_author'  => get_current_user_id(),
+			);
+
+			$page_id = wp_insert_post( $page );
+
+			return $page_id;
+		}
+
+		wp_reset_postdata();
+
+		return $query->posts[0];
+	}
 }

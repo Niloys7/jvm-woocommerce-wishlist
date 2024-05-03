@@ -10,13 +10,12 @@ class Bootstrap {
 		$this->load_classes();
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'display_post_states', array( $this, 'wishlist_page_state' ), 10, 2 );
+		add_action( 'admin_init', array( 'PAnD', 'init' ) );
 	}
 	protected function load_classes() {
 		new AjaxActions();
 		new Wishlist();
 		new Settings();
-
-		WishlistDB::insert();
 	}
 
 
@@ -46,7 +45,7 @@ class Bootstrap {
 			$js_deps = array( 'jquery', 'cix-wishlist-modal' );
 		}
 		wp_enqueue_script( 'cix-cookie', CIXWW_PLUGIN_URL . 'assets/js/js.cookie.min.js', array(), CIXWW_PLUGIN_VER, true );
-		wp_enqueue_script( 'cix-wishlist', CIXWW_PLUGIN_URL . 'assets/js/wishlist-v2.js', $js_deps, CIXWW_PLUGIN_VER, true );
+		wp_enqueue_script( 'cix-wishlist', CIXWW_PLUGIN_URL . 'assets/js/wishlist.js', $js_deps, CIXWW_PLUGIN_VER, true );
 
 		wp_localize_script(
 			'cix-wishlist',
@@ -91,36 +90,11 @@ class Bootstrap {
 
 
 	public static function activation() {
-		// add if_page_exist
-		self::if_page_exist( 'wishlist' );
-
-		WishlistDB::add_table();
-	}
-	/**
-	 * Check if a page exists by slug and create it if it doesn't.
-	 *
-	 * @param string $page_title The title of the page
-	 * @return int|bool The page ID if it exists, false if it doesn't
-	 */
-	public static function if_page_exist( $page_slug ) {
-		if ( get_page_by_path( $page_slug ) ) {
-
-			return $page_slug;
-		} else {
-
-			$page = array(
-				'post_title'   => 'Wishlist',
-				'post_content' => '[cix_woocommerce_wishlist]',
-				'post_status'  => 'publish',
-				'post_author'  => 1,
-				'post_type'    => 'page',
-			);
-			// Insert the post into the database
-			$post_id = wp_insert_post( $page );
-			$post    = get_post( $post_id );
-			$slug    = $post->post_name;
-			return $slug;
-
+		
+		$plugin_opt = get_option( 'cixwishlist_settings' );
+		if ( ! $plugin_opt ) {
+			update_option( 'cixwishlist_settings', Settings::defaults() );
 		}
 	}
+	
 }

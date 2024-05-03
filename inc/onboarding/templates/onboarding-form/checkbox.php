@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
 				<div class="desc"><?php echo wp_kses_post( $desc ); ?></div>
 			<?php endif; ?>
 		</div>
-		<input type="checkbox" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $id ); ?>" data-control="switch" <?php checked( $value, 'on', true ); ?>>
+		<input type="checkbox" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $id ); ?>" data-control="switch <?php echo esc_attr( $value ); ?>" <?php checked( $value, 1, true ); ?>>
 		<span class="hz_switcher"></span>
 	</label>
 </div>

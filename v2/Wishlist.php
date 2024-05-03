@@ -8,9 +8,35 @@ class Wishlist {
 
 		$this->display_loop_wishlist_button();
 		$this->display_single_product_wishlist_button();
+		add_action( 'init', array( $this, 'create_wishlist_page' ) );
 		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
 		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
 		add_action( 'wp_login', array( $this, 'merge_wishlists' ), 10, 1 );
+	}
+
+	/**
+	 * Creates a wishlist page if it doesn't already exist.
+	 *
+	 * This method checks if the wishlist page option is set to 0. If it is, it creates a new page with the title "Wishlist" and the shortcode "[cix_woocommerce_wishlist]".
+	 *
+	 * @return void
+	 */
+	public function create_wishlist_page() {
+
+		$cixwishlist_settings = get_option( 'cixwishlist_settings' );
+
+		if ( cixww_get_option( 'create_wishlist_page' ) == 'gen_page' ) {
+
+			$page_id = Helper::create_page( 'Wishlist', '[cix_woocommerce_wishlist]' );
+
+			$cixwishlist_settings['wishlist_page'] = $page_id;
+
+		} else {
+			$cixwishlist_settings['wishlist_page'] = ( cixww_get_option( 'create_wishlist_page' ) ) ? cixww_get_option( 'create_wishlist_page' ) : $cixwishlist_settings['wishlist_page'];
+		}
+
+		// Update the option
+		update_option( 'cixwishlist_settings', $cixwishlist_settings );
 	}
 
 	/**
@@ -28,7 +54,8 @@ class Wishlist {
 		$wishlist       = ( get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) ) ? get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) : array();
 		$guest_wishlist = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
 
-		update_user_meta( $user_id, 'cix_default_wc_wishlist', array_merge( $wishlist, $guest_wishlist ) );
+		$merge_wishlist = array_unique( array_merge( $wishlist, $guest_wishlist ) );
+		update_user_meta( $user_id, 'cix_default_wc_wishlist', $merge_wishlist );
 
 		// delete guest wishlist
 		delete_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() );
@@ -90,7 +117,7 @@ class Wishlist {
 
 		ob_start();
 		do_action( 'cix_woocommerce_wishlist_before_wishlist' );
-		self::woocommerce_wishlist_locate_template( 'wishlist-v2.php' );
+		self::woocommerce_wishlist_locate_template( 'wishlist.php' );
 		do_action( 'cix_woocommerce_wishlist_after_wishlist' );
 		return ob_get_clean();
 	}
@@ -112,7 +139,6 @@ class Wishlist {
 		self::woocommerce_wishlist_locate_template( 'wishlist-loop-item.php', $args );
 		return ob_get_clean();
 	}
-
 
 	/**
 	 * Locates and includes a template file for the WooCommerce Wishlist plugin.
@@ -174,7 +200,6 @@ class Wishlist {
 
 		return $wishlist;
 	}
-
 
 	/**
 	 * Get the temporary wishlist ID from the cookie value.

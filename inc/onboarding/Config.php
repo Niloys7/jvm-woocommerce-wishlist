@@ -2,25 +2,6 @@
 /**
  * The Web Solver WordPress Admin Onboarding Wizard Configuration.
  *
- * @todo Set the config namespace.
- * @todo Check all todo tags and make approriate changes where needed.
- *
- * @package TheWebSolver\Core\Admin\Onboarding\Class
- *
- * -----------------------------------
- * DEVELOPED-MAINTAINED-SUPPPORTED BY
- * -----------------------------------
- * ███║     ███╗   ████████████████
- * ███║     ███║   ═════════██████╗
- * ███║     ███║        ╔══█████═╝
- *  ████████████║      ╚═█████
- * ███║═════███║      █████╗
- * ███║     ███║    █████═╝
- * ███║     ███║   ████████████████╗
- * ╚═╝      ╚═╝    ═══════════════╝
- */
-
-/**
  * Onboarding namespace.
  *
  * @todo MUST REPLACE AND USE OWN NAMESPACE.
@@ -390,7 +371,7 @@ final class Config {
 			include_once __DIR__ . '/thewebsolver.php';
 
 			// Include the main onboarding abstract class.
-			include_once __DIR__ . '/Includes/Source/Onboarding.php';
+			include_once __DIR__ . '/Includes/Source/abstractBoarding.php';
 
 			// WordPress Hook to start onboarding.
 			add_action( 'init', array( $config, 'start_onboarding' ) );

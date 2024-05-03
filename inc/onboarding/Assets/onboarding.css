@@ -13,6 +13,7 @@
  * ███║     ███║   ████████████████╗
  * ╚═╝      ╚═╝    ═══════════════╝
  */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Inter&display=swap');
 
 :root {
   /* --dark: #09171e; */
@@ -32,8 +33,8 @@
   --bluish: #0d92a0;
   --mild-green: #a7ecc9;
   --dark-orange: #d84315;
-  --shadow: #0c2a3a;
-  --steps-offset: 240px;
+  --shadow: #22282d;
+  --steps-offset: 300px;
   --steps-offset-mobile: 100px;
   --top-offset: 100px;
 }
@@ -42,9 +43,14 @@
 h1,
 h2,
 h3,
-h4 {
+h4,.ob-field .title {
   margin: 0;
-  color: var(--white);
+  color: var(--shadow-dark);
+  font-family: "EB Garamond", serif;
+}
+.ob-field .title {
+  font-size: 20px;
+
 }
 ol,
 ul {
@@ -57,19 +63,30 @@ a {
   text-decoration: none;
 }
 button {
-	font: 400 1.1em "Titillium Web", sans-serif;
+	font: 400 1.1em "EB Garamond", serif;
+
+}
+.page-heading {
+ margin-bottom:50px; font-size:30px;
+}
+p.label,div.label {
+  color: var(--shadow);
+  font-weight: normal;
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  font-family: 'Inter', sans-serif;
 }
 input[type="text"],
 textarea {
   font-size: 1em;
-  background: var(--dark);
-  border-radius: 5px;
+  background: var(--light);
+  border-radius: 0px;
   width: calc(100% - 36px);
-  min-height: 50px;
-  color: var(--white);
-  font-family: Titillium Web;
+  
+  color: var(--shadow-dark);
   padding: 15px;
-  border: 3px solid var(--dark-alt);
+  border: 2px solid var(--light-gray);
   transition: border 0.2s ease-in-out;
 }
 textarea {
@@ -82,7 +99,12 @@ textarea:focus-visible {
   outline: 2px solid var(--primary-focus);
 }
 .ob-field {
-	margin-bottom: 3em;
+	margin-bottom: 2em;
+      display: grid;
+          margin-bottom: 2em;
+    display: grid;
+    border-bottom: 1px solid #eae9e9;
+    padding-bottom: 2em;
 }
 fieldset {
   padding-inline: 0;
@@ -126,9 +148,11 @@ form .desc, .radio_subtitle {
 
 /* main elements */
 body {
-  background-color: var(--shadow);
-  font-family: "Titillium Web", sans-serif;
-  color: var(--mild-gray);
+  background-color: var(--white);
+    font-family: "Inter", sans-serif;
+
+  /* font-family: "EB Garamond", serif; */
+  color: var(--shadow-dark);
   margin: 0;
 }
 header {
@@ -136,7 +160,7 @@ header {
   min-height: calc(var(--top-offset) - 20px);
   top: 0;
   width: 100%;
-  background-color: var(--dark);
+  background-color: var(--shadow);
 }
 header h1 {
   padding-block: 10px;
@@ -154,7 +178,7 @@ main {
   position: fixed;
   top: var(--top-offset);
   bottom: -20px;
-  left: 0;
+  left: 30px;
   text-align: left;
   width: var(--steps-offset-mobile);
   height: 100%;
@@ -164,15 +188,17 @@ header,
 .onboarding_steps {
   z-index: 999999;
 }
-.onboarding_dashboard_btn {
+
+.onboarding_dashboard_btn{
   padding: 12px 20px;
   background: var(--primary-border);
   margin-left: 20px;
   margin-right: 20px;
+  font-weight: 600;
   text-align: center;
-  color: var(--light-gray-bold);
+  color: var(--light);
   transition: all 0.3s ease-in-out;
-	border-radius: 999px;
+	border-radius: 0px;
 	min-width: 150px;
 }
 .onboarding_dashboard_btn:hover {
@@ -181,25 +207,41 @@ header,
 .steps_wrapper {
   margin: 0;
 }
+.content_step__introduction p,p.onboarding_complete_content{
+  
+  line-height: 1.6em;
+
+}
+a.button.button-next.hz_dyn_btn.main_btn {
+    border: 2px solid var(--primary-focus);
+    padding: 15px 25px;
+    margin-top: 20px;
+    display: inline-block;
+}
 .onboarding_content, #footer {
   max-width: 800px;
   margin: auto;
   /* background-color: var(--dark-alt); */
   border-radius: 10px;
-  padding: 30px;
+  padding: 30px 0px;
   overflow: hidden;
 }
 #footer {
-	margin-top: 50px;
+	margin-top: 0px;
 }
 #footer .onboarding_dashboard_btn {
-	display: block;
+	background: var(--shadow-dark);
+
+  padding: 15px 30px;
+}
+#footer .onboarding_dashboard_btn:first-child {
+  margin-left: 0;
 }
 .onboarding_image_wrapper {
   text-align: center;
-  padding: 30px 30px 0;
-  margin: -30px -30px 30px;
-  /* background-color: var(--shadow); */
+  margin: 0px 0px 35px;
+  background-color: var(--light);
+  border-radius: 10px;
 }
 .onboarding_image_wrapper > * {
   max-width: 600px;
@@ -226,21 +268,21 @@ header,
   width: 2px;
   left: 11px;
   top: 26px;
-  background-color: var(--hard-gray);
+  background-color: var(--gray);
   z-index: 5;
 }
 .steps_wrapper li.active:not(:last-of-type):before {
   background-color: var(--primary);
 }
 .onboarding_step_counter {
-  color: var(--mild-gray);
-  background: var(--hard-gray);
+  color: var(--dark-grey);
+  background: var(--gray);
   font-size: 10px;
   display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 9999999px;
-  border: 2px solid var(--gray);
+  border: 2px solid var(--mild-gray);
   text-align: center;
   line-height: 20px;
   position: relative;
@@ -264,6 +306,9 @@ header,
   max-width: calc(var(--steps-offset) - 80px);
   vertical-align: middle;
   margin-left: 15px;
+  font-weight: 600;
+    font-family: "EB Garamond", serif;
+    font-size: 22px;
 }
 .onboarding_step_desc {
   font-size: 0.8em;
@@ -278,7 +323,7 @@ header,
   background-color: var(--primary-border);
 }
 .step.done .onboarding_step_counter {
-	color: var(--primary);
+	color: var(--white);
   background-color: var(--primary-border);
   border-color: var(--primary-border);
 }
@@ -389,7 +434,6 @@ input.button-next {
 .hz_install_depl:not(.installed) button#hz_install_depl:hover,
 .hz_install_depl > a:hover {
   background-color: var(--error-alt);
-  box-shadow: 0px 10px 60px rgba(5, 5, 5, 0.5);
 }
 .hz_install_depl.installing button#hz_install_depl {
   width: 350px;
@@ -471,16 +515,16 @@ input.button-next {
  ***************************************/
 /* define vars */
 :root {
-  --primary: #29b6a5;
-  --primary-focus: #009688;
+  --primary: #3e58e1;
+  --primary-focus: #3e58e1;
   --primary-defocus: #e0f2f1;
-  --primary-border: #00968880;
+  --primary-border: #1a39d3;
   --secondary: #d50000;
   --secondary-focus: #ef6a6a;
   --secondary-shadow: #f842424d;
   --white: #fff;
   --dark-grey: #546e7a;
-  --shadow-dark: #0000001a;
+  --shadow-dark: #000000;
   --light: #f4f4f4;
   --light-gray: #eee;
   --light-gray-bold: #ccc;
@@ -522,7 +566,7 @@ select:focus,
 textarea:focus {
   outline: none;
   box-shadow: none;
-  border-color: var(--primary-focus);
+  border-color: var(--mild-gray);
 }
 .hz_switcher_control input:focus:before {
   background: var(--primary);
@@ -579,8 +623,7 @@ textarea:focus {
 	z-index: -99;
 }
 .hz_switcher_control .hz_switcher:before {
-  background: var(--gray);
-  box-shadow: inset 0px 0px 10px var(--dark);
+  background: var(--dark-grey);
   border-radius: 10px;
   content: "";
   top: 5px;
@@ -597,9 +640,8 @@ textarea:focus {
   opacity: 0.5;
 }
 .hz_switcher_control .hz_switcher:after {
-  background: var(--dark-grey);
+  background: var(--mild-gray);
   border-radius: 16px;
-  box-shadow: 0px 0px 5px var(--shadow-dark);
   content: "";
   height: 24px;
   right: 16px;
@@ -618,7 +660,7 @@ textarea:focus {
 .hz_switcher_control input:focus + .hz_switcher:before,
 .hz_switcher_control input:focus:checked + .hz_switcher::before {
 	opacity: 1;
-	background-color: var(--mild-green);
+	background-color: var(--gray);
 }
 .hz_switcher_control.disabled .hz_switcher:after {
   background: var(--error-disabled);
@@ -628,7 +670,7 @@ textarea:focus {
 }
 .hz_radio_field > .hz_card_control {
   padding: 20px;
-  border: 3px solid var(--dark-grey);
+  border: 2px solid var(--light-gray);
   border-radius: 5px;
 }
 .hz_card_control input {
@@ -642,7 +684,7 @@ textarea:focus {
   padding-bottom: 20px;
   margin-bottom: 20px;
   border: 3px solid var(--dark-alt);
-  border-radius: 10px;
+  border-radius: 4px;
 }
 .hz_card_info .radio_option_image img {
 	max-width: 150px;
@@ -652,8 +694,8 @@ textarea:focus {
   padding-left: 60px;
   cursor: pointer;
   line-height: 20px;
-  color: var(--hard-gray);
-  border: 2px solid var(--dark-alt);
+  color: var(--light-grey);
+  border: 2px solid var(--light-gray);
 }
 .hz_card_control input + .hz_card_info:before {
   content: "";
@@ -662,22 +704,22 @@ textarea:focus {
   top: 50%;
   width: 18px;
   height: 18px;
-  border: 1px solid var(--dark-alt);
+  border: 1px solid var(--light-gray-bold);
   border-radius: 100%;
-  background: var(--primary-focus);
+  background: var(--white);
   transform: translateY(-50%);
 }
 .hz_card_control_wrapper:not(.hz_radio_selected)
   .hz_card_control
   input
   + .hz_card_info:before {
-  background: var(--dark-grey);
+  background: var(--light-gray);
 }
 .hz_card_control input + .hz_card_info:after {
   content: "";
   width: 12px;
   height: 12px;
-  background: var(--dark-alt);
+  background: var(--primary);
   position: absolute;
   top: calc(50% - 6px);
   left: 19px;
@@ -702,7 +744,7 @@ textarea:focus {
 }
 .hz_card_control_wrapper input:focus + .hz_card_info,
 .hz_card_control_wrapper input:focus-visible + .hz_card_info {
-	border-color: var(--primary-defocus);
+	
 }
 .widefat .hz_card_control input + .hz_card_info {
 	width: 100%;
@@ -720,8 +762,8 @@ textarea:focus {
   object-fit: contain;
 }
 .recommended-plugin.hz_switcher_control {
-  border: 2px solid var(--dark-alt);
-  border-radius: 10px;
+  border: 2px solid var(--light-gray);
+  border-radius: 4px;
   padding: 20px;
   margin-block: 20px;
 	margin-top: 20px;
@@ -761,8 +803,8 @@ textarea:focus {
 }
 .onboarding-recommended-info {
 	min-height: 160px;
-	background: var(--dark);
-	border-radius: 10px;
+	background: var(--light);
+
 	align-items: center;
 	text-align: center;
 	padding: 15px;
@@ -778,7 +820,7 @@ textarea:focus {
 }
 .onboarding-recommended-info .label .count {
 	font-size: 2em;
-	color: var(--bluish);
+	color: var(--primary);
 	font-weight: bold;
 	margin-right: 5px;
 }
@@ -793,10 +835,10 @@ textarea:focus {
 #onboarding-recommended-names > span {
 	padding-block: 2px;
 	padding-inline: 30px 10px;
-	padding: 2px 10px 2px 30px;
+	padding: 7px 10px 7px 30px;
 	display: inline-block;
-	border-radius: 9999px;
-	border: 2px solid var(--dark-grey);
+	border-radius: 99993pxpx;
+	border: 2px solid var(--primary-border);
 	margin-block-start: 10px;
 	margin-inline: 3px;
 	margin: 10px 3px 0;
@@ -806,7 +848,7 @@ textarea:focus {
 	max-width: 10px;
 	margin-right: 5px;
 	border-radius: 12px;
-	background-color: var(--light-gray-bold);
+	background-color: var(--light-gray);
 	padding: 4px;
 	position: absolute;
 	left: 5px;
@@ -814,118 +856,38 @@ textarea:focus {
 	transform: translateY(-50%);
 }
 #onboarding-recommended-names > span svg .primary {
-	fill: var(--primary);
+	fill: var(--primary-border);
 }
 #onboarding-recommended-names > span svg .secondary {
 	fill: var(--primary-border);
 }
-
+.hz_switcher_control .desc{
+  margin-bottom: 0px;
+  font-family: 'Inter', sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+}
 /* select2 */
-.select2-container .select2-selection {
-  display: flex;
-  align-items: center;
-  height: 60px;
-  border: 2px solid var(--dark-alt);
-  background-color: var(--dark);
+
+.nice-select {
+   
+   border-radius: 3px;
+    border: 2px solid var(--light-grey);
+    background-color: var(--light);
+    min-height: 50px;
+    padding-top: 5px;
 }
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__placeholder {
-  color: var(--light-gray-bold);
+.nice-select .list{
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ width:100%;
+ max-height: 250px;
+ overflow-y: scroll;
 }
-.select2-container .select2-selection[aria-expanded="true"],
-.select2-container .select2-selection:focus {
-  border-color: var(--primary-focus);
-}
-.select2-container .select2-selection:focus {
-	outline: none !important;
-}
-.select2-container .select2-dropdown.select2-dropdown--above,
-.select2-container.select2-container--below .select2-selection[aria-expanded="true"] {
-	border-bottom: none;
-}
-.select2-container .select2-dropdown.select2-dropdown--below,
-.select2-container.select2-container--above .select2-selection[aria-expanded="true"] {
-	border-top: none;
-}
-.select2-container .select2-selection > span[role="textbox"] {
-  font-weight: 600;
-  color: var(--light-gray-bold);
-	padding-left: 10px;
-}
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow {
-  height: 55px;
-  width: 35px;
-	right: 10px;
-}
-select2-selection[aria-expanded="true"]
-  .select2-container--default.select2-container--open
-  .select2-selection--single
-  .select2-selection__arrow
-  b {
-  border-color: transparent transparent var(--primary-border) transparent;
-}
-.select2-container--default.select2-container--open
-  .select2-selection--single
-  .select2-selection__arrow
-  b {
-  border-width: 0 7px 7px 7px;
-  border-color: transparent transparent var(--light-gray-bold) transparent;
-}
-select2-selection[aria-expanded="true"]
-  .select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow
-  b {
-  border-color: var(--primary-border) transparent transparent transparent;
-}
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow
-  b {
-  border-width: 7px 7px 0 7px;
-  border-color: var(--light-gray-bold) transparent transparent transparent;
-}
-.select2-container .select2-dropdown {
-  border: 2px solid var(--primary-focus);
-  background: var(--dark);
-}
-.select2-container--default .select2-results > .select2-results__options {
-	max-height: 300px;
-}
-.select2-container .select2-dropdown .select2-results ul li {
-  line-height: 2.5em;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 5px;
-  border-radius: 3px;
-}
-.select2-container
-  .select2-dropdown
-  .select2-results
-  ul
-  li.select2-results__option--highlighted {
-  line-height: 2.5em;
-  color: var(--bluish);
-  background-color: var(--dark-alt);
-}
-.select2-container--default .select2-search--dropdown .select2-search__field {
-	height: 50px;
-	background: var(--medium-gray);
-	border: 3px solid var(--dark-grey);
-	border-radius: 5px;
-	color: var(--light-gray-bold);
-	font-size: 1.1em;
-}
-.select2-container
-  .select2-dropdown
-  .select2-results
-  ul
-  li[aria-selected="true"] {
-  background-color: var(--primary-border);
-  color: var(--white);
+.nice-select .list .option:first-child {
+  display: none;
 }
 .spin {
   animation: spin 20s linear infinite;

@@ -392,14 +392,8 @@ jQuery(function ($) {
 		 * Adds select2 plugin to select dropdown.
 		 */
 		initSelect2: () => {
-			$(tws.select).select2({
-				width: '100%',
-				placeholder: tws.selectPlaceholder,
-				allowClear: false,
-				dropdownParent: $(tws.selectParent),
-				minimumResultsForSearch: Infinity,
-				closeOnSelect: true
-			});
+			$(tws.select).niceSelect();
+
 		}
 	}
 
