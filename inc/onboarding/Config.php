@@ -352,7 +352,7 @@ final class Config {
 			);
 		}
 
-		if ( ! is_a( $config, get_class() ) ) {
+		if ( ! is_a( $config, self::class ) ) {
 			$config = new self();
 
 			// Set onboarding prefix.

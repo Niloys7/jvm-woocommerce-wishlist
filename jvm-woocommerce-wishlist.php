@@ -49,8 +49,20 @@ function appsero_init_tracker_jvm_woocommerce_wishlist() {
 
 appsero_init_tracker_jvm_woocommerce_wishlist();
 
-register_activation_hook( __FILE__, ['\CIXW_WISHLIST\Bootstrap','activation'] );
+register_activation_hook( __FILE__, array( '\CIXW_WISHLIST\Bootstrap', 'activation' ) );
+
 // plugin_loaded hook
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+		if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
+		}
+	}
+);
 
 add_action(
 	'plugins_loaded',

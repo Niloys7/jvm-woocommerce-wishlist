@@ -54,7 +54,7 @@ class Bootstrap {
 				'ajax_url'       => admin_url( 'admin-ajax.php' ),
 				'nonce'          => wp_create_nonce( 'cix-wishlist-nonce' ),
 				'logged_in'      => is_user_logged_in(),
-				'wishlist_count' => count( Wishlist::wishlist_product_ids() ),
+				'wishlist_count' => Wishlist::count_items(),
 				'guest_notice'   => Helper::replace_text( cixww_get_option( 'guest_notice' ), '{guest_session_in_days}' ),
 
 			)
@@ -90,11 +90,10 @@ class Bootstrap {
 
 
 	public static function activation() {
-		
+
 		$plugin_opt = get_option( 'cixwishlist_settings' );
 		if ( ! $plugin_opt ) {
 			update_option( 'cixwishlist_settings', Settings::defaults() );
 		}
 	}
-	
 }

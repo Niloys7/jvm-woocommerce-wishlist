@@ -30,7 +30,7 @@ final class Onboarding {
 	 */
 	public static function start() {
 		static $onboarding;
-		if ( ! is_a( $onboarding, get_class() ) ) {
+		if ( ! is_a( $onboarding, self::class) ) {
 			$onboarding = new self();
 		}
 		return $onboarding;

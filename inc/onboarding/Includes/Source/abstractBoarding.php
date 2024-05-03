@@ -632,8 +632,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Wizard' ) ) {
 				<?php
 				wp_print_scripts( 'onboarding_script' );
 				wp_print_styles( 'onboarding_style' );
-				do_action( 'admin_print_styles' );
-				do_action( 'admin_head' );
+				
 
 				/**
 				 * WPHOOK: Filter -> Body classes.

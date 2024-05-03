@@ -11,7 +11,7 @@ class Wishlist {
 		add_action( 'init', array( $this, 'create_wishlist_page' ) );
 		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
 		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
-		add_action( 'wp_login', array( $this, 'merge_wishlists' ), 10, 1 );
+		add_action( 'wp_login', array( $this, 'merge_wishlists' ), 10, 2 );
 	}
 
 	/**
@@ -44,14 +44,14 @@ class Wishlist {
 	 *
 	 * This function merges the user's wishlist with the guest wishlist and updates the user meta.
 	 *
-	 * @param string $user_login The login name of the user.
 	 * @return void
 	 */
-	public function merge_wishlists( $user_login ) {
+	public function merge_wishlists( $user_login, \WP_User $user ) {
 
-		$user_id = get_current_user_id();
+		$user_id = $user->ID;
 		// add user wishlist to user meta
-		$wishlist       = ( get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) ) ? get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) : array();
+		$wishlist = ( get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) ) ? get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) : array();
+
 		$guest_wishlist = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
 
 		$merge_wishlist = array_unique( array_merge( $wishlist, $guest_wishlist ) );
@@ -192,7 +192,7 @@ class Wishlist {
 		// if user is logged in, get the wishlist from user meta
 		if ( is_user_logged_in() ) {
 			$user_id  = get_current_user_id();
-			$wishlist = get_user_meta( $user_id, 'cix_default_wc_wishlist', true );
+			$wishlist = ( get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) ) ? get_user_meta( $user_id, 'cix_default_wc_wishlist', true ) : array();
 
 		} else {
 			$wishlist = ( get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) ) ? get_transient( 'cix_wc_wishlist_' . self::get_wishlist_temp_id() ) : array();
@@ -200,6 +200,19 @@ class Wishlist {
 
 		return $wishlist;
 	}
+	// add count_items method to Wishlist class to count the number of items in the wishlist
+	/**
+	 * Count the number of items in the wishlist.
+	 *
+	 * This function counts the number of items in the wishlist by calling the wishlist_product_ids method and returning the count of the array.
+	 *
+	 * @return int The number of items in the wishlist.
+	 */
+	public static function count_items() {
+		$wishlist = self::wishlist_product_ids();
+		return is_array( $wishlist ) ? count( $wishlist ) : 0;
+	}
+
 
 	/**
 	 * Get the temporary wishlist ID from the cookie value.

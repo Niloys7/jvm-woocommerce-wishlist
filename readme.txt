@@ -10,16 +10,19 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store. 🚀
 
 == Description ==
-A simple and lightweight wishlist for WooCommerce, with plenty of hooks for customization to fit your WooCommerce theme.
 
-By default, the plugin adds a wishlist icon to the WooCommerce archive pages and the WooCommerce single product page. Instead of an icon you can also switch to a text-based link to or add/remove wishlist items.
-The wishlist can be added to a page using the `[jvm_woocommerce_add_to_wishlist]` shortcode. For more advanced customization see the hooks, javascript API and templates sections below.
+Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store. 🚀
+
+
 
 == Installation ==
 
-1. Install the plugin from the Plugins or upload the plugin folder to the `/wp-content/plugins/` directory menu and then activate it.
-2. Go to the plugin setting screen to define a wishlist page.
-3. Go to the plugin settings page from the plugins screen and create your wishlist page.
+To install the WooCommerce Wishlist plugin, please follow these steps:
+
+1. Unzip the downloaded zip file.
+2. Upload the plugin folder to the wp-content/plugins/ directory on your WordPress site.
+3. Activate the Wishlist for WooCommerce plugin from the Plugins page.
+4. After activation, you will see a new submenu called “Wishlist” under the “Codeixer” menu. Here you can configure all the plugin settings to your preference.
 
 
 == Changelog ==

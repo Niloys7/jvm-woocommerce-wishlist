@@ -116,14 +116,14 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 		 *
 		 * @since 1.1
 		 */
-		public function add_field( string $type = 'text', array $args ) {
+		public function add_field( string $type = 'text', array $args = array() ) {
 			if ( 'textarea' === $type ) {
 				$args['placeholder'] = isset( $args['placeholder'] ) ? $args['placeholder'] : 'Example placeholder&#13;Another feature in new line&#13;Last feature in new line&#13;and so on....';
 			} elseif ( 'radio' === $type || 'select' === $type ) {
 				$args['options'] = isset( $args['options'] ) && is_array( $args['options'] ) ? $args['options'] : array();
 			} elseif ( 'checkbox' === $type ) {
 				$args['default'] = isset( $args['default'] ) ? $args['default'] : '0';
-				
+
 			}
 			$args['placeholder'] = isset( $args['placeholder'] ) ? $args['placeholder'] : '';
 
@@ -182,7 +182,7 @@ if ( ! class_exists( __NAMESPACE__ . '\\Form' ) ) {
 						$default  = '';
 						break;
 					case 'checkbox':
-						$callback = [ $this, 'checkbox_value'];
+						$callback = array( $this, 'checkbox_value' );
 						$default  = '0';
 						break;
 					case 'radio':
