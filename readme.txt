@@ -1,5 +1,5 @@
 === JVM WooCommerce Wishlist ===
-Contributors: im_niloy,codeixer,jorisvanmontfort,
+Contributors: im_niloy,codeixer,jorisvanmontfort
 Tags: wishlist for woocommerce, yith wishlist, woocommerce wishlist,ti wishlist
 Requires at least: 5.0
 Tested up to: 6.5.2
@@ -7,7 +7,7 @@ Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store. 🚀
+Supercharge your sales with WooCommerce Wishlist - a powerful tool that empowers customers to create wishlists and enhances their shopping experience. 🚀
 
 == Description ==
 
@@ -19,7 +19,7 @@ Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ul
 WooCommece wishlist is a helpful plugin that allows customers to create a personalized list of products they want to purchase. It simplifies the shopping experience by enabling individuals to save items they may want to buy later rather than searching for them again. By using a wishlist, customers can easily keep track of the products they are considering and make informed decisions about what to purchase. Additionally, it provides retailers with valuable insights into their customers' preferences, helping them better understand their target audience and optimize their marketing strategies.
 
 
-== 🌟 Wishlist for WooCommerce free features ==
+== 🌟 Wishlist for WooCommerce Free Features ==
 
 * Customize the position of the wishlist button
 * Ability to add wishlist buttons to any products
@@ -48,6 +48,18 @@ WooCommece wishlist is a helpful plugin that allows customers to create a person
 📅 **Guest Wishlist:** stores wishlists for guests for up to [x] days, ensuring that their wishlists remain available even after leaving your website.
 
 🧑‍💻 **[Developer-friendly hooks for actions and filters](https://www.codeixer.com/docs/for-developers/):** The plugin is developer-friendly, offering hooks for actions and filters that allow developers to extend and customize the plugin's functionality according to their needs.
+
+## 🔥 WHAT’S NEXT ##
+
+If you like this Wishlist plugin, then consider checking out our other free plugins:
+
+[Product gallery slider for WooCommerce](https://wordpress.org/plugins/woo-product-gallery-slider/) – Best product image gallery slider for WooCommerce. It shows your WooCommerce products with an image carousel slider. Beautiful style, increase sales and get customer attention.
+
+[Custom Order Status Manager for WooCommerce](https://wordpress.org/plugins/bp-custom-order-status-for-woocommerce/) allows you to create, delete and edit order statuses to control the flow of your orders better.
+
+[Bayna - Deposits & Partial Payments for WooCommerce](https://www.codeixer.com/deposits-payment-plugin-for-woocommerce/?utm_source=wp&utm_medium=site&utm_campaign=free_plugin) plugin allows customers to pay for WooCommerce products using a partial payment.
+
+[Pre-Orders for WooCommerce](https://brightplugins.com/go/preorder-free) – Ultimate Preorders Plugin for WooCommerce.
 
 == Installation ==
 
