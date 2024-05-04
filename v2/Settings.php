@@ -25,7 +25,7 @@ class Settings {
 			return $links;
 		}
 		// add doc link
-		$doc_link     = '<a target="_blank" href="https://codeixer.com/docs/jvm-woocommerce-wishlist/" title="' . __( 'Documentation', 'jvm-woocommerce-wishlist' ) . '">' . __( 'Docs', 'woo-product-gallery-slider' ) . '</a>';
+		$doc_link     = '<a target="_blank" href="https://www.codeixer.com/docs-category/wishlist-for-wc/" title="' . __( 'Documentation', 'jvm-woocommerce-wishlist' ) . '">' . __( 'Docs', 'woo-product-gallery-slider' ) . '</a>';
 		$support_link = '<a style="color:red;" target="_blank" href="https://codeixer.com/contact-us/" title="' . __( 'Get help', 'jvm-woocommerce-wishlist' ) . '">' . __( 'Support', 'woo-product-gallery-slider' ) . '</a>';
 		$rate_plugin  = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5"> Rate this plugin » </a>';
 
@@ -121,7 +121,7 @@ class Settings {
 						'options'     => 'pages',
 						'width'       => '250px',
 						'class'       => 'default-wishlist-page-field',
-						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>The page must contain the <code>[cix_woocommerce_wishlist]</code> shortcode.',
+						'desc'        => '<style>.default-wishlist-page-field .chosen-container {width: 445px !important;}</style>The page must contain the <code>[jvm_woocommerce_wishlist]</code> shortcode.',
 					),
 					// add switcher for Require Login
 					// array(

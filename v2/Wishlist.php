@@ -3,8 +3,8 @@ namespace CIXW_WISHLIST;
 
 class Wishlist {
 	public function __construct() {
-		add_shortcode( 'cix_woocommerce_wishlist', array( $this, 'wishlist_shortcode' ) );
-		add_shortcode( 'cix_add_to_wishlist', array( $this, 'add_to_wishlist_shortcode' ) );
+		add_shortcode( 'jvm_woocommerce_wishlist', array( $this, 'wishlist_shortcode' ) );
+		add_shortcode( 'jvm_add_to_wishlist', array( $this, 'add_to_wishlist_shortcode' ) );
 
 		$this->display_loop_wishlist_button();
 		$this->display_single_product_wishlist_button();
@@ -17,7 +17,7 @@ class Wishlist {
 	/**
 	 * Creates a wishlist page if it doesn't already exist.
 	 *
-	 * This method checks if the wishlist page option is set to 0. If it is, it creates a new page with the title "Wishlist" and the shortcode "[cix_woocommerce_wishlist]".
+	 * This method checks if the wishlist page option is set to 0. If it is, it creates a new page with the title "Wishlist" and the shortcode "[jvm_woocommerce_wishlist]".
 	 *
 	 * @return void
 	 */
@@ -27,7 +27,7 @@ class Wishlist {
 
 		if ( cixww_get_option( 'create_wishlist_page' ) == 'gen_page' ) {
 
-			$page_id = Helper::create_page( 'Wishlist', '[cix_woocommerce_wishlist]' );
+			$page_id = Helper::create_page( 'Wishlist', '[jvm_woocommerce_wishlist]' );
 
 			$cixwishlist_settings['wishlist_page'] = $page_id;
 
@@ -148,12 +148,13 @@ class Wishlist {
 	 * @return void
 	 */
 	public static function woocommerce_wishlist_locate_template( $path, $args = array() ) {
-		$located     = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ), true, true, $args );
+		$located = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ));
+
 		$plugin_path = CIXWW_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $path;
 
-		if ( ! $located && file_exists( $plugin_path ) ) {
+		if ( ! $located ) {
 			$final_file = $plugin_path;
-		} elseif ( $located ) {
+		} else {
 			$final_file = $located;
 		}
 

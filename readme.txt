@@ -1,5 +1,5 @@
-=== Wishlist for WooCommerce  ===
-Contributors: im_niloy,jorisvanmontfort,wpinteractive,codeixer
+=== JVM WooCommerce Wishlist ===
+Contributors: im_niloy,codeixer,jorisvanmontfort,
 Tags: wishlist for woocommerce, yith wishlist, woocommerce wishlist,ti wishlist
 Requires at least: 5.0
 Tested up to: 6.5.2
@@ -13,7 +13,41 @@ Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ul
 
 Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store. 🚀
 
+[__Live Demo__](https://wp.codeixer.com) | [__Documentation__](https://www.codeixer.com/docs-category/wishlist-for-wc) | [__Support__](https://www.codeixer.com/contact-us/)
 
+
+WooCommece wishlist is a helpful plugin that allows customers to create a personalized list of products they want to purchase. It simplifies the shopping experience by enabling individuals to save items they may want to buy later rather than searching for them again. By using a wishlist, customers can easily keep track of the products they are considering and make informed decisions about what to purchase. Additionally, it provides retailers with valuable insights into their customers' preferences, helping them better understand their target audience and optimize their marketing strategies.
+
+
+== 🌟 Wishlist for WooCommerce free features ==
+
+* Customize the position of the wishlist button
+* Ability to add wishlist buttons to any products
+* Auto Remove from wishlist when added to cart
+* Wishlist tables with customizable columns
+* Product variation support
+* Shortcode support
+* Pop-up wishlist view
+* Fast loading and efficient cache performance.
+* Override wishlist template
+* Wishlists stored for up to [x] days for guests
+* Custom CSS styling
+
+[__Live Demo__](https://wp.codeixer.com) | [__Documentation__](https://www.codeixer.com/docs-category/wishlist-for-wc) | [__Support__](https://www.codeixer.com/contact-us/)
+
+**Remove from wishlist when added to cart:** Removes a product from the wishlist when it is added to the cart, saving you the hassle of manually managing wishlist.
+
+🎨 **Custom CSS styling:** supports custom CSS styling, allowing you to style your wishlist to match your website's theme. 
+
+📝 **[Shortcode](https://www.codeixer.com/docs/shortcodes/) support:** The plugin supports product variation and shortcode, providing flexibility and convenience in creating and managing your wishlist.
+
+**Pop-up wishlist:** Show pop-up with product details when wishlist action triggered.
+
+🎨 **[Override wishlist](https://www.codeixer.com/docs/overwrite-wishlist-template/):** Override the wishlist template from a child theme, giving complete control over the look and feel of your wishlist.
+
+📅 **Guest Wishlist:** stores wishlists for guests for up to [x] days, ensuring that their wishlists remain available even after leaving your website.
+
+🧑‍💻 **[Developer-friendly hooks for actions and filters](https://www.codeixer.com/docs/for-developers/):** The plugin is developer-friendly, offering hooks for actions and filters that allow developers to extend and customize the plugin's functionality according to their needs.
 
 == Installation ==
 
@@ -24,8 +58,24 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 3. Activate the Wishlist for WooCommerce plugin from the Plugins page.
 4. After activation, you will see a new submenu called “Wishlist” under the “Codeixer” menu. Here you can configure all the plugin settings to your preference.
 
+== Screenshots ==
+1. Shop page
+2. Single Product Page
+3. Pop-up View
+4. Wishlist Template
+5. Wishlist Settings
+
 
 == Changelog ==
+
+= 2.0 - 23 May 24 =
+
+- New plugin settings page with lots of settings added
+- Setup wizard added for quick onboarding
+- All codes have been rewritten as part of an update
+- HPOS compatibility has been declared
+- Compatibility with WooCommerce 8.8.3 ensured
+
 
 = 1.3.6 - 23 Sep 22 =
 

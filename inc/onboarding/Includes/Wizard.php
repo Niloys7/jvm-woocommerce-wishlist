@@ -211,7 +211,7 @@ class Onboarding_Wizard extends Wizard {
 			array(
 				'id'      => 'create_wishlist_page',
 				'label'   => 'Generate Wishlist Page',
-				'desc'    => 'Create a wishlist page with shortcode <code>[cix_woocommerce_wishlist]</code> and set it as the wishlist page.',
+				'desc'    => 'Create a wishlist page with shortcode <code>[jvm_woocommerce_wishlist]</code> and set it as the wishlist page.',
 				'options' => Settings::get_pages(1),
 				'default' => 'gen_page',
 
@@ -551,7 +551,7 @@ class Onboarding_Wizard extends Wizard {
 				<footer id="footer">
 					<a
 					class="onboarding-return onboarding_dashboard_btn button"
-					href="https://codeixer.com/wishlist-doc" target="_">
+					href="https://www.codeixer.com/docs-category/wishlist-for-wc/" target="_">
 						<?php esc_html_e( 'Documentation', 'tws-onboarding' ); ?>
 					</a>
 					<a

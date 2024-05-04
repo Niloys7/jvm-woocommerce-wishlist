@@ -89,8 +89,8 @@ class Helper {
 
 		if ( ! $query->have_posts() ) {
 			$page = array(
-				'post_title'   => $title,
-				'post_content' => $content,
+				'post_title'   => wp_kses_post( $title ),
+				'post_content' => wp_kses_post( $content ),
 				'post_status'  => 'publish',
 				'post_type'    => 'page',
 				'post_author'  => get_current_user_id(),

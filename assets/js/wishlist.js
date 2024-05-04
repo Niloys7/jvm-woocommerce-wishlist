@@ -219,7 +219,9 @@
 
     $(document).on('undo_wishlist.cix_wishlist', function () {
         cix_wishlist.add_to_cart();
+        cix_wishlist.remove_product();
     });
+    
 
 
 

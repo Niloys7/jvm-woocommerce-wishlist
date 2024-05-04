@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Wishlist for WooCommerce
+ * Plugin Name: JVM WooCommerce Wishlist
  * Description: Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store.
  * Version: 2.0
  * Author: Codeixer
@@ -10,7 +10,7 @@
  * WC tested up to: 8.8.3
  * Requires PHP: 7.4
  * Stable Tag: 2.0
- * Requires Plugins:  woocommerce
+ * Requires Plugins: woocommerce
  *
  * Text Domain: jvm-woocommerce-wishlist
  * Domain Path: /languages/
