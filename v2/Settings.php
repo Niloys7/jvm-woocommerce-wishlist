@@ -249,7 +249,7 @@ class Settings {
 						'id'         => 'product_add_to_wishlist_text',
 						'type'       => 'text',
 						'title'      => __( 'Shortcode', 'jvm-woocommerce-wishlist' ),
-						'default'    => '[cix_add_to_wishlist]',
+						'default'    => '[jvm_add_to_wishlist]',
 						'attributes' => array(
 							'readonly' => 'readonly',
 						),
@@ -295,7 +295,7 @@ class Settings {
 						'id'         => 'product_add_to_wishlist_text',
 						'type'       => 'text',
 						'title'      => __( 'Shortcode', 'jvm-woocommerce-wishlist' ),
-						'default'    => '[cix_add_to_wishlist]',
+						'default'    => '[jvm_add_to_wishlist]',
 						'attributes' => array(
 							'readonly' => 'readonly',
 						),
@@ -587,7 +587,7 @@ class Settings {
 			'product_removed_from_wishlist_text'          => '{product_name} Removed from Wishlist',
 			'loop_button'                                 => '1',
 			'loop_button_position'                        => 'after',
-			'product_add_to_wishlist_text'                => '[cix_add_to_wishlist]',
+			'product_add_to_wishlist_text'                => '[jvm_add_to_wishlist]',
 			'product_button'                              => '1',
 			'product_button_position'                     => 'after',
 			'product_button_type'                         => 'button',
