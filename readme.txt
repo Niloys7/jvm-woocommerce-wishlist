@@ -1,13 +1,13 @@
 === JVM WooCommerce Wishlist ===
 Contributors: im_niloy,codeixer,jorisvanmontfort
-Tags: wishlist for woocommerce, yith wishlist, woocommerce wishlist,ti wishlist
+Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist
 Requires at least: 5.0
 Tested up to: 6.5.2
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Supercharge your sales with WooCommerce Wishlist - a powerful tool that empowers customers to create wishlists and enhances their shopping experience. 🚀
+Supercharge your sales with WooCommerce Wishlist - a powerful tool that empowers customers to create wishlists and enhances their shopping experience.
 
 == Description ==
 
@@ -79,6 +79,10 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 
 == Changelog ==
+
+= 2.0.1 - may 24 =
+
+Fixed: 'woocommerce' class has been added to set the default theme style for wishlist page.
 
 = 2.0 - 23 May 24 =
 

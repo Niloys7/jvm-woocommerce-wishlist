@@ -89,9 +89,9 @@
 .jvm-woocommerce-wishlist-container .hidden {
   display: none;
 }
-.www-remove:before {
+/* .www-remove:before {
     content: "\f2ed" !important;
-}
+} */
 /**
  * Wishlist modal
  */
@@ -113,4 +113,13 @@ p.modal-product-info {
     width: 100%;
     text-align: center;
     margin-bottom: 30px;
+}
+
+/* Wishlist table */
+.jvm-woocommerce-wishlist-container td.product-thumbnail{
+  max-width: 80px;
+}
+.jvm-woocommerce-wishlist-container td.product-thumbnail a{
+ 
+    width: 100%;
 }
