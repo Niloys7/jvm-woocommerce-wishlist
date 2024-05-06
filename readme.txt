@@ -1,6 +1,6 @@
 === JVM WooCommerce Wishlist ===
 Contributors: im_niloy,codeixer,jorisvanmontfort
-Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist
+Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist, add to wishlist
 Requires at least: 5.0
 Tested up to: 6.5.2
 Stable tag: 2.0.1
@@ -80,7 +80,7 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 == Changelog ==
 
-= 2.0.1 - may 24 =
+= 2.0.1 - 06 may 24 =
 
 Fixed: 'woocommerce' class has been added to set the default theme style for wishlist page.
 
