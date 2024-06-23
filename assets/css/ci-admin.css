@@ -478,7 +478,20 @@ a.cit-admin-pro-notice span {
 .cit-button-1:hover {
   color: #fff;
 }
-
+.cix-only-pro .csf-fieldset {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+.cix-only-pro {
+    
+    background: #f9f9f9;
+}
+.cix-only-pro .csf-subtitle-text{
+font-style: italic;
+}
+.cix-only-pro .csf-subtitle-text a{
+    font-weight: bold;
+}
 .cit-button-link {
   text-decoration: none;
   margin-right: 15px;

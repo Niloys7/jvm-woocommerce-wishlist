@@ -2,8 +2,8 @@
 Contributors: im_niloy,codeixer,jorisvanmontfort
 Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist, add to wishlist
 Requires at least: 5.0
-Tested up to: 6.5.2
-Stable tag: 2.0.1
+Tested up to: 6.5.4
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,9 +80,17 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 == Changelog ==
 
+= 2.0.2 - 23 Jun 24 =
+
+* Added: 'cixww_get_wishlist_page_link' function to get the wishlist page link.
+* Added: Display admin to notice to make sure the wishlist page is set.
+* Fixed: Minor CSS Padding issue for wishlist button
+
+
+
 = 2.0.1 - 06 may 24 =
 
-Fixed: 'woocommerce' class has been added to set the default theme style for wishlist page.
+* Fixed: 'woocommerce' class has been added to set the default theme style for the wishlist page.
 
 = 2.0 - 23 May 24 =
 

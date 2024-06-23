@@ -12,8 +12,29 @@ class Wishlist {
 		add_action( 'wp_footer', array( $this, 'wishlist_popup_html' ) );
 		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
 		add_action( 'wp_login', array( $this, 'merge_wishlists' ), 10, 2 );
+		add_action( 'admin_notices', array( $this, 'wishlist_page_notice' ) );
 	}
+	/**
+	 * Displays a notice on the admin dashboard if the Wishlist Page is not set up properly.
+	 *
+	 * @since 2.0.2
+	 */
+	public function wishlist_page_notice() {
+		if ( ! empty( cixww_get_option( 'wishlist_page' ) ) ) {
+			return;
+		}
+		?>
+	<div class="error notice notice-error">
+		<h4>Ensure that the Wishlist Page is set up in order for the plugin to work properly.</h4>
+		<ol>
+			<li>To show the Wishlist, just create a new page or open an existing one.</li>
+			<li>Add the <code>[jvm_woocommerce_wishlist]</code> shortcode into the page content.</li>
+			<li>Go to the <a href="<?php echo esc_url( get_admin_url( null, 'admin.php?page=cixwishlist_settings' ) ); ?>"><strong>Wishlist Settings</strong></a> and select the page for the "Wishlist Page" option.</li>
+		</ol>
 
+	</div>
+		<?php
+	}
 	/**
 	 * Creates a wishlist page if it doesn't already exist.
 	 *
@@ -69,7 +90,8 @@ class Wishlist {
 	 */
 	public function wishlist_popup_html() {
 		$wishlist_popup = cixww_get_option( 'product_button_action' );
-		if ( $wishlist_popup == 'popup' || get_the_id() == cixww_get_option( 'wishlist_page' ) ) {?>
+		if ( $wishlist_popup == 'popup' || get_the_id() == cixww_get_option( 'wishlist_page' ) ) {
+			?>
 			<!-- wishlist modal embedded in page -->
 			<div id="wishlist-modal" class="modal"></div>
 			<?php
@@ -148,7 +170,7 @@ class Wishlist {
 	 * @return void
 	 */
 	public static function woocommerce_wishlist_locate_template( $path, $args = array() ) {
-		$located = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ));
+		$located = locate_template( array( 'wishlist' . DIRECTORY_SEPARATOR . $path ) );
 
 		$plugin_path = CIXWW_PLUGIN_DIR . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $path;
 
@@ -260,6 +282,7 @@ class Wishlist {
 		$wishlist       = self::wishlist_product_ids();
 		$product_id     = empty( $product_id ) ? get_the_ID() : $product_id;
 		$is_in_wishlist = ( $wishlist ) ? ( in_array( $product_id, $wishlist ) ) : false;
+		$no_btn_text    = ( empty( cixww_get_option( 'product_button_already_wishlist_text' ) ) && empty( cixww_get_option( 'product_button_text' ) ) && empty( cixww_get_option( 'product_button_remove_text' ) ) ) ? 'no-btn-txt ' : '';
 		$class          = ( $is_in_wishlist ) ? 'in_wishlist ' : '';
 		$text           = ( $is_in_wishlist && cixww_get_option( 'remove_on_second_click' ) ) ? cixww_get_option( 'product_button_remove_text' ) : esc_html( cixww_get_option( 'product_button_text' ) );
 		$show_icon      = ( cixww_get_option( 'product_button_icon' ) == 1 ) ? true : false;
@@ -267,10 +290,10 @@ class Wishlist {
 		$icon_html = ( $show_icon ) ? apply_filters( 'cix_add_to_wishlist_icon_html', '<span class="jvm_add_to_wishlist_heart"></span>' ) : '';
 
 		do_action( 'cix_woocommerce_wishlist_before_add_to_wishlist', $product_id );
-		$button_class = ( cixww_get_option( 'product_button_type' ) == 'button' ) ? 'button' : 'btn-link';
+		$button_class = ( cixww_get_option( 'product_button_type' ) == 'button' ) ? 'button ' . $no_btn_text : 'btn-link ' . $no_btn_text;
 		$class       .= apply_filters( 'cix_add_to_wishlist_class', ' jvm_add_to_wishlist ' . $button_class );
 		?>
-			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?> data-modal="#login-modal">
+			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?>>
 					<?php echo $icon_html; ?>
 				<span class="jvm_add_to_wishlist_text_add"><?php echo esc_html( cixww_get_option( 'product_button_text' ) ); ?></span>
 

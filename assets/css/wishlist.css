@@ -70,11 +70,12 @@
 .in_wishlist .jvm_add_to_wishlist_text_add{
   display: none;
 }
-.in_wishlist .jvm_add_to_wishlist_text_remove,
-.in_wishlist .jvm_add_to_wishlist_text_already_in{
+.in_wishlist:not(.no-btn-txt) .jvm_add_to_wishlist_text_remove,
+.in_wishlist:not(.no-btn-txt) .jvm_add_to_wishlist_text_already_in{
      display: inline-block;
     margin-left: 5px;
 }
+
 .jvm_add_to_wishlist.btn-link{
   margin-left: 10px;
   margin-right: 10px;
@@ -120,6 +121,5 @@ p.modal-product-info {
   max-width: 80px;
 }
 .jvm-woocommerce-wishlist-container td.product-thumbnail a{
- 
     width: 100%;
 }
