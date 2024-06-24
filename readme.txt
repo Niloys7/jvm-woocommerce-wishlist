@@ -85,6 +85,7 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 * Added: 'cixww_get_wishlist_page_link' function to get the wishlist page link.
 * Added: Display admin to notice to make sure the wishlist page is set.
 * Fixed: Minor CSS Padding issue for wishlist button
+* Compatibility with WooCommerce 9.0.1
 
 
 
