@@ -205,16 +205,18 @@
 
     };
 
-    // before document ready
-
-
-    $(document).ready(function () {
+    window.cix_wishlist_init = function (){
+        
         cix_wishlist.misc();
         cix_wishlist.add_to_wishlist();
         cix_wishlist.add_to_cart();
         cix_wishlist.remove_product();
-        console.log('cix_wishlist ready');
+        console.log('cix wishlist initialized');
+    }
 
+
+    $(document).ready(function () {
+        cix_wishlist_init();
     });
 
     $(document).on('undo_wishlist.cix_wishlist', function () {

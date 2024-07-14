@@ -6,8 +6,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Settings {
+	/**
+	 * The unique instance of the plugin.
+	 */
+	private static $instance;
 
-	public function __construct() {
+	/**
+	 * Gets an instance of our plugin.
+	 *
+	 * @return Class Instance.
+	 */
+	public static function init() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+	private function __construct() {
 		$this->pluginOptions();
 		add_action( 'csf_cixwishlist_settings_save_after', array( $this, 'save_after' ) );
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_links' ), 10, 2 );
@@ -84,8 +100,8 @@ class Settings {
 				'menu_parent'     => apply_filters( 'ciwishlist_menu_parent', 'codeixer' ),
 				// 'nav'             => 'tab',
 				// 'theme'           => 'light',
-				'footer_text'     => '',
-				// menu extras
+				
+				'footer_credit'   => 'Please Rate <strong>WooCommerce Wishlist</strong> on <a href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5" target="_blank"> WordPress.org</a>  to help us spread the word. Thank you from the Codeixer team!',
 				'show_bar_menu'   => false,
 				'show_footer'     => false,
 				'ajax_save'       => false,

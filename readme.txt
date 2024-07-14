@@ -3,7 +3,7 @@ Contributors: im_niloy,codeixer,jorisvanmontfort
 Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist, add to wishlist
 Requires at least: 5.0
 Tested up to: 6.5.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,7 +59,6 @@ If you like this Wishlist plugin, then consider checking out our other free plug
 
 [Bayna - Deposits & Partial Payments for WooCommerce](https://www.codeixer.com/deposits-payment-plugin-for-woocommerce/?utm_source=wp&utm_medium=site&utm_campaign=free_plugin) plugin allows customers to pay for WooCommerce products using a partial payment.
 
-[Pre-Orders for WooCommerce](https://brightplugins.com/go/preorder-free) – Ultimate Preorders Plugin for WooCommerce.
 
 == Installation ==
 
@@ -79,6 +78,14 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 
 == Changelog ==
+
+= 2.0.3 - 15 Jul 24 =
+
+* Added: Global scope is added 'cix_wishlist_init()' so that the wishlist init function can be used by other plugins. 
+* Added: URL parameters are supported for direct add to the wishlist via a link. For example https://domain.com/?add-to-wishlist=product_ID
+* Added: Singleton Pattern
+
+
 
 = 2.0.2 - 23 Jun 24 =
 

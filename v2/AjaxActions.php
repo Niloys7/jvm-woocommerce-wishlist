@@ -2,11 +2,27 @@
 namespace CIXW_WISHLIST;
 
 class AjaxActions {
+	/**
+	 * The unique instance of the plugin.
+	 */
+	private static $instance;
 
+	/**
+	 * Gets an instance of our plugin.
+	 *
+	 * @return Class Instance.
+	 */
+	public static function init() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 	/**
 	 * constructor.
 	 */
-	public function __construct() {
+	private function __construct() {
 		Helper::add_ajax( 'cix_update_wishlist', array( $this, 'update_wishlist' ) );
 		Helper::add_ajax( 'cix_wishlist_add_to_cart', array( $this, 'add_to_cart_wishlist_page' ) );
 		Helper::add_ajax( 'cix_remove_product', array( $this, 'remove_product_wishlist_page' ) );

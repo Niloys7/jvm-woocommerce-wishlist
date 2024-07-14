@@ -4,8 +4,27 @@ namespace CIXW_WISHLIST;
 class Bootstrap {
 
 	protected $wishlist_slug;
+	/**
+	 * The unique instance of the plugin.
+	 */
+	private static $instance;
 
-	public function __construct() {
+	/**
+	 * Gets an instance of our plugin.
+	 *
+	 * @return Class Instance.
+	 */
+	public static function init() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+	/**
+	 * Constructor.
+	 */
+	private function __construct() {
 
 		$this->load_classes();
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -13,9 +32,9 @@ class Bootstrap {
 		add_action( 'admin_init', array( 'PAnD', 'init' ) );
 	}
 	protected function load_classes() {
-		new AjaxActions();
-		new Wishlist();
-		new Settings();
+		AjaxActions::init();
+		Wishlist::init();
+		Settings::init();
 	}
 
 

@@ -6,7 +6,7 @@ class Helper {
 	/**
 	 * Helper constructor.
 	 */
-	public function __construct() {
+	private function __construct() {
 	}
 	/**
 	 * Add WP ajax action with ease.

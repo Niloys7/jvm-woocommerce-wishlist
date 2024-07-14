@@ -2,7 +2,24 @@
 namespace CIXW_WISHLIST;
 
 class Wishlist {
-	public function __construct() {
+	/**
+	 * The unique instance of the plugin.
+	 */
+	private static $instance;
+
+	/**
+	 * Gets an instance of our plugin.
+	 *
+	 * @return Class Instance.
+	 */
+	public static function init() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+	private function __construct() {
 		add_shortcode( 'jvm_woocommerce_wishlist', array( $this, 'wishlist_shortcode' ) );
 		add_shortcode( 'jvm_add_to_wishlist', array( $this, 'add_to_wishlist_shortcode' ) );
 
@@ -13,6 +30,47 @@ class Wishlist {
 		add_filter( 'cix_replace_text_list', array( $this, 'replace_info' ), 10, 2 );
 		add_action( 'wp_login', array( $this, 'merge_wishlists' ), 10, 2 );
 		add_action( 'admin_notices', array( $this, 'wishlist_page_notice' ) );
+		add_action( 'wp_loaded', array( $this, 'add_to_wishlist_action' ) );
+	}
+	/**
+	 * Adds a product to the wishlist and performs necessary actions.
+	 *
+	 * @param bool|string $url The URL to redirect to after adding the product to the wishlist.
+	 * @return void
+	 */
+	public function add_to_wishlist_action( $url = false ) {
+		if ( ! isset( $_REQUEST['add-to-wishlist'] ) || ! is_numeric( wp_unslash( $_REQUEST['add-to-wishlist'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return;
+		}
+
+		wc_nocache_headers();
+
+		$product_id            = apply_filters( 'woocommerce_add_to_wishlist_product_id', absint( wp_unslash( $_REQUEST['add-to-wishlist'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$was_added_to_wishlist = false;
+		$adding_to_wishlist    = wc_get_product( $product_id );
+
+		if ( ! $adding_to_wishlist ) {
+			return;
+		}
+		self::set_product( $product_id );
+
+		$message = '<a href="' . esc_url( get_the_permalink( cixww_get_option( 'wishlist_page' ) ) ) . '" class="button wc-forward">' . esc_html( cixww_get_option( 'product_view_wishlist_text' ) ) . '</a>' . self::added_to_wishlist_text( $product_id );
+		wc_add_notice( $message, 'success' );
+
+		// If we added the product to the cart we can now optionally do a redirect.
+		if ( $was_added_to_wishlist && 0 === wc_notice_count( 'error' ) ) {
+			$url = apply_filters( 'woocommerce_add_to_wishlist', $url, $adding_to_wishlist );
+
+			if ( $url ) {
+				wp_safe_redirect( $url );
+				exit;
+			}
+			// TODO: add redirect link after wihsist by url
+			// elseif ( 'yes' === get_option( 'woocommerce_cart_redirect_after_add' ) ) {
+			// wp_safe_redirect( wc_get_cart_url() );
+			// exit;
+			// }
+		}
 	}
 	/**
 	 * Displays a notice on the admin dashboard if the Wishlist Page is not set up properly.
@@ -293,7 +351,7 @@ class Wishlist {
 		$button_class = ( cixww_get_option( 'product_button_type' ) == 'button' ) ? 'button ' . $no_btn_text : 'btn-link ' . $no_btn_text;
 		$class       .= apply_filters( 'cix_add_to_wishlist_class', ' jvm_add_to_wishlist ' . $button_class );
 		?>
-			<a class="<?php echo esc_attr( $class ); ?>" href="?add_to_wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?>>
+			<a class="<?php echo esc_attr( $class ); ?>" href="?add-to-wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?>>
 					<?php echo $icon_html; ?>
 				<span class="jvm_add_to_wishlist_text_add"><?php echo esc_html( cixww_get_option( 'product_button_text' ) ); ?></span>
 
