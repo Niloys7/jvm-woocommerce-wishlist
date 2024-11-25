@@ -79,6 +79,12 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 == Changelog ==
 
+= 2.0.4 - 25 Nov 24 =
+
+* Fixed:  `js click event` triggerd mutiple times
+* Tweak: Update plugin SDK lib
+* Compatibility with WooCommerce 9.4.x
+
 = 2.0.3 - 15 Jul 24 =
 
 * Added: Global scope is added 'cix_wishlist_init()' so that the wishlist init function can be used by other plugins. 
