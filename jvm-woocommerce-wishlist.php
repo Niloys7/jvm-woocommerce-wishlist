@@ -7,7 +7,7 @@
  * Author URI: https://codeixer.com
  * Tested up to: 6.7.1
  * WC requires at least: 5.0
- * WC tested up to: 9.4
+ * WC tested up to: 9.4.2
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
  *
