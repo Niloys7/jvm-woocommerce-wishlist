@@ -36,7 +36,7 @@ git clone https://github.com/AppSero/client.git appsero
 Now include the dependencies in your plugin/theme.
 
 ```php
-if( !class_exists('Appsero\Client') ) {
+if( !class_exists('NS7_UT\Client') ) {
     require __DIR__ . '/appsero/src/Client.php';
 }
 ```
@@ -45,10 +45,10 @@ if( !class_exists('Appsero\Client') ) {
 
 AppSero can be used in both themes and plugins.
 
-The `Appsero\Client` class has *three* parameters:
+The `NS7_UT\Client` class has *three* parameters:
 
 ```php
-$client = new Appsero\Client( $hash, $name, $file );
+$client = new NS7_UT\Client( $hash, $name, $file );
 ```
 
 - **hash** (*string*, *required*) - The unique identifier for a plugin or theme.
@@ -69,11 +69,11 @@ You can obtain the **hash** for your plugin for the [Appsero Dashboard](https://
  */
 function appsero_init_tracker_appsero_test() {
 
-    if ( ! class_exists( 'Appsero\Client' ) ) {
+    if ( ! class_exists( 'NS7_UT\Client' ) ) {
         require_once __DIR__ . '/appsero/src/Client.php';
     }
 
-    $client = new Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044891', 'Akismet', __FILE__ );
+    $client = new NS7_UT\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044891', 'Akismet', __FILE__ );
 
     // Active insights
     $client->insights()->init();
@@ -103,7 +103,7 @@ Make sure you call this function directly, never use any action hook to call thi
 ## More Usage
 
 ```php
-$client = new Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
+$client = new NS7_UT\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
 ```
 
 #### 1. Hiding the notice
@@ -190,7 +190,7 @@ Check your plugin/theme is using with valid license or not, First create a globa
 If you are using it outside of same function make sure you global the variable before using the condition.
 
 ```php
-$client = new Appsero\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
+$client = new NS7_UT\Client( 'a4a8da5b-b419-4656-98e9-4a42e9044892', 'Twenty Twelve', __FILE__ );
 
 $args = array(
     'type'        => 'submenu',
