@@ -2,7 +2,7 @@
 
 namespace NS7_UT;
 
-if ( class_exists( '\NS7_UT\Client' ) ) {
+if ( class_exists( 'NS7_UT\Client' ) ) {
 	return;
 }
 /**

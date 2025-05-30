@@ -5,9 +5,9 @@
  * Version: 2.0.6
  * Author: Codeixer
  * Author URI: https://codeixer.com
- * Tested up to: 6.7.1
+ * Tested up to: 6.8.1
  * WC requires at least: 5.0
- * WC tested up to: 9.5.2
+ * WC tested up to: 9.9
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
  *
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 define( 'CIXWW_PLUGIN_DIR', __DIR__ );
-define( 'CIXWW_PLUGIN_VER', '2.0.6' );
+define( 'CIXWW_PLUGIN_VER', get_file_data( __FILE__, array( 'Version' => 'Version' ) )['Version'] );
 define( 'CIXWW_PLUGIN_FILE', __FILE__ );
 define( 'CIXWW_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 define( 'CIXWW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -62,15 +62,11 @@ add_action(
 		}
 	}
 );
-add_action(
-	'init',
-	function () {
-		load_plugin_textdomain( 'jvm-woocommerce-wishlist', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
-);
+
 add_action(
 	'plugins_loaded',
 	function () {
+		load_plugin_textdomain( 'jvm-woocommerce-wishlist', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		\CIXW_WISHLIST\Bootstrap::init();
 	}
 );
