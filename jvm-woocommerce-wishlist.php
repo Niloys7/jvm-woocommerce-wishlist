@@ -28,7 +28,7 @@ define( 'CIXWW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'CIXWW_ASSETS', CIXWW_PLUGIN_URL . '/assets' );
 
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/inc/uasge-tracking/client/src/Client.php';
+require_once __DIR__ . '/inc/usage-tracking/Client.php';
 /**
  * Initialize the plugin tracker
  *
