@@ -1,9 +1,9 @@
 === Wishlist for WooCommerce ===
-Contributors: im_niloy,codeixer,jorisvanmontfort
+Contributors: im_niloy,codeixer,jorisvanmontfort,blazecommerce
 Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist, add to wishlist
 Requires at least: 5.0
-Tested up to: 6.8.1
-Stable tag: 2.0.6
+Tested up to: 7.1
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Supercharge your sales with WooCommerce Wishlist - a powerful tool that empowers
 
 Enhance your e-commerce store's functionality with WooCommerce Wishlist - the ultimate tool that adds a powerful and lightweight wishlist feature. Improve your customer's shopping experience and boost your sales with this essential addition to your online store. 🚀
 
-[__Live Demo__](https://wp.codeixer.com) | [__Documentation__](https://www.codeixer.com/docs-category/wishlist-for-wc) | [__Support__](https://www.codeixer.com/contact-us/)
+[__Documentation__](https://www.codeixer.com/docs-category/wishlist-for-wc) | [__Support__](https://www.codeixer.com/contact-us/)
 
 
 WooCommece wishlist is a helpful plugin that allows customers to create a personalized list of products they want to purchase. It simplifies the shopping experience by enabling individuals to save items they may want to buy later rather than searching for them again. By using a wishlist, customers can easily keep track of the products they are considering and make informed decisions about what to purchase. Additionally, it provides retailers with valuable insights into their customers' preferences, helping them better understand their target audience and optimize their marketing strategies.
@@ -33,7 +33,7 @@ WooCommece wishlist is a helpful plugin that allows customers to create a person
 * Wishlists stored for up to [x] days for guests
 * Custom CSS styling
 
-[__Live Demo__](https://wp.codeixer.com) | [__Documentation__](https://www.codeixer.com/docs-category/wishlist-for-wc) | [__Support__](https://www.codeixer.com/contact-us/)
+[__Documentation__](https://www.codeixer.com/docs-category/wishlist-for-wc) | [__Support__](https://www.codeixer.com/contact-us/)
 
 **Remove from wishlist when added to cart:** Removes a product from the wishlist when it is added to the cart, saving you the hassle of manually managing wishlist.
 
@@ -78,6 +78,17 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 
 == Changelog ==
+
+= 2.0.7 - 1 Oct 26 =
+
+* Fixed: Undefined index notice for wishlist_page on first activation
+* Tweak: Tested up to WordPress 7.1 and WooCommerce 11.1
+* Tweak: Escape output in the wishlist button and templates
+* Tweak: Use a proper placeholder in the transient cleanup query
+* Tweak: Link to the review form instead of the 5-star filter
+* Tweak: Remove the external roadmap script from the settings page
+* Tweak: Add License header and direct access guards
+* Tweak: Remove the Live Demo link (demo site is offline)
 
 = 2.0.6 - 30 May 25 =
 

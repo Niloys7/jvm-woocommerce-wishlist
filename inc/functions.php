@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 use CIXW_WISHLIST\Helper;
 /**
  * Get the value of a settings field

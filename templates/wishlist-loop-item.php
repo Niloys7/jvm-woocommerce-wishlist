@@ -28,13 +28,13 @@ $permalink  = get_the_permalink( $product_id );
 
 	<td class="product-thumbnail">
 		<a href="<?php echo esc_url( $permalink ); ?>">
-			<?php echo $product->get_image(); ?>
+			<?php echo $product->get_image(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WC_Product::get_image() returns escaped markup; kses would strip lazy-load attributes. ?>
 		</a>
 	</td>
 
 	<td class="product-name" data-title="<?php esc_html_e( 'Product', 'jvm-woocommerce-wishlist' ); ?>">
 		<a href="<?php echo esc_url( $permalink ); ?>">
-			<?php echo get_the_title( $product_id ); ?>
+			<?php echo esc_html( get_the_title( $product_id ) ); ?>
 		</a>
 	</td>
 	<?php if ( cixww_get_option( 'wishlist_page_table_unit_price' ) ) : ?>

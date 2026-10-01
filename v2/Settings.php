@@ -43,7 +43,7 @@ class Settings {
 		// add doc link
 		$doc_link     = '<a target="_blank" href="https://www.codeixer.com/docs-category/wishlist-for-wc/" title="' . 'Documentation' . '">' . 'Docs' . '</a>';
 		$support_link = '<a style="color:red;" target="_blank" href="https://codeixer.com/contact-us/" title="' . 'Get help' . '">' . 'Support' . '</a>';
-		$rate_plugin  = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5"> Rate this plugin » </a>';
+		$rate_plugin  = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/#new-post"> Rate this plugin » </a>';
 
 		$links[] = $doc_link;
 		$links[] = $support_link;
@@ -88,12 +88,6 @@ class Settings {
 		// Set a unique slug-like ID
 		$prefix       = 'cixwishlist_settings';
 		$doc_link     = '<a class="button" target="_blank" href="https://www.codeixer.com/docs-category/wishlist-for-wc/" title="' . 'Documentation' . '">' . 'Documentation' . '</a>';
-		$roadmap_link = '<script>
-  var li_sidebar = {
-	workspace_id : "0d913973-c1ab-470c-90f1-a1b3cb5046b7"
-  };
-</script>
-<script type="text/javascript" src="https://cdn.loopedin.io/js/sidebar.min.js?v=0.2" defer="defer"></script>';
 		//
 		// Create options
 		\CSF::createOptions(
@@ -101,13 +95,13 @@ class Settings {
 			array(
 				'menu_title'      => 'Wishlist Settings',
 				'menu_slug'       => $prefix,
-				'framework_title' => 'Wishlist for WooCommerce Settings <small>v' . CIXWW_PLUGIN_VER . '</small><br>' . $doc_link . $roadmap_link,
+				'framework_title' => 'Wishlist for WooCommerce Settings <small>v' . CIXWW_PLUGIN_VER . '</small><br>' . $doc_link,
 				'menu_type'       => 'submenu',
 				'menu_parent'     => apply_filters( 'ciwishlist_menu_parent', 'codeixer' ),
 				// 'nav'             => 'tab',
 				// 'theme'           => 'light',
 
-				'footer_credit'   => 'Please Rate <strong>WooCommerce Wishlist</strong> on <a href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5" target="_blank"> WordPress.org</a>  to help us spread the word. Thank you from the Codeixer team!',
+				'footer_credit'   => 'Please Rate <strong>WooCommerce Wishlist</strong> on <a href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/#new-post" target="_blank"> WordPress.org</a>  to help us spread the word. Thank you from the Codeixer team!',
 				'show_bar_menu'   => false,
 				'show_footer'     => false,
 				'ajax_save'       => false,
@@ -669,8 +663,7 @@ class Settings {
 		global $wpdb;
 
 		$prefix = $wpdb->esc_like( '_transient_' . $prefix );
-		$sql    = "SELECT `option_name` FROM $wpdb->options WHERE `option_name` LIKE '%s'";
-		$keys   = $wpdb->get_results( $wpdb->prepare( $sql, $prefix . '%' ), ARRAY_A );
+		$keys   = $wpdb->get_results( $wpdb->prepare( "SELECT `option_name` FROM $wpdb->options WHERE `option_name` LIKE %s", $prefix . '%' ), ARRAY_A );
 
 		if ( is_wp_error( $keys ) ) {
 			return array();

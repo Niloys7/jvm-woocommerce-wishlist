@@ -14,17 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php if ( isset( $args['already_in_wishlist'] ) && $args['already_in_wishlist'] == 1 ) : ?>
 	<div class="modal-wishlist-icon"></div>
-	<p class="modal-product-info"><?php echo \CIXW_WISHLIST\Wishlist::already_in_wishlist_text( $args['product_id'] ); ?></p>
+	<p class="modal-product-info"><?php echo wp_kses_post( \CIXW_WISHLIST\Wishlist::already_in_wishlist_text( $args['product_id'] ) ); ?></p>
 <?php endif; ?>
 
 <?php if ( isset( $args['added'] ) ) : ?>
 	<div class="modal-wishlist-icon"></div>
-	<p class="modal-product-info"><?php echo \CIXW_WISHLIST\Wishlist::added_to_wishlist_text( $args['product_id'] ); ?></p>
+	<p class="modal-product-info"><?php echo wp_kses_post( \CIXW_WISHLIST\Wishlist::added_to_wishlist_text( $args['product_id'] ) ); ?></p>
 <?php endif; ?>
 
 <?php if ( isset( $args['removed'] ) ) : ?>
 	<div class="not modal-wishlist-icon"></div>
-	<p class="modal-product-info"><?php echo \CIXW_WISHLIST\Wishlist::removed_from_wishlist_text( $args['product_id'] ); ?></p>
+	<p class="modal-product-info"><?php echo wp_kses_post( \CIXW_WISHLIST\Wishlist::removed_from_wishlist_text( $args['product_id'] ) ); ?></p>
 <?php endif; ?>
 
 <?php if ( isset( $args['product_id'] ) ) : ?>
