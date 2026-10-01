@@ -1,5 +1,5 @@
 === Wishlist for WooCommerce ===
-Contributors: im_niloy,codeixer,jorisvanmontfort
+Contributors: im_niloy,codeixer,jorisvanmontfort,blazecommerce
 Tags: wishlist for woocommerce,wishlist, woocommerce wishlist,ti wishlist, add to wishlist
 Requires at least: 5.0
 Tested up to: 7.1
@@ -79,7 +79,7 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 == Changelog ==
 
-= 2.0.7 =
+= 2.0.7 - 1 Oct 26 =
 
 * Tweak: Tested up to WordPress 7.1 and WooCommerce 11.1
 * Tweak: Escape output in the wishlist button and templates
