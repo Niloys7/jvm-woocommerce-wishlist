@@ -88,12 +88,6 @@ class Settings {
 		// Set a unique slug-like ID
 		$prefix       = 'cixwishlist_settings';
 		$doc_link     = '<a class="button" target="_blank" href="https://www.codeixer.com/docs-category/wishlist-for-wc/" title="' . 'Documentation' . '">' . 'Documentation' . '</a>';
-		$roadmap_link = '<script>
-  var li_sidebar = {
-	workspace_id : "0d913973-c1ab-470c-90f1-a1b3cb5046b7"
-  };
-</script>
-<script type="text/javascript" src="https://cdn.loopedin.io/js/sidebar.min.js?v=0.2" defer="defer"></script>';
 		//
 		// Create options
 		\CSF::createOptions(
@@ -101,7 +95,7 @@ class Settings {
 			array(
 				'menu_title'      => 'Wishlist Settings',
 				'menu_slug'       => $prefix,
-				'framework_title' => 'Wishlist for WooCommerce Settings <small>v' . CIXWW_PLUGIN_VER . '</small><br>' . $doc_link . $roadmap_link,
+				'framework_title' => 'Wishlist for WooCommerce Settings <small>v' . CIXWW_PLUGIN_VER . '</small><br>' . $doc_link,
 				'menu_type'       => 'submenu',
 				'menu_parent'     => apply_filters( 'ciwishlist_menu_parent', 'codeixer' ),
 				// 'nav'             => 'tab',
