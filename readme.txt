@@ -81,6 +81,7 @@ To install the WooCommerce Wishlist plugin, please follow these steps:
 
 = 2.0.7 - 1 Oct 26 =
 
+* Fixed: Undefined index notice for wishlist_page on first activation
 * Tweak: Tested up to WordPress 7.1 and WooCommerce 11.1
 * Tweak: Escape output in the wishlist button and templates
 * Tweak: Use a proper placeholder in the transient cleanup query

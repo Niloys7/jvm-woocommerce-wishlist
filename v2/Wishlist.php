@@ -103,6 +103,9 @@ class Wishlist {
 	public function create_wishlist_page() {
 
 		$cixwishlist_settings = get_option( 'cixwishlist_settings' );
+		if ( ! is_array( $cixwishlist_settings ) ) {
+			$cixwishlist_settings = array();
+		}
 
 		if ( cixww_get_option( 'create_wishlist_page' ) == 'gen_page' ) {
 
@@ -111,7 +114,7 @@ class Wishlist {
 			$cixwishlist_settings['wishlist_page'] = $page_id;
 
 		} else {
-			$cixwishlist_settings['wishlist_page'] = ( cixww_get_option( 'create_wishlist_page' ) ) ? cixww_get_option( 'create_wishlist_page' ) : $cixwishlist_settings['wishlist_page'];
+			$cixwishlist_settings['wishlist_page'] = ( cixww_get_option( 'create_wishlist_page' ) ) ? cixww_get_option( 'create_wishlist_page' ) : ( isset( $cixwishlist_settings['wishlist_page'] ) ? $cixwishlist_settings['wishlist_page'] : '' );
 		}
 
 		// Update the option
