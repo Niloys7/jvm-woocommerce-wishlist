@@ -43,7 +43,7 @@ class Settings {
 		// add doc link
 		$doc_link     = '<a target="_blank" href="https://www.codeixer.com/docs-category/wishlist-for-wc/" title="' . 'Documentation' . '">' . 'Docs' . '</a>';
 		$support_link = '<a style="color:red;" target="_blank" href="https://codeixer.com/contact-us/" title="' . 'Get help' . '">' . 'Support' . '</a>';
-		$rate_plugin  = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5"> Rate this plugin » </a>';
+		$rate_plugin  = '<a target="_blank" href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/#new-post"> Rate this plugin » </a>';
 
 		$links[] = $doc_link;
 		$links[] = $support_link;
@@ -107,7 +107,7 @@ class Settings {
 				// 'nav'             => 'tab',
 				// 'theme'           => 'light',
 
-				'footer_credit'   => 'Please Rate <strong>WooCommerce Wishlist</strong> on <a href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/?filter=5" target="_blank"> WordPress.org</a>  to help us spread the word. Thank you from the Codeixer team!',
+				'footer_credit'   => 'Please Rate <strong>WooCommerce Wishlist</strong> on <a href="https://wordpress.org/support/plugin/jvm-woocommerce-wishlist/reviews/#new-post" target="_blank"> WordPress.org</a>  to help us spread the word. Thank you from the Codeixer team!',
 				'show_bar_menu'   => false,
 				'show_footer'     => false,
 				'ajax_save'       => false,
