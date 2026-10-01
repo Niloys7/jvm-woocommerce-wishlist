@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 // default codes for our plugins
 if ( ! class_exists( 'Codeixer_Plugin_Core' ) ) {
 	class Codeixer_Plugin_Core {

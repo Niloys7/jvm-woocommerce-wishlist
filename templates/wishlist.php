@@ -80,11 +80,11 @@ if ( ! empty( $product_ids ) ) {
 	$class = empty( $product_ids ) ? '' : ' hidden';
 
 ?>
-	<div class="empty-wishlist<?php echo $class; ?>">
+	<div class="empty-wishlist<?php echo esc_attr( $class ); ?>">
 		<p><?php echo esc_html( cixww_get_option( 'wishlist_page_no_item_text' ) ); ?></p>
 
 		<p class="return-to-shop">
-			<a class="button wc-backward" href="<?php echo get_permalink( get_option( 'woocommerce_shop_page_id' ) ); ?>"><?php _e( 'Return to shop', 'jvm-woocommerce-wishlist' ); ?></a>
+			<a class="button wc-backward" href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_shop_page_id' ) ) ); ?>"><?php esc_html_e( 'Return to shop', 'jvm-woocommerce-wishlist' ); ?></a>
 		</p>
 	</div>
 </div>

@@ -351,8 +351,8 @@ class Wishlist {
 		$button_class = ( cixww_get_option( 'product_button_type' ) == 'button' ) ? 'button ' . $no_btn_text : 'btn-link ' . $no_btn_text;
 		$class       .= apply_filters( 'cix_add_to_wishlist_class', ' jvm_add_to_wishlist ' . $button_class );
 		?>
-			<a class="<?php echo esc_attr( $class ); ?>" href="?add-to-wishlist=<?php echo $product_id; ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo $product_id; ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove=' . $product_id : ''; ?>>
-					<?php echo $icon_html; ?>
+			<a class="<?php echo esc_attr( $class ); ?>" href="?add-to-wishlist=<?php echo absint( $product_id ); ?>" title="<?php echo esc_attr( $text ); ?>" rel="nofollow" data-product-title="<?php echo esc_attr( get_the_title( $product_id ) ); ?>" data-product-id="<?php echo absint( $product_id ); ?>" <?php echo ( cixww_get_option( 'remove_on_second_click' ) && in_array( $product_id, $wishlist ) ) ? 'data-remove="' . absint( $product_id ) . '"' : ''; ?>>
+					<?php echo wp_kses_post( $icon_html ); ?>
 				<span class="jvm_add_to_wishlist_text_add"><?php echo esc_html( cixww_get_option( 'product_button_text' ) ); ?></span>
 
 				<?php if ( cixww_get_option( 'remove_on_second_click' ) ) : ?>

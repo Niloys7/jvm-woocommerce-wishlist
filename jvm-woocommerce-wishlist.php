@@ -10,6 +10,8 @@
  * WC tested up to: 9.9
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
  * Text Domain: jvm-woocommerce-wishlist
  * Domain Path: /languages/

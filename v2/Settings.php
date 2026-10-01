@@ -669,8 +669,7 @@ class Settings {
 		global $wpdb;
 
 		$prefix = $wpdb->esc_like( '_transient_' . $prefix );
-		$sql    = "SELECT `option_name` FROM $wpdb->options WHERE `option_name` LIKE '%s'";
-		$keys   = $wpdb->get_results( $wpdb->prepare( $sql, $prefix . '%' ), ARRAY_A );
+		$keys   = $wpdb->get_results( $wpdb->prepare( "SELECT `option_name` FROM $wpdb->options WHERE `option_name` LIKE %s", $prefix . '%' ), ARRAY_A );
 
 		if ( is_wp_error( $keys ) ) {
 			return array();
