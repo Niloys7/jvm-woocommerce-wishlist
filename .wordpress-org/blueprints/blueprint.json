@@ -1,0 +1,50 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "meta": {
+    "title": "Wishlist for WooCommerce demo",
+    "author": "blazecommerce"
+  },
+  "landingPage": "/shop/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "features": {
+    "networking": true
+  },
+  "login": true,
+  "steps": [
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "woocommerce"
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "jvm-woocommerce-wishlist"
+      }
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "permalink_structure": "/%postname%/",
+        "woocommerce_onboarding_profile": {
+          "skipped": true
+        },
+        "woocommerce_coming_soon": "no"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$items = array(\n\tarray( 'Classic Leather Wallet', '49', 'WALLET-01' ),\n\tarray( 'Canvas Weekend Bag', '129', 'BAG-02' ),\n\tarray( 'Ceramic Pour-Over Set', '64', 'POUR-03' ),\n\tarray( 'Merino Wool Beanie', '35', 'BEANIE-04' ),\n);\nforeach ( $items as $item ) {\n\t$p = new WC_Product_Simple();\n\t$p->set_name( $item[0] );\n\t$p->set_regular_price( $item[1] );\n\t$p->set_sku( $item[2] );\n\t$p->set_status( 'publish' );\n\t$p->save();\n}\n$page_id = wp_insert_post( array(\n\t'post_type'    => 'page',\n\t'post_title'   => 'Wishlist',\n\t'post_name'    => 'wishlist',\n\t'post_status'  => 'publish',\n\t'post_content' => '[jvm_woocommerce_wishlist]',\n) );\n$settings = get_option( 'cixwishlist_settings' );\nif ( ! is_array( $settings ) ) {\n\t$settings = array();\n}\n$settings['wishlist_page'] = $page_id;\nupdate_option( 'cixwishlist_settings', $settings );\n"
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require '/wordpress/wp-load.php'; flush_rewrite_rules();"
+    }
+  ]
+}
